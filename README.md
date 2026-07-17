@@ -38,6 +38,30 @@ metric definitions, synthetic-data labels, or responsible-use protections:
    each shown separately, with an **optional, fully transparent** score (exact formula, weights,
    and per-factor points — never an opaque number).
 
+### Answer Engine Optimization (AEO) workflow
+
+The newest update connects visibility measurement to **user questions → content actions →
+measurable experiments**:
+
+6. **AEO Question Clusters** (page 9) — group prompts by topic, search intent, persona, journey
+   stage, brand/non-brand, or your own cluster label (all from existing structured metadata,
+   **not** keyword matching). Per cluster: prompts and responses, focal-brand mention rate,
+   every competitor's rates, share of voice, recommendation rate, citation rate, the questions
+   the brand **wins**, the ones competitors win, the ones where **no tracked brand appears**, and
+   content coverage gaps — plus a grounded **one page vs. separate pages** recommendation with the
+   exact rules and evidence shown.
+7. **AEO Experiments** (page 10) — define an experiment (name, focal brand, cluster, baseline and
+   post-change dates, change made, hypothesis, primary/secondary KPIs) and compare the two
+   collections across mention rate, share of voice, first-mention share, recommendation rate,
+   citation rate, source coverage, narrative consistency, and competitor visibility — with absolute
+   change, percentage-point change, sample sizes, platform-level and prompt-level results, and
+   confidence/limitations. **Findings are stated as associations, never as proof of causation.**
+8. **Answer Extractability Analysis** (inside page 4) — extends the readiness audit with the shapes
+   an answer engine can actually lift: short answer sections, lists, comparison tables, entity
+   clarity, evidence/outbound sources, FAQ/Product/Organization/Article/HowTo schema, and **coverage
+   of the questions in a selected AEO cluster**. Each factor is shown separately with the exact rule
+   applied, and the summary displays every component rule, weight and point.
+
 ![AI Answer Readiness & source types preview](assets/readiness_preview.png)
 
 ---
@@ -134,6 +158,49 @@ sample can't support:
 | **Source type share** | Share of citations by transparent source type (brand-owned, competitor-owned, review, forum, news, docs, social, other). |
 | **Citation opportunity gap** | For a third-party domain: responses citing it that mention a competitor minus those mentioning the focal brand. Positive = cited alongside competitors more than you. |
 
+### AEO metrics & definitions
+
+| Metric | Definition |
+|--------|------------|
+| **Search intent** | Derived from `prompt_category` (Informational, Commercial investigation, Transactional, Problem solving, Navigational/brand) unless you supply it. Clustering uses this structured metadata, not keywords. |
+| **Question cluster** | A user-defined grouping label on each prompt; defaults to the prompt's `topic`. |
+| **Cluster mention-rate gap** | Strongest competitor's mention rate minus the focal brand's, within one cluster. Positive = competitors lead that cluster. |
+| **Question outcome** | Per question: *Focal brand wins* (focal rate > best competitor), *Competitor wins*, or *No tracked brand appears*. Ties break on first-mention share. |
+| **Page consolidation rule** | One comprehensive page when a cluster's questions share one search intent **and** one journey stage **and** ≤1 persona with ≤6 questions; one page with per-persona sections when intent is single, stages ≤2 and questions ≤8; otherwise separate pages, split by whichever dimension varies most. Evidence and rules are always displayed. |
+| **Experiment absolute / pp change** | `post − baseline`. For 0–1 rate metrics the percentage-point change is `(post − baseline) × 100`; count metrics (source coverage) report no pp change. |
+| **Source coverage** | Count of distinct cited domains in an arm — the breadth of sources behind the answers. |
+
+### Answer Extractability — component rules (fully transparent)
+
+Twelve factors, each reported separately with its rule and status (**pass / partial / fail /
+unknown**):
+
+| Factor | Rule | Weight |
+|--------|------|--------|
+| Direct answer near the beginning | paragraph of 20+ words before the first H2 | 12 |
+| Question-based headings | pass ≥3 question headings; partial 1–2 | 10 |
+| Short answer sections | pass ≥2 question headings followed by a ≤60-word answer; partial 1 | 12 |
+| Lists | pass ≥3 `<ul>`/`<ol>`; partial 1–2 | 8 |
+| Comparison tables | pass ≥1 table with a header row and 3+ columns; partial any table | 8 |
+| Clear brand, product & category entities | pass Organization or Product schema; partial title only | 8 |
+| Supporting evidence & outbound sources | pass ≥3 external links; partial 1–2 | 10 |
+| Answer schema (FAQ/Product/Organization/Article/HowTo) | pass ≥2 types; partial exactly 1 | 12 |
+| Cluster question coverage | pass ≥60% of the selected cluster's questions matched in headings/title; partial ≥30% | 10 |
+| Published & modified dates | pass both; partial one | 4 |
+| Canonical URL | pass if a canonical link is present | 3 |
+| Crawlability (robots & sitemap) | pass both reachable; partial one | 3 |
+
+```
+Answer Extractability = Σ(weight × credit) / Σ(weight of evaluated factors) × 100
+credit: pass = 1.0, partial = 0.5, fail = 0.0
+factors that could not be observed are EXCLUDED from both sides (a blocked page reports
+"unknown", never a misleading 0)
+```
+
+Cluster-question coverage is a **word-overlap check against page headings and title** — it can miss
+a question answered in body copy under differently-worded headings. Extractability describes a
+page's *shape*; it does not predict or prove citation.
+
 ### AI Answer Readiness — scoring definition (fully transparent)
 
 The readiness audit reports **12 factors separately** (direct answer up top, question-based
@@ -177,6 +244,60 @@ as real AI-platform output.**
 
 ---
 
+## Real benchmark case study — template
+
+> **Use this template only for `Real` / `User Collected` data.** Everything shipped in this repo's
+> `data/` folder is **synthetic demo data** and must never be written up as a real result. When you
+> publish a case study, state the dataset type at the top and keep synthetic figures out of it
+> entirely. Copy the block below into a new file (e.g. `case_studies/2026-08-notion.md`).
+
+```markdown
+# AI Visibility Case Study — <Brand>
+**Dataset type:** Real / User Collected (NOT synthetic)  ·  **Benchmark:** <benchmark name>
+
+## 1. Business question
+What decision does this answer? (e.g. "Should we invest in comparison content for agency buyers?")
+
+## 2. Brands
+Focal brand + tracked competitors, with domains and aliases.
+
+## 3. Platforms
+Which AI platforms/models, and how responses were collected (manual paste / official API).
+State explicitly that no product UI was scraped.
+
+## 4. Prompt & question-cluster methodology
+- How prompts were chosen, and why they represent real customer questions.
+- Cluster definitions used (topic / search intent / persona / journey stage / custom label).
+- Number of prompts per cluster, runs per prompt, and why that sample was chosen.
+- Known selection bias in the prompt set.
+
+## 5. Collection dates
+- Baseline: <date>  ·  Post-change: <date>  ·  Runs per prompt: <n>
+- Anything that changed between the dates outside your control (model updates, etc.).
+
+## 6. Results
+- Headline: mention rate, share of voice, first-mention share, recommendation rate, citation rate.
+- Per cluster: where the brand wins, where competitors win, where no brand appears.
+- Per platform and per prompt where relevant. Always report sample sizes.
+
+## 7. Content gaps
+Clusters/topics where competitors out-appear the brand, ranked by gap, with response counts.
+
+## 8. Recommended actions
+Grounded in the gaps above — one page vs. separate pages, formats, schema, source opportunities.
+
+## 9. Limitations
+Sample size, prompt selection bias, platform variability, model updates, personalization,
+missing citations, run-to-run variance. State plainly that findings are **associations**, and
+that page traits are not proven causes of citations.
+
+## 10. Next experiment
+Hypothesis, the change to ship, primary/secondary KPIs, baseline and re-measure dates, and what
+result would change your mind. Note any holdout (untouched questions) used as a comparison.
+```
+
+---
+
 ## Technical architecture
 
 ```
@@ -214,7 +335,9 @@ as real AI-platform output.**
 | [`src/metrics.py`](src/metrics.py) | The 12 core visibility metrics + definitions. |
 | [`src/citation_quality.py`](src/citation_quality.py) | Source-type classification, diversity/concentration, opportunities. |
 | [`src/briefs.py`](src/briefs.py) | Deterministic content action briefs. |
-| [`src/page_audit.py`](src/page_audit.py) | Page audit + 12 AI-answer-readiness factors + transparent score. |
+| [`src/clusters.py`](src/clusters.py) | AEO question clusters, question outcomes, page-consolidation rules. |
+| [`src/experiments.py`](src/experiments.py) | Before/after experiment slicing, comparison and limitations. |
+| [`src/page_audit.py`](src/page_audit.py) | Page audit + AI-answer-readiness + Answer Extractability (each with transparent rules). |
 | [`src/recommendations.py`](src/recommendations.py) | Grounded, templated customer readout. |
 | [`src/appkit.py`](src/appkit.py) · [`src/ui.py`](src/ui.py) | Session state, demo loading, dataset/benchmark filtering, shared widgets. |
 
@@ -222,10 +345,11 @@ as real AI-platform output.**
 
 Tables / DuckDB views (see [`src/database.py`](src/database.py)):
 
-`projects` · `brands` · `prompts` · `response_runs` (now with `dataset_kind`, `benchmark_name`,
-`collection_date`, `collection_notes`) · `brand_mentions` · `citations` · `page_audits` (now with
-the readiness fields) · **`benchmarks`** · **`brand_entities`** — with the exact columns documented
-in the module and mirrored in the schema DDL.
+`projects` · `brands` · `prompts` (now with `search_intent`, `question_cluster`) · `response_runs`
+(with `dataset_kind`, `benchmark_name`, `collection_date`, `collection_notes`) · `brand_mentions` ·
+`citations` · `page_audits` (with the readiness **and** extractability fields) · `benchmarks` ·
+`brand_entities` — with the exact columns documented in the module and mirrored in the schema DDL.
+Experiments are user-defined at runtime (held in session state), not stored rows.
 
 ---
 
@@ -267,7 +391,8 @@ To stop the app, press `Ctrl+C` in the terminal. To leave the virtual environmen
 ### Run the tests
 
 ```bash
-pytest            # 63 tests: metrics, extraction, entities, citation quality, briefs, page-audit readiness, benchmark filtering
+pytest            # 102 tests: metrics, extraction, entities, citation quality, briefs, page-audit
+                  # readiness, answer extractability, AEO clusters, experiments, benchmark filtering
 ```
 
 ### Regenerate demo data or the preview images (optional)
@@ -286,27 +411,37 @@ python assets/_make_preview.py    # rebuilds the preview PNGs
 3. Open **Entity & Narrative Analysis** to see how each platform describes a brand, conflicts, and consistency.
 4. Open **Citation Analysis** for source-type classification, diversity/concentration, and citation opportunities.
 5. Open **Content Action Briefs** and **⬇️ Download** the briefs for the focal brand's gaps.
-6. Open **Page Audit** (needs internet) → run an audit → open **AI Answer Readiness** for the 12-factor breakdown + transparent score.
-7. Open **Customer Readout** and **⬇️ Download** the Markdown summary.
-8. Read **Limitations & Confidence**, and note the **Dataset type** filter keeps real vs synthetic separate.
+6. Open **Page Audit** (needs internet) → run an audit → see **AI Answer Readiness** (12 factors +
+   transparent score) and **Answer Extractability** (12 factors + component rules, with optional
+   cluster-question coverage).
+7. Open **AEO Question Clusters** — switch the clustering dimension, inspect a cluster's wins/losses,
+   and read the *one page or several?* recommendation with its evidence.
+8. Open **AEO Experiments** — the demo ships **two synthetic waves** (baseline `2026-07-10`,
+   post-change `2026-08-14`), so you can run a before/after comparison immediately.
+9. Open **Customer Readout** and **⬇️ Download** the Markdown summary.
+10. Read **Limitations & Confidence**, and note the **Dataset type** filter keeps real vs synthetic separate.
 
 ---
 
 ## Key findings from the synthetic dataset
 
-> These come from the **synthetic** demo (5 brands, 22 prompts, 67 fictional responses).
-> They illustrate the kind of insight the tool surfaces — they are **not** real market data.
+> These come from the **synthetic** demo (5 brands, 22 prompts, 8 question clusters, 135 fictional
+> responses across two waves). They illustrate the kind of insight the tool surfaces — they are
+> **not** real market data and **not** real AI platform output.
 
-- **Notion leads visibility** — ~91% mention rate and ~33% share of voice, and is mentioned
-  first in the majority of answers that name any tracked brand.
-- **A "loud but not loved" gap exists.** In the demo, **Monday.com** has the **#2 share of
-  voice (~24%)** but a **low recommendation rate (~15%)** — it gets *named* often but *picked*
-  rarely. **Asana** shows the opposite pattern (lower share of voice, much higher
-  recommendation rate). Share of voice alone would miss this.
-- **Third-party sources matter.** Review/roundup domains (e.g. G2, Capterra, Zapier, Reddit)
-  appear alongside brand-owned domains among the most-cited sources.
+- **Notion leads visibility** — ~86% mention rate, ~31% share of voice, and ~85% recommendation
+  rate, and it is mentioned first in most answers that name any tracked brand.
+- **A "loud but not loved" gap exists.** **Monday.com** holds ~22% share of voice but only a
+  ~21% recommendation rate — it gets *named* often but *picked* rarely. **ClickUp** has *less*
+  share of voice (~13%) yet a **higher** recommendation rate (~38%). Share of voice alone would
+  miss this.
+- **Third-party sources matter.** News/media and review domains (e.g. G2, Capterra, PCMag,
+  Reddit) together outweigh brand-owned domains among cited sources (~76% citation rate overall).
 - **Results are noisy.** Across repeated runs of the same prompt, brand sets overlapped only
-  ~60% on average — a strong reminder that a single run is not a conclusion.
+  ~60% on average — a single run is not a conclusion.
+- **The synthetic before/after wave** shows Trello's recommendation rate ~+16 pp and the top
+  competitor's share of voice ~−5 pp between the two waves. This is **invented demo data used to
+  exercise the Experiments page** — it is not evidence that any change caused any effect.
 
 ## What a Marketing Team Could Do With These Insights
 
@@ -322,6 +457,13 @@ python assets/_make_preview.py    # rebuilds the preview PNGs
    spot audiences you're invisible to, and build content that directly answers their prompts.
 5. **Track visibility after every content change.** Re-run the same prompt set on a schedule
    and watch mention rate, first-mention share, and recommendation rate move over time.
+6. **Work cluster by cluster, not page by page.** Use **AEO Question Clusters** to see which
+   question groups competitors own, and let the consolidation rule tell you whether one
+   comprehensive page or several targeted pages fits the cluster's intent/stage/persona spread.
+7. **Ship a change, then measure it honestly.** Use **AEO Experiments** to compare a baseline
+   collection with a post-change collection on a chosen cluster — and report the result as
+   "moved alongside the change", not "was caused by the change", unless a controlled design
+   (holdout of untouched questions, repeated measurement) supports more.
 
 ---
 
@@ -368,28 +510,34 @@ ai-visibility-explorer/
 │   ├── 4_Page_Audit.py        # + AI Answer Readiness (12 factors + transparent score)
 │   ├── 5_Customer_Readout.py  # + narrative / source-type / content-action sections
 │   ├── 6_Limitations.py
-│   ├── 7_Entity_Narrative.py  # (new) how AI describes the brand + consistency
-│   └── 8_Content_Briefs.py    # (new) grounded content action briefs
+│   ├── 7_Entity_Narrative.py  # how AI describes the brand + consistency
+│   ├── 8_Content_Briefs.py    # grounded content action briefs
+│   ├── 9_AEO_Question_Clusters.py  # (new) cluster map, wins/losses, one-page-vs-several
+│   └── 10_AEO_Experiments.py       # (new) before/after experiments
 ├── src/
 │   ├── database.py            # DuckDB layer + schema + AnalysisData (+ benchmarks, brand_entities)
 │   ├── extraction.py          # deterministic extraction (LLM-ready interface)
-│   ├── entities.py            # (new) entity & narrative extraction + analysis
+│   ├── entities.py            # entity & narrative extraction + analysis
 │   ├── metrics.py             # 12 metrics + definitions
-│   ├── citation_quality.py    # (new) source classification, diversity, opportunities
-│   ├── briefs.py              # (new) deterministic content action briefs
+│   ├── citation_quality.py    # source classification, diversity, opportunities
+│   ├── briefs.py              # deterministic content action briefs
+│   ├── clusters.py            # (new) AEO question clusters + consolidation rules
+│   ├── experiments.py         # (new) before/after experiment comparison
 │   ├── recommendations.py     # grounded, templated customer readout
 │   ├── validation.py          # CSV/DataFrame validation
-│   ├── page_audit.py          # page inspection + AI-answer-readiness factors + score
-│   ├── appkit.py              # session state, demo loading, dataset/benchmark filtering
-│   └── ui.py                  # shared Streamlit filter widgets (incl. dataset type)
+│   ├── page_audit.py          # page inspection + readiness + answer extractability
+│   ├── appkit.py              # session state, demo loading, dataset/benchmark/cluster filtering
+│   └── ui.py                  # shared Streamlit filter widgets (incl. dataset type, cluster, intent)
 ├── data/
-│   ├── demo_prompts.csv       # synthetic
-│   ├── demo_responses.csv     # synthetic (clearly labelled, dataset_kind = Synthetic)
+│   ├── demo_prompts.csv       # synthetic (+ search_intent, question_cluster)
+│   ├── demo_responses.csv     # synthetic (dataset_kind = Synthetic; two collection waves)
 │   └── _generate_demo.py      # deterministic demo generator
 ├── tests/
 │   ├── test_metrics.py            test_extraction.py
 │   ├── test_entities.py           test_citation_quality.py
 │   ├── test_briefs.py             test_page_audit.py
+│   ├── test_clusters.py           test_experiments.py
+│   ├── test_extractability.py
 │   └── test_benchmark_filtering.py
 ├── assets/dashboard_preview.png · readiness_preview.png
 ├── .devcontainer/devcontainer.json   # GitHub Codespaces

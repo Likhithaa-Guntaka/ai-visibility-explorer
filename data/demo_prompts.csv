@@ -1,23 +1,23 @@
-prompt_id,project_id,prompt_text,prompt_category,topic,persona,journey_stage,is_brand_prompt
-p01,demo,What is project management software and how does it help teams?,Informational,Category basics,Team Lead,Awareness,false
-p02,demo,How do productivity apps help remote teams stay organized?,Informational,Remote work,Remote Manager,Awareness,false
-p03,demo,What features should a good task management tool have?,Informational,Features,Operations Manager,Awareness,false
-p04,demo,What are the best project management tools in 2026?,Nonbrand discovery,Best tools,Team Lead,Consideration,false
-p05,demo,Recommend a productivity app for a small startup team.,Nonbrand discovery,Startup tools,Startup Founder,Consideration,false
-p06,demo,Which tools do agencies use to manage client projects?,Nonbrand discovery,Agency workflow,Agency Owner,Consideration,false
-p07,demo,What software helps teams track tasks and deadlines?,Nonbrand discovery,Task tracking,Operations Manager,Consideration,false
-p08,demo,Compare Notion vs Asana for team collaboration.,Product comparison,Notion vs Asana,Team Lead,Consideration,true
-p09,demo,ClickUp vs Monday.com: which is better for project tracking?,Product comparison,ClickUp vs Monday,Operations Manager,Consideration,true
-p10,demo,"Trello vs Asana for a small marketing team, which should I pick?",Product comparison,Trello vs Asana,Marketing Manager,Consideration,true
-p11,demo,How does Notion compare to traditional project management tools?,Product comparison,Notion positioning,Team Lead,Consideration,true
-p12,demo,Which project management tool has the best free plan for startups?,Purchase intent,Free plans,Startup Founder,Decision,false
-p13,demo,What is the most affordable project management software for a 10-person team?,Purchase intent,Pricing,Operations Manager,Decision,false
-p14,demo,"I'm ready to buy a task management tool for my agency, what do you recommend?",Purchase intent,Agency purchase,Agency Owner,Decision,false
-p15,demo,My team keeps missing deadlines. What software can help us stay on track?,Problem based,Missed deadlines,Team Lead,Consideration,false
-p16,demo,We use too many disconnected apps. What tool can consolidate our workflow?,Problem based,Tool sprawl,Operations Manager,Consideration,false
-p17,demo,How can a remote team improve visibility into who is working on what?,Problem based,Work visibility,Remote Manager,Consideration,false
-p18,demo,What is the best productivity tool for a solo freelancer?,Customer persona,Freelancer,Freelancer,Consideration,false
-p19,demo,What project management app works best for a non-technical marketing team?,Customer persona,Marketing team,Marketing Manager,Consideration,false
-p20,demo,What tool should a fast-growing engineering team use to plan sprints?,Customer persona,Engineering team,Engineering Lead,Consideration,false
-p21,demo,Is Notion good for managing complex team projects?,Brand specific,Notion capability,Team Lead,Decision,true
-p22,demo,What are the main limitations of Trello for growing teams?,Brand specific,Trello limitations,Operations Manager,Decision,true
+prompt_id,project_id,prompt_text,prompt_category,topic,persona,journey_stage,is_brand_prompt,search_intent,question_cluster
+p01,demo,What is project management software and how does it help teams?,Informational,Category basics,Team Lead,Awareness,false,Informational,Category education
+p02,demo,How do productivity apps help remote teams stay organized?,Informational,Remote work,Remote Manager,Awareness,false,Informational,Category education
+p03,demo,What features should a good task management tool have?,Informational,Features,Operations Manager,Awareness,false,Informational,Category education
+p04,demo,What are the best project management tools in 2026?,Nonbrand discovery,Best tools,Team Lead,Consideration,false,Commercial investigation,Best-tool discovery
+p05,demo,Recommend a productivity app for a small startup team.,Nonbrand discovery,Startup tools,Startup Founder,Consideration,false,Commercial investigation,Best-tool discovery
+p06,demo,Which tools do agencies use to manage client projects?,Nonbrand discovery,Agency workflow,Agency Owner,Consideration,false,Commercial investigation,Agency & client work
+p07,demo,What software helps teams track tasks and deadlines?,Nonbrand discovery,Task tracking,Operations Manager,Consideration,false,Commercial investigation,Best-tool discovery
+p08,demo,Compare Notion vs Asana for team collaboration.,Product comparison,Notion vs Asana,Team Lead,Consideration,true,Commercial investigation,Head-to-head comparisons
+p09,demo,ClickUp vs Monday.com: which is better for project tracking?,Product comparison,ClickUp vs Monday,Operations Manager,Consideration,true,Commercial investigation,Head-to-head comparisons
+p10,demo,"Trello vs Asana for a small marketing team, which should I pick?",Product comparison,Trello vs Asana,Marketing Manager,Consideration,true,Commercial investigation,Head-to-head comparisons
+p11,demo,How does Notion compare to traditional project management tools?,Product comparison,Notion positioning,Team Lead,Consideration,true,Commercial investigation,Head-to-head comparisons
+p12,demo,Which project management tool has the best free plan for startups?,Purchase intent,Free plans,Startup Founder,Decision,false,Transactional,Pricing & value
+p13,demo,What is the most affordable project management software for a 10-person team?,Purchase intent,Pricing,Operations Manager,Decision,false,Transactional,Pricing & value
+p14,demo,"I'm ready to buy a task management tool for my agency, what do you recommend?",Purchase intent,Agency purchase,Agency Owner,Decision,false,Transactional,Agency & client work
+p15,demo,My team keeps missing deadlines. What software can help us stay on track?,Problem based,Missed deadlines,Team Lead,Consideration,false,Problem solving,Team problems
+p16,demo,We use too many disconnected apps. What tool can consolidate our workflow?,Problem based,Tool sprawl,Operations Manager,Consideration,false,Problem solving,Team problems
+p17,demo,How can a remote team improve visibility into who is working on what?,Problem based,Work visibility,Remote Manager,Consideration,false,Problem solving,Team problems
+p18,demo,What is the best productivity tool for a solo freelancer?,Customer persona,Freelancer,Freelancer,Consideration,false,Commercial investigation,Persona fit
+p19,demo,What project management app works best for a non-technical marketing team?,Customer persona,Marketing team,Marketing Manager,Consideration,false,Commercial investigation,Persona fit
+p20,demo,What tool should a fast-growing engineering team use to plan sprints?,Customer persona,Engineering team,Engineering Lead,Consideration,false,Commercial investigation,Persona fit
+p21,demo,Is Notion good for managing complex team projects?,Brand specific,Notion capability,Team Lead,Decision,true,Navigational / brand,Brand questions
+p22,demo,What are the main limitations of Trello for growing teams?,Brand specific,Trello limitations,Operations Manager,Decision,true,Navigational / brand,Brand questions

@@ -20,6 +20,11 @@ import csv
 import hashlib
 import os
 import random
+import sys
+
+# Reuse the canonical category -> search-intent mapping instead of duplicating it.
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+from src.database import CATEGORY_TO_INTENT  # noqa: E402
 
 random.seed(42)  # deterministic output
 
@@ -108,8 +113,44 @@ PLATFORMS = [
 
 RUN_DATE = "2026-07-10"
 
+# Two synthetic collection waves so the AEO Experiments page has a before/after to
+# compare. WAVE 2 applies a small, INVENTED uplift to Trello, as if content work had
+# happened between the waves. This is illustrative demo data only — it is NOT evidence
+# that any change caused any effect, and it is NOT real AI platform output.
+WAVES = [
+    {"label": "baseline", "run_date": "2026-07-10", "strength_delta": {}},
+    {"label": "post-change", "run_date": "2026-08-14", "strength_delta": {"Trello": 0.18}},
+]
 
-def _ordered_brands_for_prompt(prompt_id: str, salt: int) -> list[str]:
+# User-defined AEO question clusters, mapped from the existing topic metadata (not
+# keyword guessing). Topics not listed fall back to the topic itself.
+TOPIC_TO_CLUSTER = {
+    "Category basics": "Category education",
+    "Remote work": "Category education",
+    "Features": "Category education",
+    "Best tools": "Best-tool discovery",
+    "Startup tools": "Best-tool discovery",
+    "Agency workflow": "Agency & client work",
+    "Agency purchase": "Agency & client work",
+    "Task tracking": "Best-tool discovery",
+    "Notion vs Asana": "Head-to-head comparisons",
+    "ClickUp vs Monday": "Head-to-head comparisons",
+    "Trello vs Asana": "Head-to-head comparisons",
+    "Notion positioning": "Head-to-head comparisons",
+    "Free plans": "Pricing & value",
+    "Pricing": "Pricing & value",
+    "Missed deadlines": "Team problems",
+    "Tool sprawl": "Team problems",
+    "Work visibility": "Team problems",
+    "Freelancer": "Persona fit",
+    "Marketing team": "Persona fit",
+    "Engineering team": "Persona fit",
+    "Notion capability": "Brand questions",
+    "Trello limitations": "Brand questions",
+}
+
+
+def _ordered_brands_for_prompt(prompt_id: str, salt: int, strength_delta: dict | None = None) -> list[str]:
     """Pick and order the brands mentioned in one synthetic answer.
 
     Each brand is *probabilistically* included based on its strength, so mention
@@ -117,20 +158,25 @@ def _ordered_brands_for_prompt(prompt_id: str, salt: int) -> list[str]:
     always; weaker brands appear sometimes). Included brands are then ordered by
     strength plus per-run jitter, so repeated runs mostly agree but occasionally
     reorder — the noise the consistency metric is meant to surface.
+
+    ``strength_delta`` lets a later wave shift a brand's synthetic strength, which is
+    how the demo simulates a before/after change. It is invented, not measured.
     """
+    strength_delta = strength_delta or {}
+    strength = {b: BRAND_STRENGTH[b] + strength_delta.get(b, 0.0) for b in BRANDS}
     rng = random.Random(_stable_hash(prompt_id, salt) & 0xFFFFFFFF)
     included = []
     for b in BRANDS:
         # Inclusion probability tracks strength but leaves headroom below 1.0 so even
         # the strongest brand is occasionally absent.
-        p_include = 0.35 + 0.55 * BRAND_STRENGTH[b]
+        p_include = 0.35 + 0.55 * strength[b]
         if rng.random() < p_include:
             included.append(b)
     # Guarantee at least two brands so comparisons make sense.
     if len(included) < 2:
-        ranked = sorted(BRANDS, key=lambda b: BRAND_STRENGTH[b] + rng.uniform(-0.1, 0.1), reverse=True)
+        ranked = sorted(BRANDS, key=lambda b: strength[b] + rng.uniform(-0.1, 0.1), reverse=True)
         included = ranked[:2]
-    included.sort(key=lambda b: BRAND_STRENGTH[b] + rng.uniform(-0.2, 0.2), reverse=True)
+    included.sort(key=lambda b: strength[b] + rng.uniform(-0.2, 0.2), reverse=True)
     return included
 
 
@@ -211,44 +257,53 @@ def build() -> None:
                 "persona": persona,
                 "journey_stage": stage,
                 "is_brand_prompt": str(is_brand).lower(),
+                "search_intent": CATEGORY_TO_INTENT.get(cat, "Informational"),
+                "question_cluster": TOPIC_TO_CLUSTER.get(topic, topic),
             }
         )
 
     response_rows = []
     run_counter = 1
-    for pid, *_ in PROMPTS:
-        # Each prompt gets answered on 2 platforms; a subset gets a repeated run
-        # (run_number 2) on one platform so consistency can be measured.
-        chosen_platforms = random.sample(PLATFORMS, k=2)
-        for platform, model in chosen_platforms:
-            n_runs = 2 if random.random() < 0.5 else 1
-            for run_number in range(1, n_runs + 1):
-                ordered = _ordered_brands_for_prompt(pid, salt=run_counter)
-                # ~75% of answers include citations.
-                with_citations = random.random() < 0.75
-                rng = random.Random(_stable_hash(pid, platform, run_number) & 0xFFFFFFFF)
-                text = _build_response_text(pid, ordered, with_citations, platform, rng)
-                response_rows.append(
-                    {
-                        "run_id": f"r{run_counter:03d}",
-                        "prompt_id": pid,
-                        "platform": platform,
-                        "model_name": model,
-                        "run_date": RUN_DATE,
-                        "run_number": run_number,
-                        "response_text": text,
-                        "has_citations": str(with_citations).lower(),
-                        "dataset_kind": "Synthetic",
-                        "benchmark_name": "Demo Synthetic Benchmark",
-                        "collection_date": RUN_DATE,
-                        "collection_notes": "Script-generated synthetic response (not a real AI platform output).",
-                    }
-                )
-                run_counter += 1
+    for wave in WAVES:
+        for pid, *_ in PROMPTS:
+            # Each prompt gets answered on 2 platforms; a subset gets a repeated run
+            # (run_number 2) on one platform so consistency can be measured.
+            chosen_platforms = random.sample(PLATFORMS, k=2)
+            for platform, model in chosen_platforms:
+                n_runs = 2 if random.random() < 0.5 else 1
+                for run_number in range(1, n_runs + 1):
+                    ordered = _ordered_brands_for_prompt(
+                        pid, salt=run_counter, strength_delta=wave["strength_delta"]
+                    )
+                    # ~75% of answers include citations.
+                    with_citations = random.random() < 0.75
+                    rng = random.Random(_stable_hash(pid, platform, run_number, wave["label"]) & 0xFFFFFFFF)
+                    text = _build_response_text(pid, ordered, with_citations, platform, rng)
+                    response_rows.append(
+                        {
+                            "run_id": f"r{run_counter:03d}",
+                            "prompt_id": pid,
+                            "platform": platform,
+                            "model_name": model,
+                            "run_date": wave["run_date"],
+                            "run_number": run_number,
+                            "response_text": text,
+                            "has_citations": str(with_citations).lower(),
+                            "dataset_kind": "Synthetic",
+                            "benchmark_name": "Demo Synthetic Benchmark",
+                            "collection_date": wave["run_date"],
+                            "collection_notes": (
+                                f"Script-generated synthetic response, {wave['label']} wave "
+                                "(not a real AI platform output)."
+                            ),
+                        }
+                    )
+                    run_counter += 1
 
     _write_csv(
         os.path.join(HERE, "demo_prompts.csv"),
-        ["prompt_id", "project_id", "prompt_text", "prompt_category", "topic", "persona", "journey_stage", "is_brand_prompt"],
+        ["prompt_id", "project_id", "prompt_text", "prompt_category", "topic", "persona",
+         "journey_stage", "is_brand_prompt", "search_intent", "question_cluster"],
         prompt_rows,
     )
     _write_csv(
@@ -257,7 +312,8 @@ def build() -> None:
          "dataset_kind", "benchmark_name", "collection_date", "collection_notes"],
         response_rows,
     )
-    print(f"Wrote {len(prompt_rows)} prompts and {len(response_rows)} synthetic responses.")
+    waves = ", ".join(f"{w['run_date']} ({w['label']})" for w in WAVES)
+    print(f"Wrote {len(prompt_rows)} prompts and {len(response_rows)} synthetic responses across waves: {waves}.")
 
 
 def _write_csv(path: str, header: list[str], rows: list[dict]) -> None:

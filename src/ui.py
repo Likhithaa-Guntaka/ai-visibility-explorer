@@ -54,6 +54,8 @@ def sidebar_filters(st, data: AnalysisData) -> AnalysisData:
     benchmark_names = st.sidebar.multiselect("Benchmark", benchmark_options) if benchmark_options else []
 
     platforms = st.sidebar.multiselect("AI platform", appkit.unique_values(data.response_runs, "platform"))
+    clusters = st.sidebar.multiselect("Question cluster", appkit.unique_values(data.prompts, "question_cluster"))
+    intents = st.sidebar.multiselect("Search intent", appkit.unique_values(data.prompts, "search_intent"))
     categories = st.sidebar.multiselect("Prompt category", appkit.unique_values(data.prompts, "prompt_category"))
     topics = st.sidebar.multiselect("Topic", appkit.unique_values(data.prompts, "topic"))
     personas = st.sidebar.multiselect("Persona", appkit.unique_values(data.prompts, "persona"))
@@ -70,6 +72,8 @@ def sidebar_filters(st, data: AnalysisData) -> AnalysisData:
         run_dates=dates or None,
         dataset_kinds=dataset_kinds or None,
         benchmark_names=benchmark_names or None,
+        search_intents=intents or None,
+        question_clusters=clusters or None,
     )
     st.sidebar.caption(f"{len(filtered.response_runs)} of {len(data.response_runs)} responses in view.")
 

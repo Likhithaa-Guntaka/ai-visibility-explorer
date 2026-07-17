@@ -1,5 +1,5 @@
 run_id,prompt_id,platform,model_name,run_date,run_number,response_text,has_citations,dataset_kind,benchmark_name,collection_date,collection_notes
-r001,p01,Gemini (synthetic),gemini-synthetic-demo,2026-07-10,1,"Based on common recommendations, these tools stand out:
+r001,p01,Gemini (synthetic),gemini-synthetic-demo,2026-07-10,1,"A few widely used tools fit this need:
 
 1. **Asana** offers polished task tracking, timelines, and reporting. It is affordable for small teams and is often recommended for marketing teams.
 2. **Notion** is an all-in-one workspace that combines docs, wikis, databases, and project boards. Its strength is flexibility and a generous free plan, though it can be overwhelming to set up for beginners.
@@ -10,10 +10,10 @@ r001,p01,Gemini (synthetic),gemini-synthetic-demo,2026-07-10,1,"Based on common 
 For most teams, **Asana** is a great starting point, with **Notion** as a solid alternative.
 
 Sources:
-- https://www.reddit.com/r/productivity/comments/best-pm-tool/
-- https://www.capterra.com/project-management-software/
-- https://asana.com/product",true,Synthetic,Demo Synthetic Benchmark,2026-07-10,Script-generated synthetic response (not a real AI platform output).
-r002,p01,Gemini (synthetic),gemini-synthetic-demo,2026-07-10,2,"Here are some strong options to consider:
+- https://www.forbes.com/advisor/business/software/best-project-management-software/
+- https://www.pcmag.com/picks/the-best-project-management-software
+- https://asana.com/product",true,Synthetic,Demo Synthetic Benchmark,2026-07-10,"Script-generated synthetic response, baseline wave (not a real AI platform output)."
+r002,p01,Gemini (synthetic),gemini-synthetic-demo,2026-07-10,2,"Based on common recommendations, these tools stand out:
 
 1. **Notion** is an all-in-one workspace that combines docs, wikis, databases, and project boards. Its strength is flexibility and a generous free plan, though it can be overwhelming to set up for beginners.
 2. **Monday.com** offers colorful, spreadsheet-style boards, automations, and dashboards that non-technical teams find approachable and easy to use, but advanced reporting is limited on lower tiers.
@@ -23,11 +23,11 @@ r002,p01,Gemini (synthetic),gemini-synthetic-demo,2026-07-10,2,"Here are some st
 For most teams, **Notion** is a great starting point, with **Monday.com** as a solid alternative.
 
 Sources:
-- https://www.capterra.com/project-management-software/
+- https://www.nytimes.com/wirecutter/reviews/best-to-do-list-app/
 - https://www.forbes.com/advisor/business/software/best-project-management-software/
-- https://www.reddit.com/r/productivity/comments/best-pm-tool/
-- https://www.notion.so/product",true,Synthetic,Demo Synthetic Benchmark,2026-07-10,Script-generated synthetic response (not a real AI platform output).
-r003,p01,ChatGPT (synthetic),gpt-synthetic-demo,2026-07-10,1,"Based on common recommendations, these tools stand out:
+- https://zapier.com/blog/best-project-management-software/
+- https://www.notion.so/product",true,Synthetic,Demo Synthetic Benchmark,2026-07-10,"Script-generated synthetic response, baseline wave (not a real AI platform output)."
+r003,p01,ChatGPT (synthetic),gpt-synthetic-demo,2026-07-10,1,"Several popular platforms could work well here:
 
 1. **Notion** is a flexible all-in-one workspace with docs, wikis, and databases. It is simple to start with ready-made templates and is popular with startups and small teams.
 2. **Monday.com** offers colorful, spreadsheet-style boards, automations, and dashboards that non-technical teams find approachable and easy to use, but advanced reporting is limited on lower tiers.
@@ -37,10 +37,10 @@ r003,p01,ChatGPT (synthetic),gpt-synthetic-demo,2026-07-10,1,"Based on common re
 For most teams, **Notion** is a great starting point, with **Monday.com** as a solid alternative.
 
 Sources:
-- https://www.forbes.com/advisor/business/software/best-project-management-software/
-- https://www.pcmag.com/picks/the-best-project-management-software
-- https://www.notion.so/product",true,Synthetic,Demo Synthetic Benchmark,2026-07-10,Script-generated synthetic response (not a real AI platform output).
-r004,p02,Gemini (synthetic),gemini-synthetic-demo,2026-07-10,1,"Several popular platforms could work well here:
+- https://www.g2.com/categories/project-management
+- https://zapier.com/blog/best-project-management-software/
+- https://www.notion.so/product",true,Synthetic,Demo Synthetic Benchmark,2026-07-10,"Script-generated synthetic response, baseline wave (not a real AI platform output)."
+r004,p02,Gemini (synthetic),gemini-synthetic-demo,2026-07-10,1,"A few widely used tools fit this need:
 
 1. **Notion** is an all-in-one workspace that combines docs, wikis, databases, and project boards. Its strength is flexibility and a generous free plan, though it can be overwhelming to set up for beginners.
 2. **Monday.com** offers colorful, spreadsheet-style boards, automations, and dashboards that non-technical teams find approachable and easy to use, but advanced reporting is limited on lower tiers.
@@ -51,10 +51,11 @@ r004,p02,Gemini (synthetic),gemini-synthetic-demo,2026-07-10,1,"Several popular 
 For most teams, **Notion** is a great starting point, with **Monday.com** as a solid alternative.
 
 Sources:
+- https://www.nytimes.com/wirecutter/reviews/best-to-do-list-app/
+- https://zapier.com/blog/best-project-management-software/
 - https://www.pcmag.com/picks/the-best-project-management-software
-- https://www.forbes.com/advisor/business/software/best-project-management-software/
-- https://www.notion.so/product",true,Synthetic,Demo Synthetic Benchmark,2026-07-10,Script-generated synthetic response (not a real AI platform output).
-r005,p02,ChatGPT (synthetic),gpt-synthetic-demo,2026-07-10,1,"Here are some strong options to consider:
+- https://www.notion.so/product",true,Synthetic,Demo Synthetic Benchmark,2026-07-10,"Script-generated synthetic response, baseline wave (not a real AI platform output)."
+r005,p02,ChatGPT (synthetic),gpt-synthetic-demo,2026-07-10,1,"A few widely used tools fit this need:
 
 1. **Notion** is a flexible all-in-one workspace with docs, wikis, and databases. It is simple to start with ready-made templates and is popular with startups and small teams.
 2. **Asana** is a mature project management platform known for reliable task tracking, timelines, and workload management. It is powerful for larger teams, but its pricing gets expensive at scale.
@@ -64,9 +65,9 @@ r005,p02,ChatGPT (synthetic),gpt-synthetic-demo,2026-07-10,1,"Here are some stro
 For most teams, **Notion** is a great starting point, with **Asana** as a solid alternative.
 
 Sources:
-- https://www.forbes.com/advisor/business/software/best-project-management-software/
 - https://www.pcmag.com/picks/the-best-project-management-software
-- https://www.notion.so/product",true,Synthetic,Demo Synthetic Benchmark,2026-07-10,Script-generated synthetic response (not a real AI platform output).
+- https://www.g2.com/categories/project-management
+- https://www.notion.so/product",true,Synthetic,Demo Synthetic Benchmark,2026-07-10,"Script-generated synthetic response, baseline wave (not a real AI platform output)."
 r006,p02,ChatGPT (synthetic),gpt-synthetic-demo,2026-07-10,2,"Here are some strong options to consider:
 
 1. **Asana** is a mature project management platform known for reliable task tracking, timelines, and workload management. It is powerful for larger teams, but its pricing gets expensive at scale.
@@ -77,10 +78,10 @@ r006,p02,ChatGPT (synthetic),gpt-synthetic-demo,2026-07-10,2,"Here are some stro
 For most teams, **Asana** is a great starting point, with **Notion** as a solid alternative.
 
 Sources:
-- https://www.capterra.com/project-management-software/
-- https://www.nytimes.com/wirecutter/reviews/best-to-do-list-app/
-- https://asana.com/product",true,Synthetic,Demo Synthetic Benchmark,2026-07-10,Script-generated synthetic response (not a real AI platform output).
-r007,p03,Gemini (synthetic),gemini-synthetic-demo,2026-07-10,1,"A few widely used tools fit this need:
+- https://www.forbes.com/advisor/business/software/best-project-management-software/
+- https://www.reddit.com/r/productivity/comments/best-pm-tool/
+- https://asana.com/product",true,Synthetic,Demo Synthetic Benchmark,2026-07-10,"Script-generated synthetic response, baseline wave (not a real AI platform output)."
+r007,p03,Gemini (synthetic),gemini-synthetic-demo,2026-07-10,1,"Several popular platforms could work well here:
 
 1. **Notion** is an all-in-one workspace that combines docs, wikis, databases, and project boards. Its strength is flexibility and a generous free plan, though it can be overwhelming to set up for beginners.
 2. **Asana** offers polished task tracking, timelines, and reporting. It is affordable for small teams and is often recommended for marketing teams.
@@ -88,11 +89,10 @@ r007,p03,Gemini (synthetic),gemini-synthetic-demo,2026-07-10,1,"A few widely use
 For most teams, **Notion** is a great starting point, with **Asana** as a solid alternative.
 
 Sources:
-- https://www.pcmag.com/picks/the-best-project-management-software
-- https://zapier.com/blog/best-project-management-software/
+- https://www.forbes.com/advisor/business/software/best-project-management-software/
 - https://www.g2.com/categories/project-management
-- https://www.notion.so/product",true,Synthetic,Demo Synthetic Benchmark,2026-07-10,Script-generated synthetic response (not a real AI platform output).
-r008,p03,ChatGPT (synthetic),gpt-synthetic-demo,2026-07-10,1,"Several popular platforms could work well here:
+- https://www.notion.so/product",true,Synthetic,Demo Synthetic Benchmark,2026-07-10,"Script-generated synthetic response, baseline wave (not a real AI platform output)."
+r008,p03,ChatGPT (synthetic),gpt-synthetic-demo,2026-07-10,1,"Here are some strong options to consider:
 
 1. **Notion** is a flexible all-in-one workspace with docs, wikis, and databases. It is simple to start with ready-made templates and is popular with startups and small teams.
 2. **Asana** is a mature project management platform known for reliable task tracking, timelines, and workload management. It is powerful for larger teams, but its pricing gets expensive at scale.
@@ -102,9 +102,9 @@ r008,p03,ChatGPT (synthetic),gpt-synthetic-demo,2026-07-10,1,"Several popular pl
 For most teams, **Notion** is a great starting point, with **Asana** as a solid alternative.
 
 Sources:
-- https://www.pcmag.com/picks/the-best-project-management-software
-- https://www.nytimes.com/wirecutter/reviews/best-to-do-list-app/
-- https://www.notion.so/product",true,Synthetic,Demo Synthetic Benchmark,2026-07-10,Script-generated synthetic response (not a real AI platform output).
+- https://www.reddit.com/r/productivity/comments/best-pm-tool/
+- https://zapier.com/blog/best-project-management-software/
+- https://www.notion.so/product",true,Synthetic,Demo Synthetic Benchmark,2026-07-10,"Script-generated synthetic response, baseline wave (not a real AI platform output)."
 r009,p03,ChatGPT (synthetic),gpt-synthetic-demo,2026-07-10,2,"Based on common recommendations, these tools stand out:
 
 1. **ClickUp** packs powerful automations, dashboards, and goals into one platform. It is feature-rich, but it can get pricey on higher tiers.
@@ -114,10 +114,9 @@ For most teams, **ClickUp** is a great starting point, with **Trello** as a soli
 
 Sources:
 - https://www.forbes.com/advisor/business/software/best-project-management-software/
-- https://www.g2.com/categories/project-management
 - https://www.nytimes.com/wirecutter/reviews/best-to-do-list-app/
-- https://clickup.com/features",true,Synthetic,Demo Synthetic Benchmark,2026-07-10,Script-generated synthetic response (not a real AI platform output).
-r010,p04,ChatGPT (synthetic),gpt-synthetic-demo,2026-07-10,1,"Here are some strong options to consider:
+- https://clickup.com/features",true,Synthetic,Demo Synthetic Benchmark,2026-07-10,"Script-generated synthetic response, baseline wave (not a real AI platform output)."
+r010,p04,ChatGPT (synthetic),gpt-synthetic-demo,2026-07-10,1,"A few widely used tools fit this need:
 
 1. **Asana** is a mature project management platform known for reliable task tracking, timelines, and workload management. It is powerful for larger teams, but its pricing gets expensive at scale.
 2. **Notion** is a flexible all-in-one workspace with docs, wikis, and databases. It is simple to start with ready-made templates and is popular with startups and small teams.
@@ -126,18 +125,18 @@ r010,p04,ChatGPT (synthetic),gpt-synthetic-demo,2026-07-10,1,"Here are some stro
 For most teams, **Asana** is a great starting point, with **Notion** as a solid alternative.
 
 Sources:
-- https://www.reddit.com/r/productivity/comments/best-pm-tool/
-- https://www.g2.com/categories/project-management
-- https://asana.com/product",true,Synthetic,Demo Synthetic Benchmark,2026-07-10,Script-generated synthetic response (not a real AI platform output).
-r011,p04,Gemini (synthetic),gemini-synthetic-demo,2026-07-10,1,"Several popular platforms could work well here:
+- https://www.forbes.com/advisor/business/software/best-project-management-software/
+- https://zapier.com/blog/best-project-management-software/
+- https://asana.com/product",true,Synthetic,Demo Synthetic Benchmark,2026-07-10,"Script-generated synthetic response, baseline wave (not a real AI platform output)."
+r011,p04,Gemini (synthetic),gemini-synthetic-demo,2026-07-10,1,"Here are some strong options to consider:
 
 1. **Notion** is an all-in-one workspace that combines docs, wikis, databases, and project boards. Its strength is flexibility and a generous free plan, though it can be overwhelming to set up for beginners.
 2. **Asana** offers polished task tracking, timelines, and reporting. It is affordable for small teams and is often recommended for marketing teams.
 3. **ClickUp** packs powerful automations, dashboards, and goals into one platform. It is feature-rich, but it can get pricey on higher tiers.
 4. **Monday.com** offers colorful, spreadsheet-style boards, automations, and dashboards that non-technical teams find approachable and easy to use, but advanced reporting is limited on lower tiers.
 
-For most teams, **Notion** is a great starting point, with **Asana** as a solid alternative.",false,Synthetic,Demo Synthetic Benchmark,2026-07-10,Script-generated synthetic response (not a real AI platform output).
-r012,p04,Gemini (synthetic),gemini-synthetic-demo,2026-07-10,2,"Based on common recommendations, these tools stand out:
+For most teams, **Notion** is a great starting point, with **Asana** as a solid alternative.",false,Synthetic,Demo Synthetic Benchmark,2026-07-10,"Script-generated synthetic response, baseline wave (not a real AI platform output)."
+r012,p04,Gemini (synthetic),gemini-synthetic-demo,2026-07-10,2,"Several popular platforms could work well here:
 
 1. **Notion** is an all-in-one workspace that combines docs, wikis, databases, and project boards. Its strength is flexibility and a generous free plan, though it can be overwhelming to set up for beginners.
 2. **Asana** offers polished task tracking, timelines, and reporting. It is affordable for small teams and is often recommended for marketing teams.
@@ -147,16 +146,16 @@ r012,p04,Gemini (synthetic),gemini-synthetic-demo,2026-07-10,2,"Based on common 
 For most teams, **Notion** is a great starting point, with **Asana** as a solid alternative.
 
 Sources:
-- https://www.reddit.com/r/productivity/comments/best-pm-tool/
-- https://www.nytimes.com/wirecutter/reviews/best-to-do-list-app/
-- https://www.notion.so/product",true,Synthetic,Demo Synthetic Benchmark,2026-07-10,Script-generated synthetic response (not a real AI platform output).
-r013,p05,ChatGPT (synthetic),gpt-synthetic-demo,2026-07-10,1,"A few widely used tools fit this need:
+- https://zapier.com/blog/best-project-management-software/
+- https://www.g2.com/categories/project-management
+- https://www.notion.so/product",true,Synthetic,Demo Synthetic Benchmark,2026-07-10,"Script-generated synthetic response, baseline wave (not a real AI platform output)."
+r013,p05,ChatGPT (synthetic),gpt-synthetic-demo,2026-07-10,1,"Based on common recommendations, these tools stand out:
 
 1. **Asana** is a mature project management platform known for reliable task tracking, timelines, and workload management. It is powerful for larger teams, but its pricing gets expensive at scale.
 2. **Notion** is a flexible all-in-one workspace with docs, wikis, and databases. It is simple to start with ready-made templates and is popular with startups and small teams.
 3. **Monday.com** offers colorful, spreadsheet-style boards, automations, and dashboards that non-technical teams find approachable and easy to use, but advanced reporting is limited on lower tiers.
 
-For most teams, **Asana** is a great starting point, with **Notion** as a solid alternative.",false,Synthetic,Demo Synthetic Benchmark,2026-07-10,Script-generated synthetic response (not a real AI platform output).
+For most teams, **Asana** is a great starting point, with **Notion** as a solid alternative.",false,Synthetic,Demo Synthetic Benchmark,2026-07-10,"Script-generated synthetic response, baseline wave (not a real AI platform output)."
 r014,p05,ChatGPT (synthetic),gpt-synthetic-demo,2026-07-10,2,"A few widely used tools fit this need:
 
 1. **Notion** is a flexible all-in-one workspace with docs, wikis, and databases. It is simple to start with ready-made templates and is popular with startups and small teams.
@@ -166,10 +165,10 @@ r014,p05,ChatGPT (synthetic),gpt-synthetic-demo,2026-07-10,2,"A few widely used 
 For most teams, **Notion** is a great starting point, with **ClickUp** as a solid alternative.
 
 Sources:
+- https://www.reddit.com/r/productivity/comments/best-pm-tool/
 - https://www.capterra.com/project-management-software/
-- https://www.forbes.com/advisor/business/software/best-project-management-software/
-- https://www.notion.so/product",true,Synthetic,Demo Synthetic Benchmark,2026-07-10,Script-generated synthetic response (not a real AI platform output).
-r015,p05,Claude (synthetic),claude-synthetic-demo,2026-07-10,1,"Based on common recommendations, these tools stand out:
+- https://www.notion.so/product",true,Synthetic,Demo Synthetic Benchmark,2026-07-10,"Script-generated synthetic response, baseline wave (not a real AI platform output)."
+r015,p05,Claude (synthetic),claude-synthetic-demo,2026-07-10,1,"Several popular platforms could work well here:
 
 1. **Asana** offers polished task tracking, timelines, and reporting. It is affordable for small teams and is often recommended for marketing teams.
 2. **Notion** is a flexible all-in-one workspace with docs, wikis, and databases. It is simple to start with ready-made templates and is popular with startups and small teams.
@@ -180,11 +179,10 @@ r015,p05,Claude (synthetic),claude-synthetic-demo,2026-07-10,1,"Based on common 
 For most teams, **Asana** is a great starting point, with **Notion** as a solid alternative.
 
 Sources:
-- https://www.g2.com/categories/project-management
 - https://www.nytimes.com/wirecutter/reviews/best-to-do-list-app/
-- https://www.reddit.com/r/productivity/comments/best-pm-tool/
-- https://asana.com/product",true,Synthetic,Demo Synthetic Benchmark,2026-07-10,Script-generated synthetic response (not a real AI platform output).
-r016,p06,Gemini (synthetic),gemini-synthetic-demo,2026-07-10,1,"Based on common recommendations, these tools stand out:
+- https://www.capterra.com/project-management-software/
+- https://asana.com/product",true,Synthetic,Demo Synthetic Benchmark,2026-07-10,"Script-generated synthetic response, baseline wave (not a real AI platform output)."
+r016,p06,Gemini (synthetic),gemini-synthetic-demo,2026-07-10,1,"Here are some strong options to consider:
 
 1. **Notion** is an all-in-one workspace that combines docs, wikis, databases, and project boards. Its strength is flexibility and a generous free plan, though it can be overwhelming to set up for beginners.
 2. **Asana** offers polished task tracking, timelines, and reporting. It is affordable for small teams and is often recommended for marketing teams.
@@ -194,18 +192,17 @@ r016,p06,Gemini (synthetic),gemini-synthetic-demo,2026-07-10,1,"Based on common 
 For most teams, **Notion** is a great starting point, with **Asana** as a solid alternative.
 
 Sources:
-- https://www.nytimes.com/wirecutter/reviews/best-to-do-list-app/
 - https://www.capterra.com/project-management-software/
-- https://www.reddit.com/r/productivity/comments/best-pm-tool/
-- https://www.notion.so/product",true,Synthetic,Demo Synthetic Benchmark,2026-07-10,Script-generated synthetic response (not a real AI platform output).
+- https://www.g2.com/categories/project-management
+- https://www.notion.so/product",true,Synthetic,Demo Synthetic Benchmark,2026-07-10,"Script-generated synthetic response, baseline wave (not a real AI platform output)."
 r017,p06,ChatGPT (synthetic),gpt-synthetic-demo,2026-07-10,1,"A few widely used tools fit this need:
 
 1. **Notion** is a flexible all-in-one workspace with docs, wikis, and databases. It is simple to start with ready-made templates and is popular with startups and small teams.
 2. **Asana** is a mature project management platform known for reliable task tracking, timelines, and workload management. It is powerful for larger teams, but its pricing gets expensive at scale.
 3. **Monday.com** offers colorful, spreadsheet-style boards, automations, and dashboards that non-technical teams find approachable and easy to use, but advanced reporting is limited on lower tiers.
 
-For most teams, **Notion** is a great starting point, with **Asana** as a solid alternative.",false,Synthetic,Demo Synthetic Benchmark,2026-07-10,Script-generated synthetic response (not a real AI platform output).
-r018,p07,Gemini (synthetic),gemini-synthetic-demo,2026-07-10,1,"A few widely used tools fit this need:
+For most teams, **Notion** is a great starting point, with **Asana** as a solid alternative.",false,Synthetic,Demo Synthetic Benchmark,2026-07-10,"Script-generated synthetic response, baseline wave (not a real AI platform output)."
+r018,p07,Gemini (synthetic),gemini-synthetic-demo,2026-07-10,1,"Several popular platforms could work well here:
 
 1. **Asana** offers polished task tracking, timelines, and reporting. It is affordable for small teams and is often recommended for marketing teams.
 2. **Notion** is an all-in-one workspace that combines docs, wikis, databases, and project boards. Its strength is flexibility and a generous free plan, though it can be overwhelming to set up for beginners.
@@ -216,10 +213,10 @@ r018,p07,Gemini (synthetic),gemini-synthetic-demo,2026-07-10,1,"A few widely use
 For most teams, **Asana** is a great starting point, with **Notion** as a solid alternative.
 
 Sources:
-- https://zapier.com/blog/best-project-management-software/
-- https://www.g2.com/categories/project-management
-- https://asana.com/product",true,Synthetic,Demo Synthetic Benchmark,2026-07-10,Script-generated synthetic response (not a real AI platform output).
-r019,p07,Claude (synthetic),claude-synthetic-demo,2026-07-10,1,"Here are some strong options to consider:
+- https://www.reddit.com/r/productivity/comments/best-pm-tool/
+- https://www.pcmag.com/picks/the-best-project-management-software
+- https://asana.com/product",true,Synthetic,Demo Synthetic Benchmark,2026-07-10,"Script-generated synthetic response, baseline wave (not a real AI platform output)."
+r019,p07,Claude (synthetic),claude-synthetic-demo,2026-07-10,1,"Based on common recommendations, these tools stand out:
 
 1. **Notion** is a flexible all-in-one workspace with docs, wikis, and databases. It is simple to start with ready-made templates and is popular with startups and small teams.
 2. **Asana** offers polished task tracking, timelines, and reporting. It is affordable for small teams and is often recommended for marketing teams.
@@ -227,10 +224,10 @@ r019,p07,Claude (synthetic),claude-synthetic-demo,2026-07-10,1,"Here are some st
 For most teams, **Notion** is a great starting point, with **Asana** as a solid alternative.
 
 Sources:
-- https://www.capterra.com/project-management-software/
 - https://www.g2.com/categories/project-management
-- https://www.notion.so/product",true,Synthetic,Demo Synthetic Benchmark,2026-07-10,Script-generated synthetic response (not a real AI platform output).
-r020,p07,Claude (synthetic),claude-synthetic-demo,2026-07-10,2,"Based on common recommendations, these tools stand out:
+- https://zapier.com/blog/best-project-management-software/
+- https://www.notion.so/product",true,Synthetic,Demo Synthetic Benchmark,2026-07-10,"Script-generated synthetic response, baseline wave (not a real AI platform output)."
+r020,p07,Claude (synthetic),claude-synthetic-demo,2026-07-10,2,"Here are some strong options to consider:
 
 1. **Notion** is a flexible all-in-one workspace with docs, wikis, and databases. It is simple to start with ready-made templates and is popular with startups and small teams.
 2. **Asana** offers polished task tracking, timelines, and reporting. It is affordable for small teams and is often recommended for marketing teams.
@@ -240,11 +237,11 @@ r020,p07,Claude (synthetic),claude-synthetic-demo,2026-07-10,2,"Based on common 
 For most teams, **Notion** is a great starting point, with **Asana** as a solid alternative.
 
 Sources:
-- https://www.pcmag.com/picks/the-best-project-management-software
-- https://zapier.com/blog/best-project-management-software/
+- https://www.capterra.com/project-management-software/
+- https://www.nytimes.com/wirecutter/reviews/best-to-do-list-app/
 - https://www.reddit.com/r/productivity/comments/best-pm-tool/
-- https://www.notion.so/product",true,Synthetic,Demo Synthetic Benchmark,2026-07-10,Script-generated synthetic response (not a real AI platform output).
-r021,p08,ChatGPT (synthetic),gpt-synthetic-demo,2026-07-10,1,"Based on common recommendations, these tools stand out:
+- https://www.notion.so/product",true,Synthetic,Demo Synthetic Benchmark,2026-07-10,"Script-generated synthetic response, baseline wave (not a real AI platform output)."
+r021,p08,ChatGPT (synthetic),gpt-synthetic-demo,2026-07-10,1,"A few widely used tools fit this need:
 
 1. **Asana** is a mature project management platform known for reliable task tracking, timelines, and workload management. It is powerful for larger teams, but its pricing gets expensive at scale.
 2. **Notion** is a flexible all-in-one workspace with docs, wikis, and databases. It is simple to start with ready-made templates and is popular with startups and small teams.
@@ -254,17 +251,17 @@ r021,p08,ChatGPT (synthetic),gpt-synthetic-demo,2026-07-10,1,"Based on common re
 For most teams, **Asana** is a great starting point, with **Notion** as a solid alternative.
 
 Sources:
-- https://zapier.com/blog/best-project-management-software/
-- https://www.pcmag.com/picks/the-best-project-management-software
 - https://www.reddit.com/r/productivity/comments/best-pm-tool/
-- https://asana.com/product",true,Synthetic,Demo Synthetic Benchmark,2026-07-10,Script-generated synthetic response (not a real AI platform output).
+- https://www.g2.com/categories/project-management
+- https://www.pcmag.com/picks/the-best-project-management-software
+- https://asana.com/product",true,Synthetic,Demo Synthetic Benchmark,2026-07-10,"Script-generated synthetic response, baseline wave (not a real AI platform output)."
 r022,p08,Gemini (synthetic),gemini-synthetic-demo,2026-07-10,1,"Here are some strong options to consider:
 
 1. **Notion** is an all-in-one workspace that combines docs, wikis, databases, and project boards. Its strength is flexibility and a generous free plan, though it can be overwhelming to set up for beginners.
 2. **ClickUp** packs powerful automations, dashboards, and goals into one platform. It is feature-rich, but it can get pricey on higher tiers.
 
-For most teams, **Notion** is a great starting point, with **ClickUp** as a solid alternative.",false,Synthetic,Demo Synthetic Benchmark,2026-07-10,Script-generated synthetic response (not a real AI platform output).
-r023,p08,Gemini (synthetic),gemini-synthetic-demo,2026-07-10,2,"A few widely used tools fit this need:
+For most teams, **Notion** is a great starting point, with **ClickUp** as a solid alternative.",false,Synthetic,Demo Synthetic Benchmark,2026-07-10,"Script-generated synthetic response, baseline wave (not a real AI platform output)."
+r023,p08,Gemini (synthetic),gemini-synthetic-demo,2026-07-10,2,"Based on common recommendations, these tools stand out:
 
 1. **Notion** is an all-in-one workspace that combines docs, wikis, databases, and project boards. Its strength is flexibility and a generous free plan, though it can be overwhelming to set up for beginners.
 2. **Asana** offers polished task tracking, timelines, and reporting. It is affordable for small teams and is often recommended for marketing teams.
@@ -273,9 +270,10 @@ r023,p08,Gemini (synthetic),gemini-synthetic-demo,2026-07-10,2,"A few widely use
 For most teams, **Notion** is a great starting point, with **Asana** as a solid alternative.
 
 Sources:
-- https://www.capterra.com/project-management-software/
 - https://www.nytimes.com/wirecutter/reviews/best-to-do-list-app/
-- https://www.notion.so/product",true,Synthetic,Demo Synthetic Benchmark,2026-07-10,Script-generated synthetic response (not a real AI platform output).
+- https://www.forbes.com/advisor/business/software/best-project-management-software/
+- https://www.g2.com/categories/project-management
+- https://www.notion.so/product",true,Synthetic,Demo Synthetic Benchmark,2026-07-10,"Script-generated synthetic response, baseline wave (not a real AI platform output)."
 r024,p09,Claude (synthetic),claude-synthetic-demo,2026-07-10,1,"A few widely used tools fit this need:
 
 1. **Trello** uses a simple, intuitive Kanban-board approach that is easy to learn and has a free plan, though it feels limited for complex projects and lacks advanced reporting.
@@ -285,10 +283,10 @@ r024,p09,Claude (synthetic),claude-synthetic-demo,2026-07-10,1,"A few widely use
 For most teams, **Trello** is a great starting point, with **ClickUp** as a solid alternative.
 
 Sources:
-- https://www.g2.com/categories/project-management
+- https://www.forbes.com/advisor/business/software/best-project-management-software/
 - https://www.capterra.com/project-management-software/
-- https://trello.com/tour",true,Synthetic,Demo Synthetic Benchmark,2026-07-10,Script-generated synthetic response (not a real AI platform output).
-r025,p09,ChatGPT (synthetic),gpt-synthetic-demo,2026-07-10,1,"Here are some strong options to consider:
+- https://trello.com/tour",true,Synthetic,Demo Synthetic Benchmark,2026-07-10,"Script-generated synthetic response, baseline wave (not a real AI platform output)."
+r025,p09,ChatGPT (synthetic),gpt-synthetic-demo,2026-07-10,1,"Several popular platforms could work well here:
 
 1. **Notion** is a flexible all-in-one workspace with docs, wikis, and databases. It is simple to start with ready-made templates and is popular with startups and small teams.
 2. **Asana** is a mature project management platform known for reliable task tracking, timelines, and workload management. It is powerful for larger teams, but its pricing gets expensive at scale.
@@ -298,11 +296,10 @@ r025,p09,ChatGPT (synthetic),gpt-synthetic-demo,2026-07-10,1,"Here are some stro
 For most teams, **Notion** is a great starting point, with **Asana** as a solid alternative.
 
 Sources:
-- https://www.pcmag.com/picks/the-best-project-management-software
-- https://www.nytimes.com/wirecutter/reviews/best-to-do-list-app/
+- https://www.g2.com/categories/project-management
 - https://zapier.com/blog/best-project-management-software/
-- https://www.notion.so/product",true,Synthetic,Demo Synthetic Benchmark,2026-07-10,Script-generated synthetic response (not a real AI platform output).
-r026,p10,Gemini (synthetic),gemini-synthetic-demo,2026-07-10,1,"Several popular platforms could work well here:
+- https://www.notion.so/product",true,Synthetic,Demo Synthetic Benchmark,2026-07-10,"Script-generated synthetic response, baseline wave (not a real AI platform output)."
+r026,p10,Gemini (synthetic),gemini-synthetic-demo,2026-07-10,1,"Here are some strong options to consider:
 
 1. **Asana** offers polished task tracking, timelines, and reporting. It is affordable for small teams and is often recommended for marketing teams.
 2. **Monday.com** offers colorful, spreadsheet-style boards, automations, and dashboards that non-technical teams find approachable and easy to use, but advanced reporting is limited on lower tiers.
@@ -311,11 +308,10 @@ r026,p10,Gemini (synthetic),gemini-synthetic-demo,2026-07-10,1,"Several popular 
 For most teams, **Asana** is a great starting point, with **Monday.com** as a solid alternative.
 
 Sources:
-- https://www.g2.com/categories/project-management
-- https://www.capterra.com/project-management-software/
-- https://www.forbes.com/advisor/business/software/best-project-management-software/
-- https://asana.com/product",true,Synthetic,Demo Synthetic Benchmark,2026-07-10,Script-generated synthetic response (not a real AI platform output).
-r027,p10,ChatGPT (synthetic),gpt-synthetic-demo,2026-07-10,1,"A few widely used tools fit this need:
+- https://zapier.com/blog/best-project-management-software/
+- https://www.nytimes.com/wirecutter/reviews/best-to-do-list-app/
+- https://asana.com/product",true,Synthetic,Demo Synthetic Benchmark,2026-07-10,"Script-generated synthetic response, baseline wave (not a real AI platform output)."
+r027,p10,ChatGPT (synthetic),gpt-synthetic-demo,2026-07-10,1,"Several popular platforms could work well here:
 
 1. **Notion** is a flexible all-in-one workspace with docs, wikis, and databases. It is simple to start with ready-made templates and is popular with startups and small teams.
 2. **ClickUp** packs powerful automations, dashboards, and goals into one platform. It is feature-rich, but it can get pricey on higher tiers.
@@ -325,17 +321,17 @@ r027,p10,ChatGPT (synthetic),gpt-synthetic-demo,2026-07-10,1,"A few widely used 
 For most teams, **Notion** is a great starting point, with **ClickUp** as a solid alternative.
 
 Sources:
-- https://www.forbes.com/advisor/business/software/best-project-management-software/
-- https://www.nytimes.com/wirecutter/reviews/best-to-do-list-app/
-- https://www.notion.so/product",true,Synthetic,Demo Synthetic Benchmark,2026-07-10,Script-generated synthetic response (not a real AI platform output).
-r028,p10,ChatGPT (synthetic),gpt-synthetic-demo,2026-07-10,2,"Several popular platforms could work well here:
+- https://www.reddit.com/r/productivity/comments/best-pm-tool/
+- https://www.g2.com/categories/project-management
+- https://www.notion.so/product",true,Synthetic,Demo Synthetic Benchmark,2026-07-10,"Script-generated synthetic response, baseline wave (not a real AI platform output)."
+r028,p10,ChatGPT (synthetic),gpt-synthetic-demo,2026-07-10,2,"A few widely used tools fit this need:
 
 1. **Notion** is a flexible all-in-one workspace with docs, wikis, and databases. It is simple to start with ready-made templates and is popular with startups and small teams.
 2. **Asana** is a mature project management platform known for reliable task tracking, timelines, and workload management. It is powerful for larger teams, but its pricing gets expensive at scale.
 3. **ClickUp** packs powerful automations, dashboards, and goals into one platform. It is feature-rich, but it can get pricey on higher tiers.
 4. **Monday.com** offers colorful, spreadsheet-style boards, automations, and dashboards that non-technical teams find approachable and easy to use, but advanced reporting is limited on lower tiers.
 
-For most teams, **Notion** is a great starting point, with **Asana** as a solid alternative.",false,Synthetic,Demo Synthetic Benchmark,2026-07-10,Script-generated synthetic response (not a real AI platform output).
+For most teams, **Notion** is a great starting point, with **Asana** as a solid alternative.",false,Synthetic,Demo Synthetic Benchmark,2026-07-10,"Script-generated synthetic response, baseline wave (not a real AI platform output)."
 r029,p11,Gemini (synthetic),gemini-synthetic-demo,2026-07-10,1,"A few widely used tools fit this need:
 
 1. **Notion** is an all-in-one workspace that combines docs, wikis, databases, and project boards. Its strength is flexibility and a generous free plan, though it can be overwhelming to set up for beginners.
@@ -343,8 +339,8 @@ r029,p11,Gemini (synthetic),gemini-synthetic-demo,2026-07-10,1,"A few widely use
 3. **Monday.com** offers colorful, spreadsheet-style boards, automations, and dashboards that non-technical teams find approachable and easy to use, but advanced reporting is limited on lower tiers.
 4. **Trello** uses a simple, intuitive Kanban-board approach that is easy to learn and has a free plan, though it feels limited for complex projects and lacks advanced reporting.
 
-For most teams, **Notion** is a great starting point, with **Asana** as a solid alternative.",false,Synthetic,Demo Synthetic Benchmark,2026-07-10,Script-generated synthetic response (not a real AI platform output).
-r030,p11,ChatGPT (synthetic),gpt-synthetic-demo,2026-07-10,1,"A few widely used tools fit this need:
+For most teams, **Notion** is a great starting point, with **Asana** as a solid alternative.",false,Synthetic,Demo Synthetic Benchmark,2026-07-10,"Script-generated synthetic response, baseline wave (not a real AI platform output)."
+r030,p11,ChatGPT (synthetic),gpt-synthetic-demo,2026-07-10,1,"Several popular platforms could work well here:
 
 1. **Notion** is a flexible all-in-one workspace with docs, wikis, and databases. It is simple to start with ready-made templates and is popular with startups and small teams.
 2. **Asana** is a mature project management platform known for reliable task tracking, timelines, and workload management. It is powerful for larger teams, but its pricing gets expensive at scale.
@@ -354,10 +350,9 @@ r030,p11,ChatGPT (synthetic),gpt-synthetic-demo,2026-07-10,1,"A few widely used 
 For most teams, **Notion** is a great starting point, with **Asana** as a solid alternative.
 
 Sources:
-- https://zapier.com/blog/best-project-management-software/
-- https://www.capterra.com/project-management-software/
-- https://www.g2.com/categories/project-management
-- https://www.notion.so/product",true,Synthetic,Demo Synthetic Benchmark,2026-07-10,Script-generated synthetic response (not a real AI platform output).
+- https://www.reddit.com/r/productivity/comments/best-pm-tool/
+- https://www.forbes.com/advisor/business/software/best-project-management-software/
+- https://www.notion.so/product",true,Synthetic,Demo Synthetic Benchmark,2026-07-10,"Script-generated synthetic response, baseline wave (not a real AI platform output)."
 r031,p12,ChatGPT (synthetic),gpt-synthetic-demo,2026-07-10,1,"Several popular platforms could work well here:
 
 1. **Notion** is a flexible all-in-one workspace with docs, wikis, and databases. It is simple to start with ready-made templates and is popular with startups and small teams.
@@ -370,9 +365,9 @@ For most teams, **Notion** is a great starting point, with **Asana** as a solid 
 
 Sources:
 - https://www.forbes.com/advisor/business/software/best-project-management-software/
-- https://www.g2.com/categories/project-management
-- https://www.notion.so/product",true,Synthetic,Demo Synthetic Benchmark,2026-07-10,Script-generated synthetic response (not a real AI platform output).
-r032,p12,ChatGPT (synthetic),gpt-synthetic-demo,2026-07-10,2,"Based on common recommendations, these tools stand out:
+- https://www.nytimes.com/wirecutter/reviews/best-to-do-list-app/
+- https://www.notion.so/product",true,Synthetic,Demo Synthetic Benchmark,2026-07-10,"Script-generated synthetic response, baseline wave (not a real AI platform output)."
+r032,p12,ChatGPT (synthetic),gpt-synthetic-demo,2026-07-10,2,"A few widely used tools fit this need:
 
 1. **Notion** is a flexible all-in-one workspace with docs, wikis, and databases. It is simple to start with ready-made templates and is popular with startups and small teams.
 2. **Asana** is a mature project management platform known for reliable task tracking, timelines, and workload management. It is powerful for larger teams, but its pricing gets expensive at scale.
@@ -380,7 +375,7 @@ r032,p12,ChatGPT (synthetic),gpt-synthetic-demo,2026-07-10,2,"Based on common re
 4. **Monday.com** offers colorful, spreadsheet-style boards, automations, and dashboards that non-technical teams find approachable and easy to use, but advanced reporting is limited on lower tiers.
 5. **Trello** is a lightweight Kanban tool that is easy to learn and great for simple workflows, with a free plan that appeals to freelancers and small teams.
 
-For most teams, **Notion** is a great starting point, with **Asana** as a solid alternative.",false,Synthetic,Demo Synthetic Benchmark,2026-07-10,Script-generated synthetic response (not a real AI platform output).
+For most teams, **Notion** is a great starting point, with **Asana** as a solid alternative.",false,Synthetic,Demo Synthetic Benchmark,2026-07-10,"Script-generated synthetic response, baseline wave (not a real AI platform output)."
 r033,p12,Claude (synthetic),claude-synthetic-demo,2026-07-10,1,"Based on common recommendations, these tools stand out:
 
 1. **Asana** offers polished task tracking, timelines, and reporting. It is affordable for small teams and is often recommended for marketing teams.
@@ -389,16 +384,17 @@ r033,p12,Claude (synthetic),claude-synthetic-demo,2026-07-10,1,"Based on common 
 For most teams, **Asana** is a great starting point, with **Notion** as a solid alternative.
 
 Sources:
+- https://www.capterra.com/project-management-software/
 - https://www.reddit.com/r/productivity/comments/best-pm-tool/
-- https://www.nytimes.com/wirecutter/reviews/best-to-do-list-app/
-- https://asana.com/product",true,Synthetic,Demo Synthetic Benchmark,2026-07-10,Script-generated synthetic response (not a real AI platform output).
-r034,p13,ChatGPT (synthetic),gpt-synthetic-demo,2026-07-10,1,"Several popular platforms could work well here:
+- https://zapier.com/blog/best-project-management-software/
+- https://asana.com/product",true,Synthetic,Demo Synthetic Benchmark,2026-07-10,"Script-generated synthetic response, baseline wave (not a real AI platform output)."
+r034,p13,ChatGPT (synthetic),gpt-synthetic-demo,2026-07-10,1,"A few widely used tools fit this need:
 
 1. **Notion** is a flexible all-in-one workspace with docs, wikis, and databases. It is simple to start with ready-made templates and is popular with startups and small teams.
 2. **Asana** is a mature project management platform known for reliable task tracking, timelines, and workload management. It is powerful for larger teams, but its pricing gets expensive at scale.
 3. **ClickUp** packs powerful automations, dashboards, and goals into one platform. It is feature-rich, but it can get pricey on higher tiers.
 
-For most teams, **Notion** is a great starting point, with **Asana** as a solid alternative.",false,Synthetic,Demo Synthetic Benchmark,2026-07-10,Script-generated synthetic response (not a real AI platform output).
+For most teams, **Notion** is a great starting point, with **Asana** as a solid alternative.",false,Synthetic,Demo Synthetic Benchmark,2026-07-10,"Script-generated synthetic response, baseline wave (not a real AI platform output)."
 r035,p13,ChatGPT (synthetic),gpt-synthetic-demo,2026-07-10,2,"A few widely used tools fit this need:
 
 1. **Notion** is a flexible all-in-one workspace with docs, wikis, and databases. It is simple to start with ready-made templates and is popular with startups and small teams.
@@ -408,10 +404,10 @@ r035,p13,ChatGPT (synthetic),gpt-synthetic-demo,2026-07-10,2,"A few widely used 
 For most teams, **Notion** is a great starting point, with **ClickUp** as a solid alternative.
 
 Sources:
-- https://www.forbes.com/advisor/business/software/best-project-management-software/
 - https://zapier.com/blog/best-project-management-software/
-- https://www.notion.so/product",true,Synthetic,Demo Synthetic Benchmark,2026-07-10,Script-generated synthetic response (not a real AI platform output).
-r036,p13,Claude (synthetic),claude-synthetic-demo,2026-07-10,1,"A few widely used tools fit this need:
+- https://www.capterra.com/project-management-software/
+- https://www.notion.so/product",true,Synthetic,Demo Synthetic Benchmark,2026-07-10,"Script-generated synthetic response, baseline wave (not a real AI platform output)."
+r036,p13,Claude (synthetic),claude-synthetic-demo,2026-07-10,1,"Several popular platforms could work well here:
 
 1. **Notion** is a flexible all-in-one workspace with docs, wikis, and databases. It is simple to start with ready-made templates and is popular with startups and small teams.
 2. **ClickUp** is a highly customizable, all-in-one tool bundling tasks, docs, goals, and automations at an affordable price, though the interface can feel cluttered and the learning curve is steep.
@@ -421,10 +417,10 @@ r036,p13,Claude (synthetic),claude-synthetic-demo,2026-07-10,1,"A few widely use
 For most teams, **Notion** is a great starting point, with **ClickUp** as a solid alternative.
 
 Sources:
+- https://www.nytimes.com/wirecutter/reviews/best-to-do-list-app/
 - https://www.reddit.com/r/productivity/comments/best-pm-tool/
-- https://www.pcmag.com/picks/the-best-project-management-software
-- https://www.notion.so/product",true,Synthetic,Demo Synthetic Benchmark,2026-07-10,Script-generated synthetic response (not a real AI platform output).
-r037,p13,Claude (synthetic),claude-synthetic-demo,2026-07-10,2,"Several popular platforms could work well here:
+- https://www.notion.so/product",true,Synthetic,Demo Synthetic Benchmark,2026-07-10,"Script-generated synthetic response, baseline wave (not a real AI platform output)."
+r037,p13,Claude (synthetic),claude-synthetic-demo,2026-07-10,2,"Here are some strong options to consider:
 
 1. **Notion** is a flexible all-in-one workspace with docs, wikis, and databases. It is simple to start with ready-made templates and is popular with startups and small teams.
 2. **Asana** offers polished task tracking, timelines, and reporting. It is affordable for small teams and is often recommended for marketing teams.
@@ -435,10 +431,10 @@ r037,p13,Claude (synthetic),claude-synthetic-demo,2026-07-10,2,"Several popular 
 For most teams, **Notion** is a great starting point, with **Asana** as a solid alternative.
 
 Sources:
-- https://www.capterra.com/project-management-software/
-- https://www.g2.com/categories/project-management
-- https://www.notion.so/product",true,Synthetic,Demo Synthetic Benchmark,2026-07-10,Script-generated synthetic response (not a real AI platform output).
-r038,p14,Claude (synthetic),claude-synthetic-demo,2026-07-10,1,"Here are some strong options to consider:
+- https://www.reddit.com/r/productivity/comments/best-pm-tool/
+- https://www.forbes.com/advisor/business/software/best-project-management-software/
+- https://www.notion.so/product",true,Synthetic,Demo Synthetic Benchmark,2026-07-10,"Script-generated synthetic response, baseline wave (not a real AI platform output)."
+r038,p14,Claude (synthetic),claude-synthetic-demo,2026-07-10,1,"A few widely used tools fit this need:
 
 1. **Notion** is a flexible all-in-one workspace with docs, wikis, and databases. It is simple to start with ready-made templates and is popular with startups and small teams.
 2. **ClickUp** is a highly customizable, all-in-one tool bundling tasks, docs, goals, and automations at an affordable price, though the interface can feel cluttered and the learning curve is steep.
@@ -449,17 +445,17 @@ For most teams, **Notion** is a great starting point, with **ClickUp** as a soli
 Sources:
 - https://www.capterra.com/project-management-software/
 - https://www.g2.com/categories/project-management
-- https://www.reddit.com/r/productivity/comments/best-pm-tool/
-- https://www.notion.so/product",true,Synthetic,Demo Synthetic Benchmark,2026-07-10,Script-generated synthetic response (not a real AI platform output).
-r039,p14,Gemini (synthetic),gemini-synthetic-demo,2026-07-10,1,"Based on common recommendations, these tools stand out:
+- https://www.forbes.com/advisor/business/software/best-project-management-software/
+- https://www.notion.so/product",true,Synthetic,Demo Synthetic Benchmark,2026-07-10,"Script-generated synthetic response, baseline wave (not a real AI platform output)."
+r039,p14,Gemini (synthetic),gemini-synthetic-demo,2026-07-10,1,"Several popular platforms could work well here:
 
 1. **Asana** offers polished task tracking, timelines, and reporting. It is affordable for small teams and is often recommended for marketing teams.
 2. **Notion** is an all-in-one workspace that combines docs, wikis, databases, and project boards. Its strength is flexibility and a generous free plan, though it can be overwhelming to set up for beginners.
 3. **ClickUp** packs powerful automations, dashboards, and goals into one platform. It is feature-rich, but it can get pricey on higher tiers.
 4. **Monday.com** offers colorful, spreadsheet-style boards, automations, and dashboards that non-technical teams find approachable and easy to use, but advanced reporting is limited on lower tiers.
 
-For most teams, **Asana** is a great starting point, with **Notion** as a solid alternative.",false,Synthetic,Demo Synthetic Benchmark,2026-07-10,Script-generated synthetic response (not a real AI platform output).
-r040,p14,Gemini (synthetic),gemini-synthetic-demo,2026-07-10,2,"Here are some strong options to consider:
+For most teams, **Asana** is a great starting point, with **Notion** as a solid alternative.",false,Synthetic,Demo Synthetic Benchmark,2026-07-10,"Script-generated synthetic response, baseline wave (not a real AI platform output)."
+r040,p14,Gemini (synthetic),gemini-synthetic-demo,2026-07-10,2,"A few widely used tools fit this need:
 
 1. **Monday.com** offers colorful, spreadsheet-style boards, automations, and dashboards that non-technical teams find approachable and easy to use, but advanced reporting is limited on lower tiers.
 2. **Asana** offers polished task tracking, timelines, and reporting. It is affordable for small teams and is often recommended for marketing teams.
@@ -468,11 +464,10 @@ r040,p14,Gemini (synthetic),gemini-synthetic-demo,2026-07-10,2,"Here are some st
 For most teams, **Monday.com** is a great starting point, with **Asana** as a solid alternative.
 
 Sources:
+- https://www.reddit.com/r/productivity/comments/best-pm-tool/
 - https://www.nytimes.com/wirecutter/reviews/best-to-do-list-app/
-- https://www.forbes.com/advisor/business/software/best-project-management-software/
-- https://zapier.com/blog/best-project-management-software/
-- https://monday.com/product",true,Synthetic,Demo Synthetic Benchmark,2026-07-10,Script-generated synthetic response (not a real AI platform output).
-r041,p15,ChatGPT (synthetic),gpt-synthetic-demo,2026-07-10,1,"Several popular platforms could work well here:
+- https://monday.com/product",true,Synthetic,Demo Synthetic Benchmark,2026-07-10,"Script-generated synthetic response, baseline wave (not a real AI platform output)."
+r041,p15,ChatGPT (synthetic),gpt-synthetic-demo,2026-07-10,1,"Based on common recommendations, these tools stand out:
 
 1. **Notion** is a flexible all-in-one workspace with docs, wikis, and databases. It is simple to start with ready-made templates and is popular with startups and small teams.
 2. **Asana** is a mature project management platform known for reliable task tracking, timelines, and workload management. It is powerful for larger teams, but its pricing gets expensive at scale.
@@ -483,8 +478,9 @@ For most teams, **Notion** is a great starting point, with **Asana** as a solid 
 
 Sources:
 - https://www.reddit.com/r/productivity/comments/best-pm-tool/
-- https://www.g2.com/categories/project-management
-- https://www.notion.so/product",true,Synthetic,Demo Synthetic Benchmark,2026-07-10,Script-generated synthetic response (not a real AI platform output).
+- https://www.pcmag.com/picks/the-best-project-management-software
+- https://www.capterra.com/project-management-software/
+- https://www.notion.so/product",true,Synthetic,Demo Synthetic Benchmark,2026-07-10,"Script-generated synthetic response, baseline wave (not a real AI platform output)."
 r042,p15,Gemini (synthetic),gemini-synthetic-demo,2026-07-10,1,"A few widely used tools fit this need:
 
 1. **Notion** is an all-in-one workspace that combines docs, wikis, databases, and project boards. Its strength is flexibility and a generous free plan, though it can be overwhelming to set up for beginners.
@@ -494,9 +490,10 @@ For most teams, **Notion** is a great starting point, with **Trello** as a solid
 
 Sources:
 - https://www.pcmag.com/picks/the-best-project-management-software
-- https://zapier.com/blog/best-project-management-software/
-- https://www.notion.so/product",true,Synthetic,Demo Synthetic Benchmark,2026-07-10,Script-generated synthetic response (not a real AI platform output).
-r043,p15,Gemini (synthetic),gemini-synthetic-demo,2026-07-10,2,"Several popular platforms could work well here:
+- https://www.capterra.com/project-management-software/
+- https://www.nytimes.com/wirecutter/reviews/best-to-do-list-app/
+- https://www.notion.so/product",true,Synthetic,Demo Synthetic Benchmark,2026-07-10,"Script-generated synthetic response, baseline wave (not a real AI platform output)."
+r043,p15,Gemini (synthetic),gemini-synthetic-demo,2026-07-10,2,"A few widely used tools fit this need:
 
 1. **Notion** is an all-in-one workspace that combines docs, wikis, databases, and project boards. Its strength is flexibility and a generous free plan, though it can be overwhelming to set up for beginners.
 2. **Asana** offers polished task tracking, timelines, and reporting. It is affordable for small teams and is often recommended for marketing teams.
@@ -506,11 +503,11 @@ r043,p15,Gemini (synthetic),gemini-synthetic-demo,2026-07-10,2,"Several popular 
 For most teams, **Notion** is a great starting point, with **Asana** as a solid alternative.
 
 Sources:
+- https://www.g2.com/categories/project-management
+- https://www.nytimes.com/wirecutter/reviews/best-to-do-list-app/
 - https://www.pcmag.com/picks/the-best-project-management-software
-- https://www.capterra.com/project-management-software/
-- https://www.reddit.com/r/productivity/comments/best-pm-tool/
-- https://www.notion.so/product",true,Synthetic,Demo Synthetic Benchmark,2026-07-10,Script-generated synthetic response (not a real AI platform output).
-r044,p16,Claude (synthetic),claude-synthetic-demo,2026-07-10,1,"Several popular platforms could work well here:
+- https://www.notion.so/product",true,Synthetic,Demo Synthetic Benchmark,2026-07-10,"Script-generated synthetic response, baseline wave (not a real AI platform output)."
+r044,p16,Claude (synthetic),claude-synthetic-demo,2026-07-10,1,"Based on common recommendations, these tools stand out:
 
 1. **Notion** is a flexible all-in-one workspace with docs, wikis, and databases. It is simple to start with ready-made templates and is popular with startups and small teams.
 2. **Asana** offers polished task tracking, timelines, and reporting. It is affordable for small teams and is often recommended for marketing teams.
@@ -521,10 +518,10 @@ r044,p16,Claude (synthetic),claude-synthetic-demo,2026-07-10,1,"Several popular 
 For most teams, **Notion** is a great starting point, with **Asana** as a solid alternative.
 
 Sources:
-- https://www.nytimes.com/wirecutter/reviews/best-to-do-list-app/
-- https://www.g2.com/categories/project-management
-- https://www.notion.so/product",true,Synthetic,Demo Synthetic Benchmark,2026-07-10,Script-generated synthetic response (not a real AI platform output).
-r045,p16,Gemini (synthetic),gemini-synthetic-demo,2026-07-10,1,"Based on common recommendations, these tools stand out:
+- https://www.pcmag.com/picks/the-best-project-management-software
+- https://www.capterra.com/project-management-software/
+- https://www.notion.so/product",true,Synthetic,Demo Synthetic Benchmark,2026-07-10,"Script-generated synthetic response, baseline wave (not a real AI platform output)."
+r045,p16,Gemini (synthetic),gemini-synthetic-demo,2026-07-10,1,"Here are some strong options to consider:
 
 1. **Asana** offers polished task tracking, timelines, and reporting. It is affordable for small teams and is often recommended for marketing teams.
 2. **Notion** is an all-in-one workspace that combines docs, wikis, databases, and project boards. Its strength is flexibility and a generous free plan, though it can be overwhelming to set up for beginners.
@@ -534,18 +531,17 @@ r045,p16,Gemini (synthetic),gemini-synthetic-demo,2026-07-10,1,"Based on common 
 For most teams, **Asana** is a great starting point, with **Notion** as a solid alternative.
 
 Sources:
-- https://www.forbes.com/advisor/business/software/best-project-management-software/
-- https://www.g2.com/categories/project-management
-- https://www.nytimes.com/wirecutter/reviews/best-to-do-list-app/
-- https://asana.com/product",true,Synthetic,Demo Synthetic Benchmark,2026-07-10,Script-generated synthetic response (not a real AI platform output).
-r046,p16,Gemini (synthetic),gemini-synthetic-demo,2026-07-10,2,"Several popular platforms could work well here:
+- https://www.capterra.com/project-management-software/
+- https://www.reddit.com/r/productivity/comments/best-pm-tool/
+- https://asana.com/product",true,Synthetic,Demo Synthetic Benchmark,2026-07-10,"Script-generated synthetic response, baseline wave (not a real AI platform output)."
+r046,p16,Gemini (synthetic),gemini-synthetic-demo,2026-07-10,2,"A few widely used tools fit this need:
 
 1. **Notion** is an all-in-one workspace that combines docs, wikis, databases, and project boards. Its strength is flexibility and a generous free plan, though it can be overwhelming to set up for beginners.
 2. **ClickUp** packs powerful automations, dashboards, and goals into one platform. It is feature-rich, but it can get pricey on higher tiers.
 3. **Trello** uses a simple, intuitive Kanban-board approach that is easy to learn and has a free plan, though it feels limited for complex projects and lacks advanced reporting.
 
-For most teams, **Notion** is a great starting point, with **ClickUp** as a solid alternative.",false,Synthetic,Demo Synthetic Benchmark,2026-07-10,Script-generated synthetic response (not a real AI platform output).
-r047,p17,Gemini (synthetic),gemini-synthetic-demo,2026-07-10,1,"Based on common recommendations, these tools stand out:
+For most teams, **Notion** is a great starting point, with **ClickUp** as a solid alternative.",false,Synthetic,Demo Synthetic Benchmark,2026-07-10,"Script-generated synthetic response, baseline wave (not a real AI platform output)."
+r047,p17,Gemini (synthetic),gemini-synthetic-demo,2026-07-10,1,"Here are some strong options to consider:
 
 1. **Notion** is an all-in-one workspace that combines docs, wikis, databases, and project boards. Its strength is flexibility and a generous free plan, though it can be overwhelming to set up for beginners.
 2. **Asana** offers polished task tracking, timelines, and reporting. It is affordable for small teams and is often recommended for marketing teams.
@@ -556,11 +552,10 @@ r047,p17,Gemini (synthetic),gemini-synthetic-demo,2026-07-10,1,"Based on common 
 For most teams, **Notion** is a great starting point, with **Asana** as a solid alternative.
 
 Sources:
-- https://www.pcmag.com/picks/the-best-project-management-software
-- https://www.reddit.com/r/productivity/comments/best-pm-tool/
-- https://www.forbes.com/advisor/business/software/best-project-management-software/
-- https://www.notion.so/product",true,Synthetic,Demo Synthetic Benchmark,2026-07-10,Script-generated synthetic response (not a real AI platform output).
-r048,p17,ChatGPT (synthetic),gpt-synthetic-demo,2026-07-10,1,"A few widely used tools fit this need:
+- https://www.nytimes.com/wirecutter/reviews/best-to-do-list-app/
+- https://zapier.com/blog/best-project-management-software/
+- https://www.notion.so/product",true,Synthetic,Demo Synthetic Benchmark,2026-07-10,"Script-generated synthetic response, baseline wave (not a real AI platform output)."
+r048,p17,ChatGPT (synthetic),gpt-synthetic-demo,2026-07-10,1,"Based on common recommendations, these tools stand out:
 
 1. **Asana** is a mature project management platform known for reliable task tracking, timelines, and workload management. It is powerful for larger teams, but its pricing gets expensive at scale.
 2. **Notion** is a flexible all-in-one workspace with docs, wikis, and databases. It is simple to start with ready-made templates and is popular with startups and small teams.
@@ -571,10 +566,9 @@ r048,p17,ChatGPT (synthetic),gpt-synthetic-demo,2026-07-10,1,"A few widely used 
 For most teams, **Asana** is a great starting point, with **Notion** as a solid alternative.
 
 Sources:
-- https://zapier.com/blog/best-project-management-software/
-- https://www.nytimes.com/wirecutter/reviews/best-to-do-list-app/
 - https://www.capterra.com/project-management-software/
-- https://asana.com/product",true,Synthetic,Demo Synthetic Benchmark,2026-07-10,Script-generated synthetic response (not a real AI platform output).
+- https://www.g2.com/categories/project-management
+- https://asana.com/product",true,Synthetic,Demo Synthetic Benchmark,2026-07-10,"Script-generated synthetic response, baseline wave (not a real AI platform output)."
 r049,p17,ChatGPT (synthetic),gpt-synthetic-demo,2026-07-10,2,"Several popular platforms could work well here:
 
 1. **Notion** is a flexible all-in-one workspace with docs, wikis, and databases. It is simple to start with ready-made templates and is popular with startups and small teams.
@@ -586,24 +580,24 @@ For most teams, **Notion** is a great starting point, with **Asana** as a solid 
 
 Sources:
 - https://www.g2.com/categories/project-management
-- https://zapier.com/blog/best-project-management-software/
-- https://www.notion.so/product",true,Synthetic,Demo Synthetic Benchmark,2026-07-10,Script-generated synthetic response (not a real AI platform output).
-r050,p18,Claude (synthetic),claude-synthetic-demo,2026-07-10,1,"Based on common recommendations, these tools stand out:
+- https://www.forbes.com/advisor/business/software/best-project-management-software/
+- https://www.notion.so/product",true,Synthetic,Demo Synthetic Benchmark,2026-07-10,"Script-generated synthetic response, baseline wave (not a real AI platform output)."
+r050,p18,Claude (synthetic),claude-synthetic-demo,2026-07-10,1,"Here are some strong options to consider:
 
 1. **Asana** offers polished task tracking, timelines, and reporting. It is affordable for small teams and is often recommended for marketing teams.
 2. **Notion** is a flexible all-in-one workspace with docs, wikis, and databases. It is simple to start with ready-made templates and is popular with startups and small teams.
 3. **ClickUp** is a highly customizable, all-in-one tool bundling tasks, docs, goals, and automations at an affordable price, though the interface can feel cluttered and the learning curve is steep.
 4. **Trello** uses a simple, intuitive Kanban-board approach that is easy to learn and has a free plan, though it feels limited for complex projects and lacks advanced reporting.
 
-For most teams, **Asana** is a great starting point, with **Notion** as a solid alternative.",false,Synthetic,Demo Synthetic Benchmark,2026-07-10,Script-generated synthetic response (not a real AI platform output).
-r051,p18,Claude (synthetic),claude-synthetic-demo,2026-07-10,2,"Here are some strong options to consider:
+For most teams, **Asana** is a great starting point, with **Notion** as a solid alternative.",false,Synthetic,Demo Synthetic Benchmark,2026-07-10,"Script-generated synthetic response, baseline wave (not a real AI platform output)."
+r051,p18,Claude (synthetic),claude-synthetic-demo,2026-07-10,2,"Several popular platforms could work well here:
 
 1. **Notion** is a flexible all-in-one workspace with docs, wikis, and databases. It is simple to start with ready-made templates and is popular with startups and small teams.
 2. **Asana** offers polished task tracking, timelines, and reporting. It is affordable for small teams and is often recommended for marketing teams.
 3. **Monday.com** offers colorful, spreadsheet-style boards, automations, and dashboards that non-technical teams find approachable and easy to use, but advanced reporting is limited on lower tiers.
 
-For most teams, **Notion** is a great starting point, with **Asana** as a solid alternative.",false,Synthetic,Demo Synthetic Benchmark,2026-07-10,Script-generated synthetic response (not a real AI platform output).
-r052,p18,ChatGPT (synthetic),gpt-synthetic-demo,2026-07-10,1,"Based on common recommendations, these tools stand out:
+For most teams, **Notion** is a great starting point, with **Asana** as a solid alternative.",false,Synthetic,Demo Synthetic Benchmark,2026-07-10,"Script-generated synthetic response, baseline wave (not a real AI platform output)."
+r052,p18,ChatGPT (synthetic),gpt-synthetic-demo,2026-07-10,1,"Here are some strong options to consider:
 
 1. **Asana** is a mature project management platform known for reliable task tracking, timelines, and workload management. It is powerful for larger teams, but its pricing gets expensive at scale.
 2. **Notion** is a flexible all-in-one workspace with docs, wikis, and databases. It is simple to start with ready-made templates and is popular with startups and small teams.
@@ -613,10 +607,10 @@ r052,p18,ChatGPT (synthetic),gpt-synthetic-demo,2026-07-10,1,"Based on common re
 For most teams, **Asana** is a great starting point, with **Notion** as a solid alternative.
 
 Sources:
-- https://www.forbes.com/advisor/business/software/best-project-management-software/
+- https://zapier.com/blog/best-project-management-software/
 - https://www.g2.com/categories/project-management
-- https://asana.com/product",true,Synthetic,Demo Synthetic Benchmark,2026-07-10,Script-generated synthetic response (not a real AI platform output).
-r053,p18,ChatGPT (synthetic),gpt-synthetic-demo,2026-07-10,2,"Here are some strong options to consider:
+- https://asana.com/product",true,Synthetic,Demo Synthetic Benchmark,2026-07-10,"Script-generated synthetic response, baseline wave (not a real AI platform output)."
+r053,p18,ChatGPT (synthetic),gpt-synthetic-demo,2026-07-10,2,"A few widely used tools fit this need:
 
 1. **Notion** is a flexible all-in-one workspace with docs, wikis, and databases. It is simple to start with ready-made templates and is popular with startups and small teams.
 2. **ClickUp** packs powerful automations, dashboards, and goals into one platform. It is feature-rich, but it can get pricey on higher tiers.
@@ -625,11 +619,10 @@ r053,p18,ChatGPT (synthetic),gpt-synthetic-demo,2026-07-10,2,"Here are some stro
 For most teams, **Notion** is a great starting point, with **ClickUp** as a solid alternative.
 
 Sources:
-- https://www.g2.com/categories/project-management
-- https://www.reddit.com/r/productivity/comments/best-pm-tool/
-- https://www.pcmag.com/picks/the-best-project-management-software
-- https://www.notion.so/product",true,Synthetic,Demo Synthetic Benchmark,2026-07-10,Script-generated synthetic response (not a real AI platform output).
-r054,p19,ChatGPT (synthetic),gpt-synthetic-demo,2026-07-10,1,"Based on common recommendations, these tools stand out:
+- https://www.nytimes.com/wirecutter/reviews/best-to-do-list-app/
+- https://www.capterra.com/project-management-software/
+- https://www.notion.so/product",true,Synthetic,Demo Synthetic Benchmark,2026-07-10,"Script-generated synthetic response, baseline wave (not a real AI platform output)."
+r054,p19,ChatGPT (synthetic),gpt-synthetic-demo,2026-07-10,1,"Here are some strong options to consider:
 
 1. **Notion** is a flexible all-in-one workspace with docs, wikis, and databases. It is simple to start with ready-made templates and is popular with startups and small teams.
 2. **Monday.com** offers colorful, spreadsheet-style boards, automations, and dashboards that non-technical teams find approachable and easy to use, but advanced reporting is limited on lower tiers.
@@ -639,11 +632,10 @@ r054,p19,ChatGPT (synthetic),gpt-synthetic-demo,2026-07-10,1,"Based on common re
 For most teams, **Notion** is a great starting point, with **Monday.com** as a solid alternative.
 
 Sources:
-- https://www.forbes.com/advisor/business/software/best-project-management-software/
-- https://www.nytimes.com/wirecutter/reviews/best-to-do-list-app/
-- https://www.g2.com/categories/project-management
-- https://www.notion.so/product",true,Synthetic,Demo Synthetic Benchmark,2026-07-10,Script-generated synthetic response (not a real AI platform output).
-r055,p19,Claude (synthetic),claude-synthetic-demo,2026-07-10,1,"Several popular platforms could work well here:
+- https://www.capterra.com/project-management-software/
+- https://www.pcmag.com/picks/the-best-project-management-software
+- https://www.notion.so/product",true,Synthetic,Demo Synthetic Benchmark,2026-07-10,"Script-generated synthetic response, baseline wave (not a real AI platform output)."
+r055,p19,Claude (synthetic),claude-synthetic-demo,2026-07-10,1,"A few widely used tools fit this need:
 
 1. **Notion** is a flexible all-in-one workspace with docs, wikis, and databases. It is simple to start with ready-made templates and is popular with startups and small teams.
 2. **Monday.com** offers colorful, spreadsheet-style boards, automations, and dashboards that non-technical teams find approachable and easy to use, but advanced reporting is limited on lower tiers.
@@ -652,11 +644,11 @@ r055,p19,Claude (synthetic),claude-synthetic-demo,2026-07-10,1,"Several popular 
 For most teams, **Notion** is a great starting point, with **Monday.com** as a solid alternative.
 
 Sources:
-- https://www.pcmag.com/picks/the-best-project-management-software
-- https://zapier.com/blog/best-project-management-software/
+- https://www.capterra.com/project-management-software/
+- https://www.g2.com/categories/project-management
 - https://www.forbes.com/advisor/business/software/best-project-management-software/
-- https://www.notion.so/product",true,Synthetic,Demo Synthetic Benchmark,2026-07-10,Script-generated synthetic response (not a real AI platform output).
-r056,p19,Claude (synthetic),claude-synthetic-demo,2026-07-10,2,"Here are some strong options to consider:
+- https://www.notion.so/product",true,Synthetic,Demo Synthetic Benchmark,2026-07-10,"Script-generated synthetic response, baseline wave (not a real AI platform output)."
+r056,p19,Claude (synthetic),claude-synthetic-demo,2026-07-10,2,"Based on common recommendations, these tools stand out:
 
 1. **Notion** is a flexible all-in-one workspace with docs, wikis, and databases. It is simple to start with ready-made templates and is popular with startups and small teams.
 2. **Trello** uses a simple, intuitive Kanban-board approach that is easy to learn and has a free plan, though it feels limited for complex projects and lacks advanced reporting.
@@ -665,10 +657,10 @@ r056,p19,Claude (synthetic),claude-synthetic-demo,2026-07-10,2,"Here are some st
 For most teams, **Notion** is a great starting point, with **Trello** as a solid alternative.
 
 Sources:
-- https://www.pcmag.com/picks/the-best-project-management-software
-- https://www.forbes.com/advisor/business/software/best-project-management-software/
-- https://www.notion.so/product",true,Synthetic,Demo Synthetic Benchmark,2026-07-10,Script-generated synthetic response (not a real AI platform output).
-r057,p20,Gemini (synthetic),gemini-synthetic-demo,2026-07-10,1,"Several popular platforms could work well here:
+- https://www.g2.com/categories/project-management
+- https://zapier.com/blog/best-project-management-software/
+- https://www.notion.so/product",true,Synthetic,Demo Synthetic Benchmark,2026-07-10,"Script-generated synthetic response, baseline wave (not a real AI platform output)."
+r057,p20,Gemini (synthetic),gemini-synthetic-demo,2026-07-10,1,"Here are some strong options to consider:
 
 1. **Notion** is an all-in-one workspace that combines docs, wikis, databases, and project boards. Its strength is flexibility and a generous free plan, though it can be overwhelming to set up for beginners.
 2. **Asana** offers polished task tracking, timelines, and reporting. It is affordable for small teams and is often recommended for marketing teams.
@@ -678,11 +670,10 @@ r057,p20,Gemini (synthetic),gemini-synthetic-demo,2026-07-10,1,"Several popular 
 For most teams, **Notion** is a great starting point, with **Asana** as a solid alternative.
 
 Sources:
+- https://www.g2.com/categories/project-management
 - https://www.reddit.com/r/productivity/comments/best-pm-tool/
-- https://www.capterra.com/project-management-software/
-- https://www.pcmag.com/picks/the-best-project-management-software
-- https://www.notion.so/product",true,Synthetic,Demo Synthetic Benchmark,2026-07-10,Script-generated synthetic response (not a real AI platform output).
-r058,p20,ChatGPT (synthetic),gpt-synthetic-demo,2026-07-10,1,"A few widely used tools fit this need:
+- https://www.notion.so/product",true,Synthetic,Demo Synthetic Benchmark,2026-07-10,"Script-generated synthetic response, baseline wave (not a real AI platform output)."
+r058,p20,ChatGPT (synthetic),gpt-synthetic-demo,2026-07-10,1,"Several popular platforms could work well here:
 
 1. **Notion** is a flexible all-in-one workspace with docs, wikis, and databases. It is simple to start with ready-made templates and is popular with startups and small teams.
 2. **Asana** is a mature project management platform known for reliable task tracking, timelines, and workload management. It is powerful for larger teams, but its pricing gets expensive at scale.
@@ -692,26 +683,26 @@ r058,p20,ChatGPT (synthetic),gpt-synthetic-demo,2026-07-10,1,"A few widely used 
 For most teams, **Notion** is a great starting point, with **Asana** as a solid alternative.
 
 Sources:
-- https://www.reddit.com/r/productivity/comments/best-pm-tool/
+- https://www.capterra.com/project-management-software/
 - https://www.forbes.com/advisor/business/software/best-project-management-software/
-- https://www.notion.so/product",true,Synthetic,Demo Synthetic Benchmark,2026-07-10,Script-generated synthetic response (not a real AI platform output).
-r059,p20,ChatGPT (synthetic),gpt-synthetic-demo,2026-07-10,2,"A few widely used tools fit this need:
+- https://www.notion.so/product",true,Synthetic,Demo Synthetic Benchmark,2026-07-10,"Script-generated synthetic response, baseline wave (not a real AI platform output)."
+r059,p20,ChatGPT (synthetic),gpt-synthetic-demo,2026-07-10,2,"Here are some strong options to consider:
 
 1. **Notion** is a flexible all-in-one workspace with docs, wikis, and databases. It is simple to start with ready-made templates and is popular with startups and small teams.
 2. **Asana** is a mature project management platform known for reliable task tracking, timelines, and workload management. It is powerful for larger teams, but its pricing gets expensive at scale.
 3. **Monday.com** offers colorful, spreadsheet-style boards, automations, and dashboards that non-technical teams find approachable and easy to use, but advanced reporting is limited on lower tiers.
 4. **Trello** is a lightweight Kanban tool that is easy to learn and great for simple workflows, with a free plan that appeals to freelancers and small teams.
 
-For most teams, **Notion** is a great starting point, with **Asana** as a solid alternative.",false,Synthetic,Demo Synthetic Benchmark,2026-07-10,Script-generated synthetic response (not a real AI platform output).
-r060,p21,Claude (synthetic),claude-synthetic-demo,2026-07-10,1,"Here are some strong options to consider:
+For most teams, **Notion** is a great starting point, with **Asana** as a solid alternative.",false,Synthetic,Demo Synthetic Benchmark,2026-07-10,"Script-generated synthetic response, baseline wave (not a real AI platform output)."
+r060,p21,Claude (synthetic),claude-synthetic-demo,2026-07-10,1,"Several popular platforms could work well here:
 
 1. **Notion** is a flexible all-in-one workspace with docs, wikis, and databases. It is simple to start with ready-made templates and is popular with startups and small teams.
 2. **Asana** offers polished task tracking, timelines, and reporting. It is affordable for small teams and is often recommended for marketing teams.
 3. **ClickUp** is a highly customizable, all-in-one tool bundling tasks, docs, goals, and automations at an affordable price, though the interface can feel cluttered and the learning curve is steep.
 4. **Trello** uses a simple, intuitive Kanban-board approach that is easy to learn and has a free plan, though it feels limited for complex projects and lacks advanced reporting.
 
-For most teams, **Notion** is a great starting point, with **Asana** as a solid alternative.",false,Synthetic,Demo Synthetic Benchmark,2026-07-10,Script-generated synthetic response (not a real AI platform output).
-r061,p21,Claude (synthetic),claude-synthetic-demo,2026-07-10,2,"A few widely used tools fit this need:
+For most teams, **Notion** is a great starting point, with **Asana** as a solid alternative.",false,Synthetic,Demo Synthetic Benchmark,2026-07-10,"Script-generated synthetic response, baseline wave (not a real AI platform output)."
+r061,p21,Claude (synthetic),claude-synthetic-demo,2026-07-10,2,"Several popular platforms could work well here:
 
 1. **Notion** is a flexible all-in-one workspace with docs, wikis, and databases. It is simple to start with ready-made templates and is popular with startups and small teams.
 2. **Asana** offers polished task tracking, timelines, and reporting. It is affordable for small teams and is often recommended for marketing teams.
@@ -719,7 +710,7 @@ r061,p21,Claude (synthetic),claude-synthetic-demo,2026-07-10,2,"A few widely use
 4. **ClickUp** is a highly customizable, all-in-one tool bundling tasks, docs, goals, and automations at an affordable price, though the interface can feel cluttered and the learning curve is steep.
 5. **Trello** uses a simple, intuitive Kanban-board approach that is easy to learn and has a free plan, though it feels limited for complex projects and lacks advanced reporting.
 
-For most teams, **Notion** is a great starting point, with **Asana** as a solid alternative.",false,Synthetic,Demo Synthetic Benchmark,2026-07-10,Script-generated synthetic response (not a real AI platform output).
+For most teams, **Notion** is a great starting point, with **Asana** as a solid alternative.",false,Synthetic,Demo Synthetic Benchmark,2026-07-10,"Script-generated synthetic response, baseline wave (not a real AI platform output)."
 r062,p21,ChatGPT (synthetic),gpt-synthetic-demo,2026-07-10,1,"Based on common recommendations, these tools stand out:
 
 1. **Asana** is a mature project management platform known for reliable task tracking, timelines, and workload management. It is powerful for larger teams, but its pricing gets expensive at scale.
@@ -731,10 +722,11 @@ r062,p21,ChatGPT (synthetic),gpt-synthetic-demo,2026-07-10,1,"Based on common re
 For most teams, **Asana** is a great starting point, with **Notion** as a solid alternative.
 
 Sources:
+- https://www.pcmag.com/picks/the-best-project-management-software
 - https://www.forbes.com/advisor/business/software/best-project-management-software/
 - https://www.g2.com/categories/project-management
-- https://asana.com/product",true,Synthetic,Demo Synthetic Benchmark,2026-07-10,Script-generated synthetic response (not a real AI platform output).
-r063,p21,ChatGPT (synthetic),gpt-synthetic-demo,2026-07-10,2,"Here are some strong options to consider:
+- https://asana.com/product",true,Synthetic,Demo Synthetic Benchmark,2026-07-10,"Script-generated synthetic response, baseline wave (not a real AI platform output)."
+r063,p21,ChatGPT (synthetic),gpt-synthetic-demo,2026-07-10,2,"Several popular platforms could work well here:
 
 1. **Notion** is a flexible all-in-one workspace with docs, wikis, and databases. It is simple to start with ready-made templates and is popular with startups and small teams.
 2. **Asana** is a mature project management platform known for reliable task tracking, timelines, and workload management. It is powerful for larger teams, but its pricing gets expensive at scale.
@@ -744,10 +736,11 @@ r063,p21,ChatGPT (synthetic),gpt-synthetic-demo,2026-07-10,2,"Here are some stro
 For most teams, **Notion** is a great starting point, with **Asana** as a solid alternative.
 
 Sources:
-- https://www.reddit.com/r/productivity/comments/best-pm-tool/
+- https://www.pcmag.com/picks/the-best-project-management-software
 - https://www.nytimes.com/wirecutter/reviews/best-to-do-list-app/
-- https://www.notion.so/product",true,Synthetic,Demo Synthetic Benchmark,2026-07-10,Script-generated synthetic response (not a real AI platform output).
-r064,p22,Gemini (synthetic),gemini-synthetic-demo,2026-07-10,1,"A few widely used tools fit this need:
+- https://www.g2.com/categories/project-management
+- https://www.notion.so/product",true,Synthetic,Demo Synthetic Benchmark,2026-07-10,"Script-generated synthetic response, baseline wave (not a real AI platform output)."
+r064,p22,Gemini (synthetic),gemini-synthetic-demo,2026-07-10,1,"Here are some strong options to consider:
 
 1. **Notion** is an all-in-one workspace that combines docs, wikis, databases, and project boards. Its strength is flexibility and a generous free plan, though it can be overwhelming to set up for beginners.
 2. **ClickUp** packs powerful automations, dashboards, and goals into one platform. It is feature-rich, but it can get pricey on higher tiers.
@@ -755,10 +748,9 @@ r064,p22,Gemini (synthetic),gemini-synthetic-demo,2026-07-10,1,"A few widely use
 For most teams, **Notion** is a great starting point, with **ClickUp** as a solid alternative.
 
 Sources:
-- https://www.forbes.com/advisor/business/software/best-project-management-software/
-- https://zapier.com/blog/best-project-management-software/
 - https://www.nytimes.com/wirecutter/reviews/best-to-do-list-app/
-- https://www.notion.so/product",true,Synthetic,Demo Synthetic Benchmark,2026-07-10,Script-generated synthetic response (not a real AI platform output).
+- https://www.reddit.com/r/productivity/comments/best-pm-tool/
+- https://www.notion.so/product",true,Synthetic,Demo Synthetic Benchmark,2026-07-10,"Script-generated synthetic response, baseline wave (not a real AI platform output)."
 r065,p22,Gemini (synthetic),gemini-synthetic-demo,2026-07-10,2,"Several popular platforms could work well here:
 
 1. **Notion** is an all-in-one workspace that combines docs, wikis, databases, and project boards. Its strength is flexibility and a generous free plan, though it can be overwhelming to set up for beginners.
@@ -769,17 +761,17 @@ For most teams, **Notion** is a great starting point, with **ClickUp** as a soli
 
 Sources:
 - https://www.g2.com/categories/project-management
-- https://www.capterra.com/project-management-software/
-- https://www.notion.so/product",true,Synthetic,Demo Synthetic Benchmark,2026-07-10,Script-generated synthetic response (not a real AI platform output).
-r066,p22,ChatGPT (synthetic),gpt-synthetic-demo,2026-07-10,1,"Here are some strong options to consider:
+- https://www.nytimes.com/wirecutter/reviews/best-to-do-list-app/
+- https://www.notion.so/product",true,Synthetic,Demo Synthetic Benchmark,2026-07-10,"Script-generated synthetic response, baseline wave (not a real AI platform output)."
+r066,p22,ChatGPT (synthetic),gpt-synthetic-demo,2026-07-10,1,"Several popular platforms could work well here:
 
 1. **Notion** is a flexible all-in-one workspace with docs, wikis, and databases. It is simple to start with ready-made templates and is popular with startups and small teams.
 2. **Asana** is a mature project management platform known for reliable task tracking, timelines, and workload management. It is powerful for larger teams, but its pricing gets expensive at scale.
 3. **Monday.com** offers colorful, spreadsheet-style boards, automations, and dashboards that non-technical teams find approachable and easy to use, but advanced reporting is limited on lower tiers.
 4. **Trello** is a lightweight Kanban tool that is easy to learn and great for simple workflows, with a free plan that appeals to freelancers and small teams.
 
-For most teams, **Notion** is a great starting point, with **Asana** as a solid alternative.",false,Synthetic,Demo Synthetic Benchmark,2026-07-10,Script-generated synthetic response (not a real AI platform output).
-r067,p22,ChatGPT (synthetic),gpt-synthetic-demo,2026-07-10,2,"Based on common recommendations, these tools stand out:
+For most teams, **Notion** is a great starting point, with **Asana** as a solid alternative.",false,Synthetic,Demo Synthetic Benchmark,2026-07-10,"Script-generated synthetic response, baseline wave (not a real AI platform output)."
+r067,p22,ChatGPT (synthetic),gpt-synthetic-demo,2026-07-10,2,"A few widely used tools fit this need:
 
 1. **Notion** is a flexible all-in-one workspace with docs, wikis, and databases. It is simple to start with ready-made templates and is popular with startups and small teams.
 2. **Asana** is a mature project management platform known for reliable task tracking, timelines, and workload management. It is powerful for larger teams, but its pricing gets expensive at scale.
@@ -790,7 +782,804 @@ r067,p22,ChatGPT (synthetic),gpt-synthetic-demo,2026-07-10,2,"Based on common re
 For most teams, **Notion** is a great starting point, with **Asana** as a solid alternative.
 
 Sources:
+- https://www.nytimes.com/wirecutter/reviews/best-to-do-list-app/
+- https://www.reddit.com/r/productivity/comments/best-pm-tool/
+- https://www.forbes.com/advisor/business/software/best-project-management-software/
+- https://www.notion.so/product",true,Synthetic,Demo Synthetic Benchmark,2026-07-10,"Script-generated synthetic response, baseline wave (not a real AI platform output)."
+r068,p01,ChatGPT (synthetic),gpt-synthetic-demo,2026-08-14,1,"A few widely used tools fit this need:
+
+1. **Notion** is a flexible all-in-one workspace with docs, wikis, and databases. It is simple to start with ready-made templates and is popular with startups and small teams.
+2. **Trello** is a lightweight Kanban tool that is easy to learn and great for simple workflows, with a free plan that appeals to freelancers and small teams.
+3. **Monday.com** offers colorful, spreadsheet-style boards, automations, and dashboards that non-technical teams find approachable and easy to use, but advanced reporting is limited on lower tiers.
+4. **ClickUp** packs powerful automations, dashboards, and goals into one platform. It is feature-rich, but it can get pricey on higher tiers.
+
+For most teams, **Notion** is a great starting point, with **Trello** as a solid alternative.
+
+Sources:
+- https://www.pcmag.com/picks/the-best-project-management-software
+- https://www.nytimes.com/wirecutter/reviews/best-to-do-list-app/
+- https://www.notion.so/product",true,Synthetic,Demo Synthetic Benchmark,2026-08-14,"Script-generated synthetic response, post-change wave (not a real AI platform output)."
+r069,p01,Gemini (synthetic),gemini-synthetic-demo,2026-08-14,1,"Based on common recommendations, these tools stand out:
+
+1. **ClickUp** packs powerful automations, dashboards, and goals into one platform. It is feature-rich, but it can get pricey on higher tiers.
+2. **Notion** is an all-in-one workspace that combines docs, wikis, databases, and project boards. Its strength is flexibility and a generous free plan, though it can be overwhelming to set up for beginners.
+3. **Asana** offers polished task tracking, timelines, and reporting. It is affordable for small teams and is often recommended for marketing teams.
+4. **Trello** uses a simple, intuitive Kanban-board approach that is easy to learn and has a free plan, though it feels limited for complex projects and lacks advanced reporting.
+
+For most teams, **ClickUp** is a great starting point, with **Notion** as a solid alternative.
+
+Sources:
+- https://www.reddit.com/r/productivity/comments/best-pm-tool/
+- https://www.forbes.com/advisor/business/software/best-project-management-software/
+- https://clickup.com/features",true,Synthetic,Demo Synthetic Benchmark,2026-08-14,"Script-generated synthetic response, post-change wave (not a real AI platform output)."
+r070,p02,Gemini (synthetic),gemini-synthetic-demo,2026-08-14,1,"Based on common recommendations, these tools stand out:
+
+1. **Notion** is an all-in-one workspace that combines docs, wikis, databases, and project boards. Its strength is flexibility and a generous free plan, though it can be overwhelming to set up for beginners.
+2. **Asana** offers polished task tracking, timelines, and reporting. It is affordable for small teams and is often recommended for marketing teams.
+
+For most teams, **Notion** is a great starting point, with **Asana** as a solid alternative.
+
+Sources:
+- https://www.forbes.com/advisor/business/software/best-project-management-software/
+- https://www.nytimes.com/wirecutter/reviews/best-to-do-list-app/
+- https://www.notion.so/product",true,Synthetic,Demo Synthetic Benchmark,2026-08-14,"Script-generated synthetic response, post-change wave (not a real AI platform output)."
+r071,p02,Gemini (synthetic),gemini-synthetic-demo,2026-08-14,2,"Based on common recommendations, these tools stand out:
+
+1. **Trello** uses a simple, intuitive Kanban-board approach that is easy to learn and has a free plan, though it feels limited for complex projects and lacks advanced reporting.
+2. **Asana** offers polished task tracking, timelines, and reporting. It is affordable for small teams and is often recommended for marketing teams.
+3. **Monday.com** offers colorful, spreadsheet-style boards, automations, and dashboards that non-technical teams find approachable and easy to use, but advanced reporting is limited on lower tiers.
+
+For most teams, **Trello** is a great starting point, with **Asana** as a solid alternative.
+
+Sources:
+- https://www.forbes.com/advisor/business/software/best-project-management-software/
+- https://www.capterra.com/project-management-software/
+- https://www.nytimes.com/wirecutter/reviews/best-to-do-list-app/
+- https://trello.com/tour",true,Synthetic,Demo Synthetic Benchmark,2026-08-14,"Script-generated synthetic response, post-change wave (not a real AI platform output)."
+r072,p02,Claude (synthetic),claude-synthetic-demo,2026-08-14,1,"Based on common recommendations, these tools stand out:
+
+1. **Notion** is a flexible all-in-one workspace with docs, wikis, and databases. It is simple to start with ready-made templates and is popular with startups and small teams.
+2. **Asana** offers polished task tracking, timelines, and reporting. It is affordable for small teams and is often recommended for marketing teams.
+3. **Trello** uses a simple, intuitive Kanban-board approach that is easy to learn and has a free plan, though it feels limited for complex projects and lacks advanced reporting.
+4. **Monday.com** offers colorful, spreadsheet-style boards, automations, and dashboards that non-technical teams find approachable and easy to use, but advanced reporting is limited on lower tiers.
+
+For most teams, **Notion** is a great starting point, with **Asana** as a solid alternative.
+
+Sources:
+- https://www.nytimes.com/wirecutter/reviews/best-to-do-list-app/
+- https://www.capterra.com/project-management-software/
+- https://www.forbes.com/advisor/business/software/best-project-management-software/
+- https://www.notion.so/product",true,Synthetic,Demo Synthetic Benchmark,2026-08-14,"Script-generated synthetic response, post-change wave (not a real AI platform output)."
+r073,p03,ChatGPT (synthetic),gpt-synthetic-demo,2026-08-14,1,"A few widely used tools fit this need:
+
+1. **Notion** is a flexible all-in-one workspace with docs, wikis, and databases. It is simple to start with ready-made templates and is popular with startups and small teams.
+2. **ClickUp** packs powerful automations, dashboards, and goals into one platform. It is feature-rich, but it can get pricey on higher tiers.
+3. **Asana** is a mature project management platform known for reliable task tracking, timelines, and workload management. It is powerful for larger teams, but its pricing gets expensive at scale.
+4. **Monday.com** offers colorful, spreadsheet-style boards, automations, and dashboards that non-technical teams find approachable and easy to use, but advanced reporting is limited on lower tiers.
+5. **Trello** is a lightweight Kanban tool that is easy to learn and great for simple workflows, with a free plan that appeals to freelancers and small teams.
+
+For most teams, **Notion** is a great starting point, with **ClickUp** as a solid alternative.
+
+Sources:
+- https://www.capterra.com/project-management-software/
+- https://www.nytimes.com/wirecutter/reviews/best-to-do-list-app/
+- https://www.notion.so/product",true,Synthetic,Demo Synthetic Benchmark,2026-08-14,"Script-generated synthetic response, post-change wave (not a real AI platform output)."
+r074,p03,ChatGPT (synthetic),gpt-synthetic-demo,2026-08-14,2,"A few widely used tools fit this need:
+
+1. **Asana** is a mature project management platform known for reliable task tracking, timelines, and workload management. It is powerful for larger teams, but its pricing gets expensive at scale.
+2. **Trello** is a lightweight Kanban tool that is easy to learn and great for simple workflows, with a free plan that appeals to freelancers and small teams.
+3. **Monday.com** offers colorful, spreadsheet-style boards, automations, and dashboards that non-technical teams find approachable and easy to use, but advanced reporting is limited on lower tiers.
+4. **ClickUp** packs powerful automations, dashboards, and goals into one platform. It is feature-rich, but it can get pricey on higher tiers.
+
+For most teams, **Asana** is a great starting point, with **Trello** as a solid alternative.
+
+Sources:
+- https://zapier.com/blog/best-project-management-software/
+- https://www.pcmag.com/picks/the-best-project-management-software
+- https://asana.com/product",true,Synthetic,Demo Synthetic Benchmark,2026-08-14,"Script-generated synthetic response, post-change wave (not a real AI platform output)."
+r075,p03,Gemini (synthetic),gemini-synthetic-demo,2026-08-14,1,"A few widely used tools fit this need:
+
+1. **Notion** is an all-in-one workspace that combines docs, wikis, databases, and project boards. Its strength is flexibility and a generous free plan, though it can be overwhelming to set up for beginners.
+2. **Asana** offers polished task tracking, timelines, and reporting. It is affordable for small teams and is often recommended for marketing teams.
+3. **Monday.com** offers colorful, spreadsheet-style boards, automations, and dashboards that non-technical teams find approachable and easy to use, but advanced reporting is limited on lower tiers.
+4. **Trello** uses a simple, intuitive Kanban-board approach that is easy to learn and has a free plan, though it feels limited for complex projects and lacks advanced reporting.
+
+For most teams, **Notion** is a great starting point, with **Asana** as a solid alternative.",false,Synthetic,Demo Synthetic Benchmark,2026-08-14,"Script-generated synthetic response, post-change wave (not a real AI platform output)."
+r076,p04,ChatGPT (synthetic),gpt-synthetic-demo,2026-08-14,1,"Here are some strong options to consider:
+
+1. **Notion** is a flexible all-in-one workspace with docs, wikis, and databases. It is simple to start with ready-made templates and is popular with startups and small teams.
+2. **Asana** is a mature project management platform known for reliable task tracking, timelines, and workload management. It is powerful for larger teams, but its pricing gets expensive at scale.
+3. **ClickUp** packs powerful automations, dashboards, and goals into one platform. It is feature-rich, but it can get pricey on higher tiers.
+4. **Monday.com** offers colorful, spreadsheet-style boards, automations, and dashboards that non-technical teams find approachable and easy to use, but advanced reporting is limited on lower tiers.
+
+For most teams, **Notion** is a great starting point, with **Asana** as a solid alternative.
+
+Sources:
+- https://www.g2.com/categories/project-management
+- https://www.forbes.com/advisor/business/software/best-project-management-software/
+- https://www.notion.so/product",true,Synthetic,Demo Synthetic Benchmark,2026-08-14,"Script-generated synthetic response, post-change wave (not a real AI platform output)."
+r077,p04,ChatGPT (synthetic),gpt-synthetic-demo,2026-08-14,2,"Here are some strong options to consider:
+
+1. **Notion** is a flexible all-in-one workspace with docs, wikis, and databases. It is simple to start with ready-made templates and is popular with startups and small teams.
+2. **Trello** is a lightweight Kanban tool that is easy to learn and great for simple workflows, with a free plan that appeals to freelancers and small teams.
+3. **Monday.com** offers colorful, spreadsheet-style boards, automations, and dashboards that non-technical teams find approachable and easy to use, but advanced reporting is limited on lower tiers.
+
+For most teams, **Notion** is a great starting point, with **Trello** as a solid alternative.
+
+Sources:
+- https://www.pcmag.com/picks/the-best-project-management-software
+- https://www.g2.com/categories/project-management
+- https://www.notion.so/product",true,Synthetic,Demo Synthetic Benchmark,2026-08-14,"Script-generated synthetic response, post-change wave (not a real AI platform output)."
+r078,p04,Gemini (synthetic),gemini-synthetic-demo,2026-08-14,1,"A few widely used tools fit this need:
+
+1. **Asana** offers polished task tracking, timelines, and reporting. It is affordable for small teams and is often recommended for marketing teams.
+2. **Notion** is an all-in-one workspace that combines docs, wikis, databases, and project boards. Its strength is flexibility and a generous free plan, though it can be overwhelming to set up for beginners.
+3. **Trello** uses a simple, intuitive Kanban-board approach that is easy to learn and has a free plan, though it feels limited for complex projects and lacks advanced reporting.
+
+For most teams, **Asana** is a great starting point, with **Notion** as a solid alternative.",false,Synthetic,Demo Synthetic Benchmark,2026-08-14,"Script-generated synthetic response, post-change wave (not a real AI platform output)."
+r079,p05,Gemini (synthetic),gemini-synthetic-demo,2026-08-14,1,"Here are some strong options to consider:
+
+1. **Asana** offers polished task tracking, timelines, and reporting. It is affordable for small teams and is often recommended for marketing teams.
+2. **ClickUp** packs powerful automations, dashboards, and goals into one platform. It is feature-rich, but it can get pricey on higher tiers.
+3. **Trello** uses a simple, intuitive Kanban-board approach that is easy to learn and has a free plan, though it feels limited for complex projects and lacks advanced reporting.
+4. **Monday.com** offers colorful, spreadsheet-style boards, automations, and dashboards that non-technical teams find approachable and easy to use, but advanced reporting is limited on lower tiers.
+
+For most teams, **Asana** is a great starting point, with **ClickUp** as a solid alternative.
+
+Sources:
+- https://www.pcmag.com/picks/the-best-project-management-software
+- https://www.g2.com/categories/project-management
+- https://asana.com/product",true,Synthetic,Demo Synthetic Benchmark,2026-08-14,"Script-generated synthetic response, post-change wave (not a real AI platform output)."
+r080,p05,Gemini (synthetic),gemini-synthetic-demo,2026-08-14,2,"Based on common recommendations, these tools stand out:
+
+1. **ClickUp** packs powerful automations, dashboards, and goals into one platform. It is feature-rich, but it can get pricey on higher tiers.
+2. **Trello** uses a simple, intuitive Kanban-board approach that is easy to learn and has a free plan, though it feels limited for complex projects and lacks advanced reporting.
+
+For most teams, **ClickUp** is a great starting point, with **Trello** as a solid alternative.
+
+Sources:
+- https://zapier.com/blog/best-project-management-software/
+- https://www.pcmag.com/picks/the-best-project-management-software
+- https://www.forbes.com/advisor/business/software/best-project-management-software/
+- https://clickup.com/features",true,Synthetic,Demo Synthetic Benchmark,2026-08-14,"Script-generated synthetic response, post-change wave (not a real AI platform output)."
+r081,p05,Claude (synthetic),claude-synthetic-demo,2026-08-14,1,"Here are some strong options to consider:
+
+1. **Notion** is a flexible all-in-one workspace with docs, wikis, and databases. It is simple to start with ready-made templates and is popular with startups and small teams.
+2. **Asana** offers polished task tracking, timelines, and reporting. It is affordable for small teams and is often recommended for marketing teams.
+3. **ClickUp** is a highly customizable, all-in-one tool bundling tasks, docs, goals, and automations at an affordable price, though the interface can feel cluttered and the learning curve is steep.
+4. **Trello** uses a simple, intuitive Kanban-board approach that is easy to learn and has a free plan, though it feels limited for complex projects and lacks advanced reporting.
+
+For most teams, **Notion** is a great starting point, with **Asana** as a solid alternative.
+
+Sources:
+- https://www.g2.com/categories/project-management
+- https://zapier.com/blog/best-project-management-software/
+- https://www.notion.so/product",true,Synthetic,Demo Synthetic Benchmark,2026-08-14,"Script-generated synthetic response, post-change wave (not a real AI platform output)."
+r082,p05,Claude (synthetic),claude-synthetic-demo,2026-08-14,2,"Based on common recommendations, these tools stand out:
+
+1. **Notion** is a flexible all-in-one workspace with docs, wikis, and databases. It is simple to start with ready-made templates and is popular with startups and small teams.
+2. **Trello** uses a simple, intuitive Kanban-board approach that is easy to learn and has a free plan, though it feels limited for complex projects and lacks advanced reporting.
+
+For most teams, **Notion** is a great starting point, with **Trello** as a solid alternative.
+
+Sources:
+- https://www.g2.com/categories/project-management
+- https://www.pcmag.com/picks/the-best-project-management-software
+- https://www.notion.so/product",true,Synthetic,Demo Synthetic Benchmark,2026-08-14,"Script-generated synthetic response, post-change wave (not a real AI platform output)."
+r083,p06,Claude (synthetic),claude-synthetic-demo,2026-08-14,1,"Here are some strong options to consider:
+
+1. **Notion** is a flexible all-in-one workspace with docs, wikis, and databases. It is simple to start with ready-made templates and is popular with startups and small teams.
+2. **Asana** offers polished task tracking, timelines, and reporting. It is affordable for small teams and is often recommended for marketing teams.
+3. **ClickUp** is a highly customizable, all-in-one tool bundling tasks, docs, goals, and automations at an affordable price, though the interface can feel cluttered and the learning curve is steep.
+4. **Trello** uses a simple, intuitive Kanban-board approach that is easy to learn and has a free plan, though it feels limited for complex projects and lacks advanced reporting.
+
+For most teams, **Notion** is a great starting point, with **Asana** as a solid alternative.
+
+Sources:
+- https://www.nytimes.com/wirecutter/reviews/best-to-do-list-app/
+- https://www.g2.com/categories/project-management
+- https://zapier.com/blog/best-project-management-software/
+- https://www.notion.so/product",true,Synthetic,Demo Synthetic Benchmark,2026-08-14,"Script-generated synthetic response, post-change wave (not a real AI platform output)."
+r084,p06,Gemini (synthetic),gemini-synthetic-demo,2026-08-14,1,"A few widely used tools fit this need:
+
+1. **Asana** offers polished task tracking, timelines, and reporting. It is affordable for small teams and is often recommended for marketing teams.
+2. **Notion** is an all-in-one workspace that combines docs, wikis, databases, and project boards. Its strength is flexibility and a generous free plan, though it can be overwhelming to set up for beginners.
+3. **Monday.com** offers colorful, spreadsheet-style boards, automations, and dashboards that non-technical teams find approachable and easy to use, but advanced reporting is limited on lower tiers.
+4. **Trello** uses a simple, intuitive Kanban-board approach that is easy to learn and has a free plan, though it feels limited for complex projects and lacks advanced reporting.
+5. **ClickUp** packs powerful automations, dashboards, and goals into one platform. It is feature-rich, but it can get pricey on higher tiers.
+
+For most teams, **Asana** is a great starting point, with **Notion** as a solid alternative.
+
+Sources:
+- https://www.g2.com/categories/project-management
+- https://www.forbes.com/advisor/business/software/best-project-management-software/
+- https://asana.com/product",true,Synthetic,Demo Synthetic Benchmark,2026-08-14,"Script-generated synthetic response, post-change wave (not a real AI platform output)."
+r085,p07,ChatGPT (synthetic),gpt-synthetic-demo,2026-08-14,1,"A few widely used tools fit this need:
+
+1. **Asana** is a mature project management platform known for reliable task tracking, timelines, and workload management. It is powerful for larger teams, but its pricing gets expensive at scale.
+2. **ClickUp** packs powerful automations, dashboards, and goals into one platform. It is feature-rich, but it can get pricey on higher tiers.
+3. **Trello** is a lightweight Kanban tool that is easy to learn and great for simple workflows, with a free plan that appeals to freelancers and small teams.
+4. **Monday.com** offers colorful, spreadsheet-style boards, automations, and dashboards that non-technical teams find approachable and easy to use, but advanced reporting is limited on lower tiers.
+
+For most teams, **Asana** is a great starting point, with **ClickUp** as a solid alternative.",false,Synthetic,Demo Synthetic Benchmark,2026-08-14,"Script-generated synthetic response, post-change wave (not a real AI platform output)."
+r086,p07,Claude (synthetic),claude-synthetic-demo,2026-08-14,1,"Based on common recommendations, these tools stand out:
+
+1. **Notion** is a flexible all-in-one workspace with docs, wikis, and databases. It is simple to start with ready-made templates and is popular with startups and small teams.
+2. **Asana** offers polished task tracking, timelines, and reporting. It is affordable for small teams and is often recommended for marketing teams.
+
+For most teams, **Notion** is a great starting point, with **Asana** as a solid alternative.
+
+Sources:
+- https://www.g2.com/categories/project-management
+- https://zapier.com/blog/best-project-management-software/
+- https://www.notion.so/product",true,Synthetic,Demo Synthetic Benchmark,2026-08-14,"Script-generated synthetic response, post-change wave (not a real AI platform output)."
+r087,p07,Claude (synthetic),claude-synthetic-demo,2026-08-14,2,"A few widely used tools fit this need:
+
+1. **Asana** offers polished task tracking, timelines, and reporting. It is affordable for small teams and is often recommended for marketing teams.
+2. **Monday.com** offers colorful, spreadsheet-style boards, automations, and dashboards that non-technical teams find approachable and easy to use, but advanced reporting is limited on lower tiers.
+3. **Notion** is a flexible all-in-one workspace with docs, wikis, and databases. It is simple to start with ready-made templates and is popular with startups and small teams.
+4. **ClickUp** is a highly customizable, all-in-one tool bundling tasks, docs, goals, and automations at an affordable price, though the interface can feel cluttered and the learning curve is steep.
+5. **Trello** uses a simple, intuitive Kanban-board approach that is easy to learn and has a free plan, though it feels limited for complex projects and lacks advanced reporting.
+
+For most teams, **Asana** is a great starting point, with **Monday.com** as a solid alternative.
+
+Sources:
+- https://www.reddit.com/r/productivity/comments/best-pm-tool/
+- https://www.g2.com/categories/project-management
+- https://www.capterra.com/project-management-software/
+- https://asana.com/product",true,Synthetic,Demo Synthetic Benchmark,2026-08-14,"Script-generated synthetic response, post-change wave (not a real AI platform output)."
+r088,p08,ChatGPT (synthetic),gpt-synthetic-demo,2026-08-14,1,"A few widely used tools fit this need:
+
+1. **Notion** is a flexible all-in-one workspace with docs, wikis, and databases. It is simple to start with ready-made templates and is popular with startups and small teams.
+2. **ClickUp** packs powerful automations, dashboards, and goals into one platform. It is feature-rich, but it can get pricey on higher tiers.
+3. **Monday.com** offers colorful, spreadsheet-style boards, automations, and dashboards that non-technical teams find approachable and easy to use, but advanced reporting is limited on lower tiers.
+
+For most teams, **Notion** is a great starting point, with **ClickUp** as a solid alternative.
+
+Sources:
+- https://www.reddit.com/r/productivity/comments/best-pm-tool/
+- https://www.forbes.com/advisor/business/software/best-project-management-software/
+- https://www.nytimes.com/wirecutter/reviews/best-to-do-list-app/
+- https://www.notion.so/product",true,Synthetic,Demo Synthetic Benchmark,2026-08-14,"Script-generated synthetic response, post-change wave (not a real AI platform output)."
+r089,p08,ChatGPT (synthetic),gpt-synthetic-demo,2026-08-14,2,"Based on common recommendations, these tools stand out:
+
+1. **Notion** is a flexible all-in-one workspace with docs, wikis, and databases. It is simple to start with ready-made templates and is popular with startups and small teams.
+2. **Asana** is a mature project management platform known for reliable task tracking, timelines, and workload management. It is powerful for larger teams, but its pricing gets expensive at scale.
+3. **Monday.com** offers colorful, spreadsheet-style boards, automations, and dashboards that non-technical teams find approachable and easy to use, but advanced reporting is limited on lower tiers.
+
+For most teams, **Notion** is a great starting point, with **Asana** as a solid alternative.",false,Synthetic,Demo Synthetic Benchmark,2026-08-14,"Script-generated synthetic response, post-change wave (not a real AI platform output)."
+r090,p08,Claude (synthetic),claude-synthetic-demo,2026-08-14,1,"Several popular platforms could work well here:
+
+1. **Notion** is a flexible all-in-one workspace with docs, wikis, and databases. It is simple to start with ready-made templates and is popular with startups and small teams.
+2. **Asana** offers polished task tracking, timelines, and reporting. It is affordable for small teams and is often recommended for marketing teams.
+3. **ClickUp** is a highly customizable, all-in-one tool bundling tasks, docs, goals, and automations at an affordable price, though the interface can feel cluttered and the learning curve is steep.
+4. **Trello** uses a simple, intuitive Kanban-board approach that is easy to learn and has a free plan, though it feels limited for complex projects and lacks advanced reporting.
+5. **Monday.com** offers colorful, spreadsheet-style boards, automations, and dashboards that non-technical teams find approachable and easy to use, but advanced reporting is limited on lower tiers.
+
+For most teams, **Notion** is a great starting point, with **Asana** as a solid alternative.",false,Synthetic,Demo Synthetic Benchmark,2026-08-14,"Script-generated synthetic response, post-change wave (not a real AI platform output)."
+r091,p08,Claude (synthetic),claude-synthetic-demo,2026-08-14,2,"Here are some strong options to consider:
+
+1. **Notion** is a flexible all-in-one workspace with docs, wikis, and databases. It is simple to start with ready-made templates and is popular with startups and small teams.
+2. **Monday.com** offers colorful, spreadsheet-style boards, automations, and dashboards that non-technical teams find approachable and easy to use, but advanced reporting is limited on lower tiers.
+3. **Asana** offers polished task tracking, timelines, and reporting. It is affordable for small teams and is often recommended for marketing teams.
+
+For most teams, **Notion** is a great starting point, with **Monday.com** as a solid alternative.",false,Synthetic,Demo Synthetic Benchmark,2026-08-14,"Script-generated synthetic response, post-change wave (not a real AI platform output)."
+r092,p09,ChatGPT (synthetic),gpt-synthetic-demo,2026-08-14,1,"Several popular platforms could work well here:
+
+1. **Notion** is a flexible all-in-one workspace with docs, wikis, and databases. It is simple to start with ready-made templates and is popular with startups and small teams.
+2. **Trello** is a lightweight Kanban tool that is easy to learn and great for simple workflows, with a free plan that appeals to freelancers and small teams.
+3. **ClickUp** packs powerful automations, dashboards, and goals into one platform. It is feature-rich, but it can get pricey on higher tiers.
+4. **Asana** is a mature project management platform known for reliable task tracking, timelines, and workload management. It is powerful for larger teams, but its pricing gets expensive at scale.
+5. **Monday.com** offers colorful, spreadsheet-style boards, automations, and dashboards that non-technical teams find approachable and easy to use, but advanced reporting is limited on lower tiers.
+
+For most teams, **Notion** is a great starting point, with **Trello** as a solid alternative.
+
+Sources:
+- https://www.forbes.com/advisor/business/software/best-project-management-software/
+- https://www.pcmag.com/picks/the-best-project-management-software
+- https://www.notion.so/product",true,Synthetic,Demo Synthetic Benchmark,2026-08-14,"Script-generated synthetic response, post-change wave (not a real AI platform output)."
+r093,p09,Gemini (synthetic),gemini-synthetic-demo,2026-08-14,1,"Here are some strong options to consider:
+
+1. **Notion** is an all-in-one workspace that combines docs, wikis, databases, and project boards. Its strength is flexibility and a generous free plan, though it can be overwhelming to set up for beginners.
+2. **Asana** offers polished task tracking, timelines, and reporting. It is affordable for small teams and is often recommended for marketing teams.
+3. **ClickUp** packs powerful automations, dashboards, and goals into one platform. It is feature-rich, but it can get pricey on higher tiers.
+4. **Trello** uses a simple, intuitive Kanban-board approach that is easy to learn and has a free plan, though it feels limited for complex projects and lacks advanced reporting.
+5. **Monday.com** offers colorful, spreadsheet-style boards, automations, and dashboards that non-technical teams find approachable and easy to use, but advanced reporting is limited on lower tiers.
+
+For most teams, **Notion** is a great starting point, with **Asana** as a solid alternative.
+
+Sources:
+- https://www.nytimes.com/wirecutter/reviews/best-to-do-list-app/
+- https://www.forbes.com/advisor/business/software/best-project-management-software/
+- https://www.capterra.com/project-management-software/
+- https://www.notion.so/product",true,Synthetic,Demo Synthetic Benchmark,2026-08-14,"Script-generated synthetic response, post-change wave (not a real AI platform output)."
+r094,p09,Gemini (synthetic),gemini-synthetic-demo,2026-08-14,2,"Here are some strong options to consider:
+
+1. **Notion** is an all-in-one workspace that combines docs, wikis, databases, and project boards. Its strength is flexibility and a generous free plan, though it can be overwhelming to set up for beginners.
+2. **Asana** offers polished task tracking, timelines, and reporting. It is affordable for small teams and is often recommended for marketing teams.
+3. **Trello** uses a simple, intuitive Kanban-board approach that is easy to learn and has a free plan, though it feels limited for complex projects and lacks advanced reporting.
+4. **ClickUp** packs powerful automations, dashboards, and goals into one platform. It is feature-rich, but it can get pricey on higher tiers.
+5. **Monday.com** offers colorful, spreadsheet-style boards, automations, and dashboards that non-technical teams find approachable and easy to use, but advanced reporting is limited on lower tiers.
+
+For most teams, **Notion** is a great starting point, with **Asana** as a solid alternative.",false,Synthetic,Demo Synthetic Benchmark,2026-08-14,"Script-generated synthetic response, post-change wave (not a real AI platform output)."
+r095,p10,ChatGPT (synthetic),gpt-synthetic-demo,2026-08-14,1,"Here are some strong options to consider:
+
+1. **Notion** is a flexible all-in-one workspace with docs, wikis, and databases. It is simple to start with ready-made templates and is popular with startups and small teams.
+2. **Asana** is a mature project management platform known for reliable task tracking, timelines, and workload management. It is powerful for larger teams, but its pricing gets expensive at scale.
+3. **ClickUp** packs powerful automations, dashboards, and goals into one platform. It is feature-rich, but it can get pricey on higher tiers.
+4. **Monday.com** offers colorful, spreadsheet-style boards, automations, and dashboards that non-technical teams find approachable and easy to use, but advanced reporting is limited on lower tiers.
+
+For most teams, **Notion** is a great starting point, with **Asana** as a solid alternative.
+
+Sources:
+- https://www.forbes.com/advisor/business/software/best-project-management-software/
+- https://zapier.com/blog/best-project-management-software/
+- https://www.nytimes.com/wirecutter/reviews/best-to-do-list-app/
+- https://www.notion.so/product",true,Synthetic,Demo Synthetic Benchmark,2026-08-14,"Script-generated synthetic response, post-change wave (not a real AI platform output)."
+r096,p10,ChatGPT (synthetic),gpt-synthetic-demo,2026-08-14,2,"A few widely used tools fit this need:
+
+1. **Notion** is a flexible all-in-one workspace with docs, wikis, and databases. It is simple to start with ready-made templates and is popular with startups and small teams.
+2. **Asana** is a mature project management platform known for reliable task tracking, timelines, and workload management. It is powerful for larger teams, but its pricing gets expensive at scale.
+
+For most teams, **Notion** is a great starting point, with **Asana** as a solid alternative.",false,Synthetic,Demo Synthetic Benchmark,2026-08-14,"Script-generated synthetic response, post-change wave (not a real AI platform output)."
+r097,p10,Gemini (synthetic),gemini-synthetic-demo,2026-08-14,1,"Based on common recommendations, these tools stand out:
+
+1. **Notion** is an all-in-one workspace that combines docs, wikis, databases, and project boards. Its strength is flexibility and a generous free plan, though it can be overwhelming to set up for beginners.
+2. **Monday.com** offers colorful, spreadsheet-style boards, automations, and dashboards that non-technical teams find approachable and easy to use, but advanced reporting is limited on lower tiers.
+3. **ClickUp** packs powerful automations, dashboards, and goals into one platform. It is feature-rich, but it can get pricey on higher tiers.
+4. **Trello** uses a simple, intuitive Kanban-board approach that is easy to learn and has a free plan, though it feels limited for complex projects and lacks advanced reporting.
+
+For most teams, **Notion** is a great starting point, with **Monday.com** as a solid alternative.
+
+Sources:
+- https://www.capterra.com/project-management-software/
+- https://www.forbes.com/advisor/business/software/best-project-management-software/
+- https://www.notion.so/product",true,Synthetic,Demo Synthetic Benchmark,2026-08-14,"Script-generated synthetic response, post-change wave (not a real AI platform output)."
+r098,p11,ChatGPT (synthetic),gpt-synthetic-demo,2026-08-14,1,"Based on common recommendations, these tools stand out:
+
+1. **Notion** is a flexible all-in-one workspace with docs, wikis, and databases. It is simple to start with ready-made templates and is popular with startups and small teams.
+2. **Asana** is a mature project management platform known for reliable task tracking, timelines, and workload management. It is powerful for larger teams, but its pricing gets expensive at scale.
+3. **Monday.com** offers colorful, spreadsheet-style boards, automations, and dashboards that non-technical teams find approachable and easy to use, but advanced reporting is limited on lower tiers.
+
+For most teams, **Notion** is a great starting point, with **Asana** as a solid alternative.",false,Synthetic,Demo Synthetic Benchmark,2026-08-14,"Script-generated synthetic response, post-change wave (not a real AI platform output)."
+r099,p11,ChatGPT (synthetic),gpt-synthetic-demo,2026-08-14,2,"Several popular platforms could work well here:
+
+1. **ClickUp** packs powerful automations, dashboards, and goals into one platform. It is feature-rich, but it can get pricey on higher tiers.
+2. **Monday.com** offers colorful, spreadsheet-style boards, automations, and dashboards that non-technical teams find approachable and easy to use, but advanced reporting is limited on lower tiers.
+3. **Asana** is a mature project management platform known for reliable task tracking, timelines, and workload management. It is powerful for larger teams, but its pricing gets expensive at scale.
+4. **Trello** is a lightweight Kanban tool that is easy to learn and great for simple workflows, with a free plan that appeals to freelancers and small teams.
+
+For most teams, **ClickUp** is a great starting point, with **Monday.com** as a solid alternative.
+
+Sources:
+- https://www.capterra.com/project-management-software/
+- https://www.forbes.com/advisor/business/software/best-project-management-software/
+- https://zapier.com/blog/best-project-management-software/
+- https://clickup.com/features",true,Synthetic,Demo Synthetic Benchmark,2026-08-14,"Script-generated synthetic response, post-change wave (not a real AI platform output)."
+r100,p11,Claude (synthetic),claude-synthetic-demo,2026-08-14,1,"Several popular platforms could work well here:
+
+1. **Monday.com** offers colorful, spreadsheet-style boards, automations, and dashboards that non-technical teams find approachable and easy to use, but advanced reporting is limited on lower tiers.
+2. **Asana** offers polished task tracking, timelines, and reporting. It is affordable for small teams and is often recommended for marketing teams.
+3. **Trello** uses a simple, intuitive Kanban-board approach that is easy to learn and has a free plan, though it feels limited for complex projects and lacks advanced reporting.
+
+For most teams, **Monday.com** is a great starting point, with **Asana** as a solid alternative.",false,Synthetic,Demo Synthetic Benchmark,2026-08-14,"Script-generated synthetic response, post-change wave (not a real AI platform output)."
+r101,p11,Claude (synthetic),claude-synthetic-demo,2026-08-14,2,"Several popular platforms could work well here:
+
+1. **ClickUp** is a highly customizable, all-in-one tool bundling tasks, docs, goals, and automations at an affordable price, though the interface can feel cluttered and the learning curve is steep.
+2. **Monday.com** offers colorful, spreadsheet-style boards, automations, and dashboards that non-technical teams find approachable and easy to use, but advanced reporting is limited on lower tiers.
+
+For most teams, **ClickUp** is a great starting point, with **Monday.com** as a solid alternative.",false,Synthetic,Demo Synthetic Benchmark,2026-08-14,"Script-generated synthetic response, post-change wave (not a real AI platform output)."
+r102,p12,Gemini (synthetic),gemini-synthetic-demo,2026-08-14,1,"Based on common recommendations, these tools stand out:
+
+1. **Asana** offers polished task tracking, timelines, and reporting. It is affordable for small teams and is often recommended for marketing teams.
+2. **Monday.com** offers colorful, spreadsheet-style boards, automations, and dashboards that non-technical teams find approachable and easy to use, but advanced reporting is limited on lower tiers.
+3. **ClickUp** packs powerful automations, dashboards, and goals into one platform. It is feature-rich, but it can get pricey on higher tiers.
+4. **Trello** uses a simple, intuitive Kanban-board approach that is easy to learn and has a free plan, though it feels limited for complex projects and lacks advanced reporting.
+
+For most teams, **Asana** is a great starting point, with **Monday.com** as a solid alternative.
+
+Sources:
+- https://www.reddit.com/r/productivity/comments/best-pm-tool/
+- https://www.forbes.com/advisor/business/software/best-project-management-software/
+- https://www.g2.com/categories/project-management
+- https://asana.com/product",true,Synthetic,Demo Synthetic Benchmark,2026-08-14,"Script-generated synthetic response, post-change wave (not a real AI platform output)."
+r103,p12,Gemini (synthetic),gemini-synthetic-demo,2026-08-14,2,"Here are some strong options to consider:
+
+1. **ClickUp** packs powerful automations, dashboards, and goals into one platform. It is feature-rich, but it can get pricey on higher tiers.
+2. **Notion** is an all-in-one workspace that combines docs, wikis, databases, and project boards. Its strength is flexibility and a generous free plan, though it can be overwhelming to set up for beginners.
+3. **Trello** uses a simple, intuitive Kanban-board approach that is easy to learn and has a free plan, though it feels limited for complex projects and lacks advanced reporting.
+4. **Asana** offers polished task tracking, timelines, and reporting. It is affordable for small teams and is often recommended for marketing teams.
+
+For most teams, **ClickUp** is a great starting point, with **Notion** as a solid alternative.",false,Synthetic,Demo Synthetic Benchmark,2026-08-14,"Script-generated synthetic response, post-change wave (not a real AI platform output)."
+r104,p12,Claude (synthetic),claude-synthetic-demo,2026-08-14,1,"Based on common recommendations, these tools stand out:
+
+1. **Asana** offers polished task tracking, timelines, and reporting. It is affordable for small teams and is often recommended for marketing teams.
+2. **Monday.com** offers colorful, spreadsheet-style boards, automations, and dashboards that non-technical teams find approachable and easy to use, but advanced reporting is limited on lower tiers.
+3. **Trello** uses a simple, intuitive Kanban-board approach that is easy to learn and has a free plan, though it feels limited for complex projects and lacks advanced reporting.
+
+For most teams, **Asana** is a great starting point, with **Monday.com** as a solid alternative.
+
+Sources:
+- https://www.reddit.com/r/productivity/comments/best-pm-tool/
+- https://www.capterra.com/project-management-software/
+- https://www.nytimes.com/wirecutter/reviews/best-to-do-list-app/
+- https://asana.com/product",true,Synthetic,Demo Synthetic Benchmark,2026-08-14,"Script-generated synthetic response, post-change wave (not a real AI platform output)."
+r105,p13,Gemini (synthetic),gemini-synthetic-demo,2026-08-14,1,"A few widely used tools fit this need:
+
+1. **Asana** offers polished task tracking, timelines, and reporting. It is affordable for small teams and is often recommended for marketing teams.
+2. **Monday.com** offers colorful, spreadsheet-style boards, automations, and dashboards that non-technical teams find approachable and easy to use, but advanced reporting is limited on lower tiers.
+3. **Trello** uses a simple, intuitive Kanban-board approach that is easy to learn and has a free plan, though it feels limited for complex projects and lacks advanced reporting.
+
+For most teams, **Asana** is a great starting point, with **Monday.com** as a solid alternative.
+
+Sources:
+- https://www.pcmag.com/picks/the-best-project-management-software
+- https://www.capterra.com/project-management-software/
+- https://www.forbes.com/advisor/business/software/best-project-management-software/
+- https://asana.com/product",true,Synthetic,Demo Synthetic Benchmark,2026-08-14,"Script-generated synthetic response, post-change wave (not a real AI platform output)."
+r106,p13,Gemini (synthetic),gemini-synthetic-demo,2026-08-14,2,"Based on common recommendations, these tools stand out:
+
+1. **ClickUp** packs powerful automations, dashboards, and goals into one platform. It is feature-rich, but it can get pricey on higher tiers.
+2. **Trello** uses a simple, intuitive Kanban-board approach that is easy to learn and has a free plan, though it feels limited for complex projects and lacks advanced reporting.
+3. **Asana** offers polished task tracking, timelines, and reporting. It is affordable for small teams and is often recommended for marketing teams.
+
+For most teams, **ClickUp** is a great starting point, with **Trello** as a solid alternative.
+
+Sources:
+- https://www.reddit.com/r/productivity/comments/best-pm-tool/
+- https://www.forbes.com/advisor/business/software/best-project-management-software/
+- https://clickup.com/features",true,Synthetic,Demo Synthetic Benchmark,2026-08-14,"Script-generated synthetic response, post-change wave (not a real AI platform output)."
+r107,p13,Claude (synthetic),claude-synthetic-demo,2026-08-14,1,"A few widely used tools fit this need:
+
+1. **Notion** is a flexible all-in-one workspace with docs, wikis, and databases. It is simple to start with ready-made templates and is popular with startups and small teams.
+2. **Asana** offers polished task tracking, timelines, and reporting. It is affordable for small teams and is often recommended for marketing teams.
+3. **ClickUp** is a highly customizable, all-in-one tool bundling tasks, docs, goals, and automations at an affordable price, though the interface can feel cluttered and the learning curve is steep.
+
+For most teams, **Notion** is a great starting point, with **Asana** as a solid alternative.
+
+Sources:
+- https://www.nytimes.com/wirecutter/reviews/best-to-do-list-app/
+- https://zapier.com/blog/best-project-management-software/
+- https://www.reddit.com/r/productivity/comments/best-pm-tool/
+- https://www.notion.so/product",true,Synthetic,Demo Synthetic Benchmark,2026-08-14,"Script-generated synthetic response, post-change wave (not a real AI platform output)."
+r108,p14,Gemini (synthetic),gemini-synthetic-demo,2026-08-14,1,"Based on common recommendations, these tools stand out:
+
+1. **Notion** is an all-in-one workspace that combines docs, wikis, databases, and project boards. Its strength is flexibility and a generous free plan, though it can be overwhelming to set up for beginners.
+2. **Asana** offers polished task tracking, timelines, and reporting. It is affordable for small teams and is often recommended for marketing teams.
+3. **Trello** uses a simple, intuitive Kanban-board approach that is easy to learn and has a free plan, though it feels limited for complex projects and lacks advanced reporting.
+4. **ClickUp** packs powerful automations, dashboards, and goals into one platform. It is feature-rich, but it can get pricey on higher tiers.
+
+For most teams, **Notion** is a great starting point, with **Asana** as a solid alternative.
+
+Sources:
+- https://www.capterra.com/project-management-software/
+- https://www.pcmag.com/picks/the-best-project-management-software
+- https://www.forbes.com/advisor/business/software/best-project-management-software/
+- https://www.notion.so/product",true,Synthetic,Demo Synthetic Benchmark,2026-08-14,"Script-generated synthetic response, post-change wave (not a real AI platform output)."
+r109,p14,ChatGPT (synthetic),gpt-synthetic-demo,2026-08-14,1,"A few widely used tools fit this need:
+
+1. **Notion** is a flexible all-in-one workspace with docs, wikis, and databases. It is simple to start with ready-made templates and is popular with startups and small teams.
+2. **Asana** is a mature project management platform known for reliable task tracking, timelines, and workload management. It is powerful for larger teams, but its pricing gets expensive at scale.
+3. **Monday.com** offers colorful, spreadsheet-style boards, automations, and dashboards that non-technical teams find approachable and easy to use, but advanced reporting is limited on lower tiers.
+4. **ClickUp** packs powerful automations, dashboards, and goals into one platform. It is feature-rich, but it can get pricey on higher tiers.
+
+For most teams, **Notion** is a great starting point, with **Asana** as a solid alternative.",false,Synthetic,Demo Synthetic Benchmark,2026-08-14,"Script-generated synthetic response, post-change wave (not a real AI platform output)."
+r110,p14,ChatGPT (synthetic),gpt-synthetic-demo,2026-08-14,2,"Here are some strong options to consider:
+
+1. **Notion** is a flexible all-in-one workspace with docs, wikis, and databases. It is simple to start with ready-made templates and is popular with startups and small teams.
+2. **Trello** is a lightweight Kanban tool that is easy to learn and great for simple workflows, with a free plan that appeals to freelancers and small teams.
+3. **Monday.com** offers colorful, spreadsheet-style boards, automations, and dashboards that non-technical teams find approachable and easy to use, but advanced reporting is limited on lower tiers.
+4. **Asana** is a mature project management platform known for reliable task tracking, timelines, and workload management. It is powerful for larger teams, but its pricing gets expensive at scale.
+5. **ClickUp** packs powerful automations, dashboards, and goals into one platform. It is feature-rich, but it can get pricey on higher tiers.
+
+For most teams, **Notion** is a great starting point, with **Trello** as a solid alternative.
+
+Sources:
+- https://www.nytimes.com/wirecutter/reviews/best-to-do-list-app/
+- https://www.pcmag.com/picks/the-best-project-management-software
+- https://www.reddit.com/r/productivity/comments/best-pm-tool/
+- https://www.notion.so/product",true,Synthetic,Demo Synthetic Benchmark,2026-08-14,"Script-generated synthetic response, post-change wave (not a real AI platform output)."
+r111,p15,Gemini (synthetic),gemini-synthetic-demo,2026-08-14,1,"A few widely used tools fit this need:
+
+1. **Notion** is an all-in-one workspace that combines docs, wikis, databases, and project boards. Its strength is flexibility and a generous free plan, though it can be overwhelming to set up for beginners.
+2. **Asana** offers polished task tracking, timelines, and reporting. It is affordable for small teams and is often recommended for marketing teams.
+3. **Trello** uses a simple, intuitive Kanban-board approach that is easy to learn and has a free plan, though it feels limited for complex projects and lacks advanced reporting.
+4. **Monday.com** offers colorful, spreadsheet-style boards, automations, and dashboards that non-technical teams find approachable and easy to use, but advanced reporting is limited on lower tiers.
+5. **ClickUp** packs powerful automations, dashboards, and goals into one platform. It is feature-rich, but it can get pricey on higher tiers.
+
+For most teams, **Notion** is a great starting point, with **Asana** as a solid alternative.
+
+Sources:
+- https://www.g2.com/categories/project-management
+- https://www.pcmag.com/picks/the-best-project-management-software
+- https://www.nytimes.com/wirecutter/reviews/best-to-do-list-app/
+- https://www.notion.so/product",true,Synthetic,Demo Synthetic Benchmark,2026-08-14,"Script-generated synthetic response, post-change wave (not a real AI platform output)."
+r112,p15,ChatGPT (synthetic),gpt-synthetic-demo,2026-08-14,1,"A few widely used tools fit this need:
+
+1. **Notion** is a flexible all-in-one workspace with docs, wikis, and databases. It is simple to start with ready-made templates and is popular with startups and small teams.
+2. **ClickUp** packs powerful automations, dashboards, and goals into one platform. It is feature-rich, but it can get pricey on higher tiers.
+3. **Asana** is a mature project management platform known for reliable task tracking, timelines, and workload management. It is powerful for larger teams, but its pricing gets expensive at scale.
+4. **Trello** is a lightweight Kanban tool that is easy to learn and great for simple workflows, with a free plan that appeals to freelancers and small teams.
+5. **Monday.com** offers colorful, spreadsheet-style boards, automations, and dashboards that non-technical teams find approachable and easy to use, but advanced reporting is limited on lower tiers.
+
+For most teams, **Notion** is a great starting point, with **ClickUp** as a solid alternative.
+
+Sources:
+- https://www.capterra.com/project-management-software/
+- https://www.reddit.com/r/productivity/comments/best-pm-tool/
+- https://www.g2.com/categories/project-management
+- https://www.notion.so/product",true,Synthetic,Demo Synthetic Benchmark,2026-08-14,"Script-generated synthetic response, post-change wave (not a real AI platform output)."
+r113,p15,ChatGPT (synthetic),gpt-synthetic-demo,2026-08-14,2,"Here are some strong options to consider:
+
+1. **Notion** is a flexible all-in-one workspace with docs, wikis, and databases. It is simple to start with ready-made templates and is popular with startups and small teams.
+2. **Asana** is a mature project management platform known for reliable task tracking, timelines, and workload management. It is powerful for larger teams, but its pricing gets expensive at scale.
+3. **ClickUp** packs powerful automations, dashboards, and goals into one platform. It is feature-rich, but it can get pricey on higher tiers.
+4. **Trello** is a lightweight Kanban tool that is easy to learn and great for simple workflows, with a free plan that appeals to freelancers and small teams.
+
+For most teams, **Notion** is a great starting point, with **Asana** as a solid alternative.
+
+Sources:
+- https://www.forbes.com/advisor/business/software/best-project-management-software/
+- https://www.capterra.com/project-management-software/
+- https://www.notion.so/product",true,Synthetic,Demo Synthetic Benchmark,2026-08-14,"Script-generated synthetic response, post-change wave (not a real AI platform output)."
+r114,p16,Claude (synthetic),claude-synthetic-demo,2026-08-14,1,"Based on common recommendations, these tools stand out:
+
+1. **Notion** is a flexible all-in-one workspace with docs, wikis, and databases. It is simple to start with ready-made templates and is popular with startups and small teams.
+2. **Asana** offers polished task tracking, timelines, and reporting. It is affordable for small teams and is often recommended for marketing teams.
+3. **ClickUp** is a highly customizable, all-in-one tool bundling tasks, docs, goals, and automations at an affordable price, though the interface can feel cluttered and the learning curve is steep.
+4. **Trello** uses a simple, intuitive Kanban-board approach that is easy to learn and has a free plan, though it feels limited for complex projects and lacks advanced reporting.
+5. **Monday.com** offers colorful, spreadsheet-style boards, automations, and dashboards that non-technical teams find approachable and easy to use, but advanced reporting is limited on lower tiers.
+
+For most teams, **Notion** is a great starting point, with **Asana** as a solid alternative.
+
+Sources:
+- https://www.g2.com/categories/project-management
+- https://zapier.com/blog/best-project-management-software/
+- https://www.notion.so/product",true,Synthetic,Demo Synthetic Benchmark,2026-08-14,"Script-generated synthetic response, post-change wave (not a real AI platform output)."
+r115,p16,Claude (synthetic),claude-synthetic-demo,2026-08-14,2,"Several popular platforms could work well here:
+
+1. **Asana** offers polished task tracking, timelines, and reporting. It is affordable for small teams and is often recommended for marketing teams.
+2. **Notion** is a flexible all-in-one workspace with docs, wikis, and databases. It is simple to start with ready-made templates and is popular with startups and small teams.
+3. **ClickUp** is a highly customizable, all-in-one tool bundling tasks, docs, goals, and automations at an affordable price, though the interface can feel cluttered and the learning curve is steep.
+4. **Monday.com** offers colorful, spreadsheet-style boards, automations, and dashboards that non-technical teams find approachable and easy to use, but advanced reporting is limited on lower tiers.
+5. **Trello** uses a simple, intuitive Kanban-board approach that is easy to learn and has a free plan, though it feels limited for complex projects and lacks advanced reporting.
+
+For most teams, **Asana** is a great starting point, with **Notion** as a solid alternative.
+
+Sources:
+- https://www.pcmag.com/picks/the-best-project-management-software
+- https://www.g2.com/categories/project-management
+- https://www.nytimes.com/wirecutter/reviews/best-to-do-list-app/
+- https://asana.com/product",true,Synthetic,Demo Synthetic Benchmark,2026-08-14,"Script-generated synthetic response, post-change wave (not a real AI platform output)."
+r116,p16,Gemini (synthetic),gemini-synthetic-demo,2026-08-14,1,"Here are some strong options to consider:
+
+1. **Asana** offers polished task tracking, timelines, and reporting. It is affordable for small teams and is often recommended for marketing teams.
+2. **Notion** is an all-in-one workspace that combines docs, wikis, databases, and project boards. Its strength is flexibility and a generous free plan, though it can be overwhelming to set up for beginners.
+3. **Monday.com** offers colorful, spreadsheet-style boards, automations, and dashboards that non-technical teams find approachable and easy to use, but advanced reporting is limited on lower tiers.
+4. **ClickUp** packs powerful automations, dashboards, and goals into one platform. It is feature-rich, but it can get pricey on higher tiers.
+
+For most teams, **Asana** is a great starting point, with **Notion** as a solid alternative.
+
+Sources:
+- https://www.nytimes.com/wirecutter/reviews/best-to-do-list-app/
+- https://www.forbes.com/advisor/business/software/best-project-management-software/
+- https://www.pcmag.com/picks/the-best-project-management-software
+- https://asana.com/product",true,Synthetic,Demo Synthetic Benchmark,2026-08-14,"Script-generated synthetic response, post-change wave (not a real AI platform output)."
+r117,p16,Gemini (synthetic),gemini-synthetic-demo,2026-08-14,2,"Here are some strong options to consider:
+
+1. **Notion** is an all-in-one workspace that combines docs, wikis, databases, and project boards. Its strength is flexibility and a generous free plan, though it can be overwhelming to set up for beginners.
+2. **ClickUp** packs powerful automations, dashboards, and goals into one platform. It is feature-rich, but it can get pricey on higher tiers.
+3. **Asana** offers polished task tracking, timelines, and reporting. It is affordable for small teams and is often recommended for marketing teams.
+
+For most teams, **Notion** is a great starting point, with **ClickUp** as a solid alternative.
+
+Sources:
+- https://www.nytimes.com/wirecutter/reviews/best-to-do-list-app/
+- https://zapier.com/blog/best-project-management-software/
+- https://www.g2.com/categories/project-management
+- https://www.notion.so/product",true,Synthetic,Demo Synthetic Benchmark,2026-08-14,"Script-generated synthetic response, post-change wave (not a real AI platform output)."
+r118,p17,Claude (synthetic),claude-synthetic-demo,2026-08-14,1,"Several popular platforms could work well here:
+
+1. **Notion** is a flexible all-in-one workspace with docs, wikis, and databases. It is simple to start with ready-made templates and is popular with startups and small teams.
+2. **Asana** offers polished task tracking, timelines, and reporting. It is affordable for small teams and is often recommended for marketing teams.
+3. **Trello** uses a simple, intuitive Kanban-board approach that is easy to learn and has a free plan, though it feels limited for complex projects and lacks advanced reporting.
+
+For most teams, **Notion** is a great starting point, with **Asana** as a solid alternative.
+
+Sources:
 - https://www.reddit.com/r/productivity/comments/best-pm-tool/
 - https://zapier.com/blog/best-project-management-software/
 - https://www.g2.com/categories/project-management
-- https://www.notion.so/product",true,Synthetic,Demo Synthetic Benchmark,2026-07-10,Script-generated synthetic response (not a real AI platform output).
+- https://www.notion.so/product",true,Synthetic,Demo Synthetic Benchmark,2026-08-14,"Script-generated synthetic response, post-change wave (not a real AI platform output)."
+r119,p17,Claude (synthetic),claude-synthetic-demo,2026-08-14,2,"Several popular platforms could work well here:
+
+1. **Asana** offers polished task tracking, timelines, and reporting. It is affordable for small teams and is often recommended for marketing teams.
+2. **Notion** is a flexible all-in-one workspace with docs, wikis, and databases. It is simple to start with ready-made templates and is popular with startups and small teams.
+3. **ClickUp** is a highly customizable, all-in-one tool bundling tasks, docs, goals, and automations at an affordable price, though the interface can feel cluttered and the learning curve is steep.
+
+For most teams, **Asana** is a great starting point, with **Notion** as a solid alternative.
+
+Sources:
+- https://www.g2.com/categories/project-management
+- https://www.capterra.com/project-management-software/
+- https://www.nytimes.com/wirecutter/reviews/best-to-do-list-app/
+- https://asana.com/product",true,Synthetic,Demo Synthetic Benchmark,2026-08-14,"Script-generated synthetic response, post-change wave (not a real AI platform output)."
+r120,p17,ChatGPT (synthetic),gpt-synthetic-demo,2026-08-14,1,"Based on common recommendations, these tools stand out:
+
+1. **Notion** is a flexible all-in-one workspace with docs, wikis, and databases. It is simple to start with ready-made templates and is popular with startups and small teams.
+2. **Asana** is a mature project management platform known for reliable task tracking, timelines, and workload management. It is powerful for larger teams, but its pricing gets expensive at scale.
+3. **Trello** is a lightweight Kanban tool that is easy to learn and great for simple workflows, with a free plan that appeals to freelancers and small teams.
+4. **ClickUp** packs powerful automations, dashboards, and goals into one platform. It is feature-rich, but it can get pricey on higher tiers.
+
+For most teams, **Notion** is a great starting point, with **Asana** as a solid alternative.
+
+Sources:
+- https://www.nytimes.com/wirecutter/reviews/best-to-do-list-app/
+- https://www.reddit.com/r/productivity/comments/best-pm-tool/
+- https://www.notion.so/product",true,Synthetic,Demo Synthetic Benchmark,2026-08-14,"Script-generated synthetic response, post-change wave (not a real AI platform output)."
+r121,p17,ChatGPT (synthetic),gpt-synthetic-demo,2026-08-14,2,"Here are some strong options to consider:
+
+1. **Notion** is a flexible all-in-one workspace with docs, wikis, and databases. It is simple to start with ready-made templates and is popular with startups and small teams.
+2. **Asana** is a mature project management platform known for reliable task tracking, timelines, and workload management. It is powerful for larger teams, but its pricing gets expensive at scale.
+3. **ClickUp** packs powerful automations, dashboards, and goals into one platform. It is feature-rich, but it can get pricey on higher tiers.
+4. **Trello** is a lightweight Kanban tool that is easy to learn and great for simple workflows, with a free plan that appeals to freelancers and small teams.
+
+For most teams, **Notion** is a great starting point, with **Asana** as a solid alternative.
+
+Sources:
+- https://www.forbes.com/advisor/business/software/best-project-management-software/
+- https://www.capterra.com/project-management-software/
+- https://www.notion.so/product",true,Synthetic,Demo Synthetic Benchmark,2026-08-14,"Script-generated synthetic response, post-change wave (not a real AI platform output)."
+r122,p18,ChatGPT (synthetic),gpt-synthetic-demo,2026-08-14,1,"Here are some strong options to consider:
+
+1. **Asana** is a mature project management platform known for reliable task tracking, timelines, and workload management. It is powerful for larger teams, but its pricing gets expensive at scale.
+2. **Notion** is a flexible all-in-one workspace with docs, wikis, and databases. It is simple to start with ready-made templates and is popular with startups and small teams.
+3. **ClickUp** packs powerful automations, dashboards, and goals into one platform. It is feature-rich, but it can get pricey on higher tiers.
+4. **Monday.com** offers colorful, spreadsheet-style boards, automations, and dashboards that non-technical teams find approachable and easy to use, but advanced reporting is limited on lower tiers.
+5. **Trello** is a lightweight Kanban tool that is easy to learn and great for simple workflows, with a free plan that appeals to freelancers and small teams.
+
+For most teams, **Asana** is a great starting point, with **Notion** as a solid alternative.",false,Synthetic,Demo Synthetic Benchmark,2026-08-14,"Script-generated synthetic response, post-change wave (not a real AI platform output)."
+r123,p18,Claude (synthetic),claude-synthetic-demo,2026-08-14,1,"Several popular platforms could work well here:
+
+1. **Notion** is a flexible all-in-one workspace with docs, wikis, and databases. It is simple to start with ready-made templates and is popular with startups and small teams.
+2. **Asana** offers polished task tracking, timelines, and reporting. It is affordable for small teams and is often recommended for marketing teams.
+3. **ClickUp** is a highly customizable, all-in-one tool bundling tasks, docs, goals, and automations at an affordable price, though the interface can feel cluttered and the learning curve is steep.
+4. **Monday.com** offers colorful, spreadsheet-style boards, automations, and dashboards that non-technical teams find approachable and easy to use, but advanced reporting is limited on lower tiers.
+
+For most teams, **Notion** is a great starting point, with **Asana** as a solid alternative.
+
+Sources:
+- https://zapier.com/blog/best-project-management-software/
+- https://www.nytimes.com/wirecutter/reviews/best-to-do-list-app/
+- https://www.notion.so/product",true,Synthetic,Demo Synthetic Benchmark,2026-08-14,"Script-generated synthetic response, post-change wave (not a real AI platform output)."
+r124,p18,Claude (synthetic),claude-synthetic-demo,2026-08-14,2,"Several popular platforms could work well here:
+
+1. **Notion** is a flexible all-in-one workspace with docs, wikis, and databases. It is simple to start with ready-made templates and is popular with startups and small teams.
+2. **Asana** offers polished task tracking, timelines, and reporting. It is affordable for small teams and is often recommended for marketing teams.
+3. **ClickUp** is a highly customizable, all-in-one tool bundling tasks, docs, goals, and automations at an affordable price, though the interface can feel cluttered and the learning curve is steep.
+
+For most teams, **Notion** is a great starting point, with **Asana** as a solid alternative.",false,Synthetic,Demo Synthetic Benchmark,2026-08-14,"Script-generated synthetic response, post-change wave (not a real AI platform output)."
+r125,p19,Gemini (synthetic),gemini-synthetic-demo,2026-08-14,1,"Several popular platforms could work well here:
+
+1. **Asana** offers polished task tracking, timelines, and reporting. It is affordable for small teams and is often recommended for marketing teams.
+2. **Notion** is an all-in-one workspace that combines docs, wikis, databases, and project boards. Its strength is flexibility and a generous free plan, though it can be overwhelming to set up for beginners.
+3. **Monday.com** offers colorful, spreadsheet-style boards, automations, and dashboards that non-technical teams find approachable and easy to use, but advanced reporting is limited on lower tiers.
+4. **Trello** uses a simple, intuitive Kanban-board approach that is easy to learn and has a free plan, though it feels limited for complex projects and lacks advanced reporting.
+5. **ClickUp** packs powerful automations, dashboards, and goals into one platform. It is feature-rich, but it can get pricey on higher tiers.
+
+For most teams, **Asana** is a great starting point, with **Notion** as a solid alternative.",false,Synthetic,Demo Synthetic Benchmark,2026-08-14,"Script-generated synthetic response, post-change wave (not a real AI platform output)."
+r126,p19,Claude (synthetic),claude-synthetic-demo,2026-08-14,1,"A few widely used tools fit this need:
+
+1. **Asana** offers polished task tracking, timelines, and reporting. It is affordable for small teams and is often recommended for marketing teams.
+2. **Notion** is a flexible all-in-one workspace with docs, wikis, and databases. It is simple to start with ready-made templates and is popular with startups and small teams.
+3. **Trello** uses a simple, intuitive Kanban-board approach that is easy to learn and has a free plan, though it feels limited for complex projects and lacks advanced reporting.
+4. **Monday.com** offers colorful, spreadsheet-style boards, automations, and dashboards that non-technical teams find approachable and easy to use, but advanced reporting is limited on lower tiers.
+
+For most teams, **Asana** is a great starting point, with **Notion** as a solid alternative.
+
+Sources:
+- https://www.nytimes.com/wirecutter/reviews/best-to-do-list-app/
+- https://www.forbes.com/advisor/business/software/best-project-management-software/
+- https://www.capterra.com/project-management-software/
+- https://asana.com/product",true,Synthetic,Demo Synthetic Benchmark,2026-08-14,"Script-generated synthetic response, post-change wave (not a real AI platform output)."
+r127,p20,Gemini (synthetic),gemini-synthetic-demo,2026-08-14,1,"Here are some strong options to consider:
+
+1. **Notion** is an all-in-one workspace that combines docs, wikis, databases, and project boards. Its strength is flexibility and a generous free plan, though it can be overwhelming to set up for beginners.
+2. **Asana** offers polished task tracking, timelines, and reporting. It is affordable for small teams and is often recommended for marketing teams.
+
+For most teams, **Notion** is a great starting point, with **Asana** as a solid alternative.
+
+Sources:
+- https://www.pcmag.com/picks/the-best-project-management-software
+- https://www.reddit.com/r/productivity/comments/best-pm-tool/
+- https://www.notion.so/product",true,Synthetic,Demo Synthetic Benchmark,2026-08-14,"Script-generated synthetic response, post-change wave (not a real AI platform output)."
+r128,p20,Claude (synthetic),claude-synthetic-demo,2026-08-14,1,"Here are some strong options to consider:
+
+1. **Asana** offers polished task tracking, timelines, and reporting. It is affordable for small teams and is often recommended for marketing teams.
+2. **Notion** is a flexible all-in-one workspace with docs, wikis, and databases. It is simple to start with ready-made templates and is popular with startups and small teams.
+3. **ClickUp** is a highly customizable, all-in-one tool bundling tasks, docs, goals, and automations at an affordable price, though the interface can feel cluttered and the learning curve is steep.
+
+For most teams, **Asana** is a great starting point, with **Notion** as a solid alternative.
+
+Sources:
+- https://www.forbes.com/advisor/business/software/best-project-management-software/
+- https://www.pcmag.com/picks/the-best-project-management-software
+- https://asana.com/product",true,Synthetic,Demo Synthetic Benchmark,2026-08-14,"Script-generated synthetic response, post-change wave (not a real AI platform output)."
+r129,p21,ChatGPT (synthetic),gpt-synthetic-demo,2026-08-14,1,"Here are some strong options to consider:
+
+1. **Asana** is a mature project management platform known for reliable task tracking, timelines, and workload management. It is powerful for larger teams, but its pricing gets expensive at scale.
+2. **Trello** is a lightweight Kanban tool that is easy to learn and great for simple workflows, with a free plan that appeals to freelancers and small teams.
+
+For most teams, **Asana** is a great starting point, with **Trello** as a solid alternative.
+
+Sources:
+- https://www.forbes.com/advisor/business/software/best-project-management-software/
+- https://zapier.com/blog/best-project-management-software/
+- https://asana.com/product",true,Synthetic,Demo Synthetic Benchmark,2026-08-14,"Script-generated synthetic response, post-change wave (not a real AI platform output)."
+r130,p21,ChatGPT (synthetic),gpt-synthetic-demo,2026-08-14,2,"Several popular platforms could work well here:
+
+1. **Notion** is a flexible all-in-one workspace with docs, wikis, and databases. It is simple to start with ready-made templates and is popular with startups and small teams.
+2. **ClickUp** packs powerful automations, dashboards, and goals into one platform. It is feature-rich, but it can get pricey on higher tiers.
+3. **Monday.com** offers colorful, spreadsheet-style boards, automations, and dashboards that non-technical teams find approachable and easy to use, but advanced reporting is limited on lower tiers.
+4. **Trello** is a lightweight Kanban tool that is easy to learn and great for simple workflows, with a free plan that appeals to freelancers and small teams.
+
+For most teams, **Notion** is a great starting point, with **ClickUp** as a solid alternative.
+
+Sources:
+- https://www.reddit.com/r/productivity/comments/best-pm-tool/
+- https://www.capterra.com/project-management-software/
+- https://www.notion.so/product",true,Synthetic,Demo Synthetic Benchmark,2026-08-14,"Script-generated synthetic response, post-change wave (not a real AI platform output)."
+r131,p21,Gemini (synthetic),gemini-synthetic-demo,2026-08-14,1,"Based on common recommendations, these tools stand out:
+
+1. **Asana** offers polished task tracking, timelines, and reporting. It is affordable for small teams and is often recommended for marketing teams.
+2. **ClickUp** packs powerful automations, dashboards, and goals into one platform. It is feature-rich, but it can get pricey on higher tiers.
+3. **Trello** uses a simple, intuitive Kanban-board approach that is easy to learn and has a free plan, though it feels limited for complex projects and lacks advanced reporting.
+
+For most teams, **Asana** is a great starting point, with **ClickUp** as a solid alternative.
+
+Sources:
+- https://www.nytimes.com/wirecutter/reviews/best-to-do-list-app/
+- https://www.forbes.com/advisor/business/software/best-project-management-software/
+- https://asana.com/product",true,Synthetic,Demo Synthetic Benchmark,2026-08-14,"Script-generated synthetic response, post-change wave (not a real AI platform output)."
+r132,p21,Gemini (synthetic),gemini-synthetic-demo,2026-08-14,2,"A few widely used tools fit this need:
+
+1. **Notion** is an all-in-one workspace that combines docs, wikis, databases, and project boards. Its strength is flexibility and a generous free plan, though it can be overwhelming to set up for beginners.
+2. **Asana** offers polished task tracking, timelines, and reporting. It is affordable for small teams and is often recommended for marketing teams.
+
+For most teams, **Notion** is a great starting point, with **Asana** as a solid alternative.
+
+Sources:
+- https://www.forbes.com/advisor/business/software/best-project-management-software/
+- https://zapier.com/blog/best-project-management-software/
+- https://www.notion.so/product",true,Synthetic,Demo Synthetic Benchmark,2026-08-14,"Script-generated synthetic response, post-change wave (not a real AI platform output)."
+r133,p22,Claude (synthetic),claude-synthetic-demo,2026-08-14,1,"Based on common recommendations, these tools stand out:
+
+1. **Asana** offers polished task tracking, timelines, and reporting. It is affordable for small teams and is often recommended for marketing teams.
+2. **Trello** uses a simple, intuitive Kanban-board approach that is easy to learn and has a free plan, though it feels limited for complex projects and lacks advanced reporting.
+
+For most teams, **Asana** is a great starting point, with **Trello** as a solid alternative.",false,Synthetic,Demo Synthetic Benchmark,2026-08-14,"Script-generated synthetic response, post-change wave (not a real AI platform output)."
+r134,p22,Gemini (synthetic),gemini-synthetic-demo,2026-08-14,1,"Based on common recommendations, these tools stand out:
+
+1. **Notion** is an all-in-one workspace that combines docs, wikis, databases, and project boards. Its strength is flexibility and a generous free plan, though it can be overwhelming to set up for beginners.
+2. **Monday.com** offers colorful, spreadsheet-style boards, automations, and dashboards that non-technical teams find approachable and easy to use, but advanced reporting is limited on lower tiers.
+
+For most teams, **Notion** is a great starting point, with **Monday.com** as a solid alternative.
+
+Sources:
+- https://www.g2.com/categories/project-management
+- https://www.pcmag.com/picks/the-best-project-management-software
+- https://www.notion.so/product",true,Synthetic,Demo Synthetic Benchmark,2026-08-14,"Script-generated synthetic response, post-change wave (not a real AI platform output)."
+r135,p22,Gemini (synthetic),gemini-synthetic-demo,2026-08-14,2,"Based on common recommendations, these tools stand out:
+
+1. **Asana** offers polished task tracking, timelines, and reporting. It is affordable for small teams and is often recommended for marketing teams.
+2. **Notion** is an all-in-one workspace that combines docs, wikis, databases, and project boards. Its strength is flexibility and a generous free plan, though it can be overwhelming to set up for beginners.
+3. **Monday.com** offers colorful, spreadsheet-style boards, automations, and dashboards that non-technical teams find approachable and easy to use, but advanced reporting is limited on lower tiers.
+4. **ClickUp** packs powerful automations, dashboards, and goals into one platform. It is feature-rich, but it can get pricey on higher tiers.
+
+For most teams, **Asana** is a great starting point, with **Notion** as a solid alternative.
+
+Sources:
+- https://www.capterra.com/project-management-software/
+- https://www.forbes.com/advisor/business/software/best-project-management-software/
+- https://www.g2.com/categories/project-management
+- https://asana.com/product",true,Synthetic,Demo Synthetic Benchmark,2026-08-14,"Script-generated synthetic response, post-change wave (not a real AI platform output)."

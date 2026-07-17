@@ -37,6 +37,9 @@ PROMPTS_COLUMNS: list[str] = [
     "persona",
     "journey_stage",
     "is_brand_prompt",
+    # -- AEO question-cluster fields (added in the AEO upgrade) -------------
+    "search_intent",     # one of SEARCH_INTENTS; derived from prompt_category when absent
+    "question_cluster",  # user-defined cluster label; defaults to the prompt's topic
 ]
 
 RESPONSE_RUNS_COLUMNS: list[str] = [
@@ -114,6 +117,12 @@ PAGE_AUDITS_COLUMNS: list[str] = [
     "question_heading_count", # headings phrased as questions (AI answers favour these)
     "has_author",             # author info present (meta/schema/rel=author)
     "external_link_count",    # outbound source links (factual evidence signal)
+    # -- Answer Extractability fields (added in the AEO upgrade) ------------
+    "list_count",             # <ul>/<ol> elements (scannable, extractable structure)
+    "table_count",            # all <table> elements
+    "comparison_table_count", # tables with a header row and 3+ columns
+    "short_answer_count",     # question headings followed by a short (<=60 word) answer
+    "headings_text",          # concatenated H1-H3 text, used for cluster-question coverage
 ]
 
 # Allowed controlled-vocabulary values (used by validation + UI dropdowns).
@@ -128,6 +137,26 @@ PROMPT_CATEGORIES: list[str] = [
 ]
 
 JOURNEY_STAGES: list[str] = ["Awareness", "Consideration", "Decision", "Retention"]
+
+# Search intent for AEO clustering. Derived from prompt_category when not supplied,
+# so clustering uses existing structured metadata rather than keyword guessing.
+SEARCH_INTENTS: list[str] = [
+    "Informational",
+    "Commercial investigation",
+    "Transactional",
+    "Problem solving",
+    "Navigational / brand",
+]
+
+CATEGORY_TO_INTENT: dict[str, str] = {
+    "Informational": "Informational",
+    "Product comparison": "Commercial investigation",
+    "Purchase intent": "Transactional",
+    "Problem based": "Problem solving",
+    "Customer persona": "Commercial investigation",
+    "Brand specific": "Navigational / brand",
+    "Nonbrand discovery": "Commercial investigation",
+}
 
 # Honesty labels for a dataset. "Synthetic" must never be presented as a real
 # platform output; the UI and exports keep these strictly separated.
@@ -157,7 +186,9 @@ CREATE TABLE IF NOT EXISTS prompts (
     topic           VARCHAR,
     persona         VARCHAR,
     journey_stage   VARCHAR,
-    is_brand_prompt BOOLEAN
+    is_brand_prompt BOOLEAN,
+    search_intent    VARCHAR,
+    question_cluster VARCHAR
 );
 
 CREATE TABLE IF NOT EXISTS response_runs (
@@ -227,7 +258,12 @@ CREATE TABLE IF NOT EXISTS page_audits (
     answer_upfront    BOOLEAN,
     question_heading_count INTEGER,
     has_author        BOOLEAN,
-    external_link_count    INTEGER
+    external_link_count    INTEGER,
+    list_count             INTEGER,
+    table_count            INTEGER,
+    comparison_table_count INTEGER,
+    short_answer_count     INTEGER,
+    headings_text          VARCHAR
 );
 """
 
@@ -385,6 +421,7 @@ def load_analysis_from_csvs(
     if "project_id" not in prompts.columns:
         prompts["project_id"] = project_id
 
+    prompts = ensure_prompt_cluster_columns(prompts)
     return AnalysisData(
         projects=projects,
         prompts=prompts.reindex(columns=PROMPTS_COLUMNS),
@@ -396,3 +433,38 @@ def _to_bool(series: pd.Series) -> pd.Series:
     """Coerce a string/mixed column of truthy values into real booleans."""
     truthy = {"true", "t", "yes", "y", "1"}
     return series.astype(str).str.strip().str.lower().isin(truthy)
+
+
+def ensure_prompt_cluster_columns(prompts: pd.DataFrame) -> pd.DataFrame:
+    """Guarantee ``search_intent`` and ``question_cluster`` exist and are populated.
+
+    Uses existing structured metadata rather than keyword guessing:
+    * ``search_intent`` defaults from ``prompt_category`` via :data:`CATEGORY_TO_INTENT`.
+    * ``question_cluster`` defaults to the prompt's ``topic``.
+    Existing user-supplied values are always preserved.
+    """
+    if prompts is None or prompts.empty:
+        out = prompts.copy() if prompts is not None else pd.DataFrame(columns=PROMPTS_COLUMNS)
+        for col in ("search_intent", "question_cluster"):
+            if col not in out.columns:
+                out[col] = pd.Series(dtype=str)
+        return out
+
+    out = prompts.copy()
+    if "search_intent" not in out.columns:
+        out["search_intent"] = ""
+    if "question_cluster" not in out.columns:
+        out["question_cluster"] = ""
+
+    out["search_intent"] = out["search_intent"].fillna("").astype(str).str.strip()
+    out["question_cluster"] = out["question_cluster"].fillna("").astype(str).str.strip()
+
+    category = out["prompt_category"] if "prompt_category" in out.columns else pd.Series([""] * len(out), index=out.index)
+    derived_intent = category.map(lambda c: CATEGORY_TO_INTENT.get(str(c), "Informational"))
+    out["search_intent"] = out["search_intent"].where(out["search_intent"] != "", derived_intent)
+
+    topic = out["topic"] if "topic" in out.columns else pd.Series([""] * len(out), index=out.index)
+    out["question_cluster"] = out["question_cluster"].where(
+        out["question_cluster"] != "", topic.fillna("").astype(str)
+    )
+    return out

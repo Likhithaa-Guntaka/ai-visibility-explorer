@@ -66,3 +66,48 @@ def test_demo_is_labelled_synthetic():
     assert set(data.response_runs["dataset_kind"].unique()) == {"Synthetic"}
     assert not data.benchmarks.empty
     assert data.benchmarks.iloc[0]["dataset_kind"] == "Synthetic"
+
+
+# -- AEO cluster / search-intent filtering -----------------------------------
+
+
+def test_filter_by_question_cluster():
+    data = appkit.load_demo_analysis()
+    clusters = sorted(data.prompts["question_cluster"].unique())
+    target = clusters[0]
+    filtered = appkit.filter_data(data, question_clusters=[target])
+    assert not filtered.response_runs.empty
+    assert set(filtered.prompts["question_cluster"]) == {target}
+    # Every remaining run belongs to a prompt in the cluster.
+    allowed = set(filtered.prompts["prompt_id"])
+    assert set(filtered.response_runs["prompt_id"]) <= allowed
+
+
+def test_filter_by_search_intent():
+    data = appkit.load_demo_analysis()
+    filtered = appkit.filter_data(data, search_intents=["Transactional"])
+    assert not filtered.prompts.empty
+    assert set(filtered.prompts["search_intent"]) == {"Transactional"}
+
+
+def test_cluster_filter_combines_with_dataset_kind():
+    data = appkit.load_demo_analysis()
+    clusters = sorted(data.prompts["question_cluster"].unique())
+    filtered = appkit.filter_data(data, question_clusters=[clusters[0]], dataset_kinds=["Synthetic"])
+    assert not filtered.response_runs.empty
+    filtered_real = appkit.filter_data(data, question_clusters=[clusters[0]], dataset_kinds=["Real"])
+    assert filtered_real.response_runs.empty
+
+
+def test_filter_unknown_cluster_returns_empty():
+    data = appkit.load_demo_analysis()
+    assert appkit.filter_data(data, question_clusters=["does-not-exist"]).response_runs.empty
+
+
+def test_demo_has_two_collection_waves():
+    """The demo ships a baseline and a post-change wave so experiments are demonstrable."""
+    data = appkit.load_demo_analysis()
+    dates = sorted(data.response_runs["run_date"].unique())
+    assert len(dates) == 2
+    # Both waves remain clearly labelled synthetic.
+    assert set(data.response_runs["dataset_kind"].unique()) == {"Synthetic"}

@@ -66,6 +66,12 @@ class PageAudit:
     question_heading_count: Optional[int] = None
     has_author: Optional[bool] = None
     external_link_count: Optional[int] = None
+    # -- Answer Extractability fields --------------------------------------
+    list_count: Optional[int] = None
+    table_count: Optional[int] = None
+    comparison_table_count: Optional[int] = None
+    short_answer_count: Optional[int] = None
+    headings_text: Optional[str] = None
 
 
 def audit_url(url: str, session: "requests.Session | None" = None) -> PageAudit:
@@ -220,6 +226,20 @@ def _extract_page_signals(soup: "BeautifulSoup", base: str, audit: PageAudit) ->
     # appears before the first H2.
     audit.answer_upfront = _has_answer_upfront(soup)
 
+    # -- Answer Extractability signals -------------------------------------
+    # Lists and tables make facts easy for an answer engine to lift out.
+    audit.list_count = len(soup.find_all(["ul", "ol"]))
+    tables = soup.find_all("table")
+    audit.table_count = len(tables)
+    audit.comparison_table_count = sum(1 for t in tables if _looks_like_comparison_table(t))
+
+    # Short answer sections: a question heading followed by a concise answer.
+    audit.short_answer_count = _count_short_answer_sections(h1s + h2s + h3s)
+
+    # Heading text is kept so cluster-question coverage can be checked later.
+    heading_texts = [h.get_text(" ", strip=True) for h in (h1s + h2s + h3s)]
+    audit.headings_text = " | ".join(t for t in heading_texts if t)[:4000]
+
     # Approximate word count from visible body text.
     body_text = soup.get_text(" ", strip=True)
     audit.word_count = len(body_text.split()) if body_text else 0
@@ -266,6 +286,77 @@ def _appears_after(node, other) -> bool:
         if elem is node:
             return False
     return True
+
+
+def _looks_like_comparison_table(table) -> bool:
+    """Heuristic: a table with a header row and 3+ columns reads as a comparison table."""
+    headers = table.find_all("th")
+    if len(headers) >= 3:
+        return True
+    first_row = table.find("tr")
+    if first_row is not None and len(first_row.find_all(["td", "th"])) >= 3:
+        return True
+    return False
+
+
+def _count_short_answer_sections(headings, max_words: int = 60) -> int:
+    """Count question headings immediately followed by a concise (<= max_words) answer.
+
+    A short answer directly under a question heading is the single most extractable
+    shape for an answer engine.
+    """
+    count = 0
+    for h in headings:
+        if not _is_question(h.get_text(" ", strip=True)):
+            continue
+        sibling = h.find_next_sibling()
+        # Skip over empty wrappers to the first content element.
+        hops = 0
+        while sibling is not None and hops < 3:
+            text = sibling.get_text(" ", strip=True)
+            if text:
+                if 0 < len(text.split()) <= max_words:
+                    count += 1
+                break
+            sibling = sibling.find_next_sibling()
+            hops += 1
+    return count
+
+
+def question_coverage(headings_text: Optional[str], page_title: Optional[str],
+                      questions: list[str], min_overlap: float = 0.5) -> dict:
+    """Share of a cluster's questions that appear to be covered by the page's headings.
+
+    A question counts as covered when at least ``min_overlap`` of its meaningful words
+    (stop-words removed) appear in the page's headings or title. This is a transparent
+    word-overlap check on *headings*, not a semantic judgement — it can miss a question
+    that is answered in body copy under a differently-worded heading.
+
+    Returns ``covered``, ``total``, ``coverage`` and the per-question ``detail``.
+    """
+    haystack = f"{headings_text or ''} {page_title or ''}".lower()
+    total = len(questions)
+    if total == 0:
+        return {"covered": 0, "total": 0, "coverage": None, "detail": []}
+    detail, covered = [], 0
+    for q in questions:
+        words = [w for w in re.findall(r"[a-z0-9]+", q.lower()) if w not in _STOPWORDS and len(w) > 2]
+        if not words:
+            detail.append({"question": q, "covered": False, "overlap": 0.0})
+            continue
+        hits = sum(1 for w in set(words) if w in haystack)
+        overlap = hits / len(set(words))
+        is_covered = overlap >= min_overlap
+        covered += int(is_covered)
+        detail.append({"question": q, "covered": is_covered, "overlap": overlap})
+    return {"covered": covered, "total": total, "coverage": covered / total, "detail": detail}
+
+
+_STOPWORDS = {
+    "the", "a", "an", "and", "or", "for", "to", "of", "in", "on", "is", "are", "do", "does",
+    "what", "which", "how", "why", "when", "who", "should", "can", "my", "our", "we", "i",
+    "with", "that", "this", "it", "be", "best", "you", "your", "me", "am", "have", "has",
+}
 
 
 def _collect_schema_types(soup: "BeautifulSoup") -> Optional[str]:
@@ -526,5 +617,186 @@ def readiness_score(row, reference_year: Optional[int] = None) -> dict:
         "points_considered": considered,
         "formula": "score = sum(weight × credit) / sum(weight of known factors) × 100; "
                    "credit: pass=1.0, partial=0.5, fail=0.0; unknown factors excluded.",
+        "components": components,
+    }
+
+
+# ---------------------------------------------------------------------------
+# Answer Extractability Analysis (AEO upgrade).
+#
+# Extends the readiness audit with the shapes an answer engine can most easily lift
+# out of a page (short answers, lists, comparison tables) plus coverage of the
+# questions in a chosen AEO cluster. Every factor is reported separately, and the
+# summary states its exact component RULE — there is no unexplained score.
+# ---------------------------------------------------------------------------
+
+# Each rule is (factor, rule_text, weight). The rule text is displayed in the UI so a
+# reader can see precisely what was checked and what threshold was applied.
+EXTRACTABILITY_RULES: list[tuple[str, str, int]] = [
+    ("Direct answer near the beginning", "pass if a paragraph of 20+ words appears before the first H2", 12),
+    ("Question-based headings", "pass if ≥3 headings are questions; partial if 1-2", 10),
+    ("Short answer sections", "pass if ≥2 question headings are followed by a ≤60-word answer; partial if 1", 12),
+    ("Lists", "pass if ≥3 <ul>/<ol> lists; partial if 1-2", 8),
+    ("Comparison tables", "pass if ≥1 table with a header row and 3+ columns; partial if any table exists", 8),
+    ("Clear brand, product & category entities", "pass if Organization or Product schema is present; partial if only a page title", 8),
+    ("Supporting evidence & outbound sources", "pass if ≥3 external links; partial if 1-2", 10),
+    ("Answer schema (FAQ/Product/Organization/Article/HowTo)", "pass if ≥2 of these types; partial if exactly 1", 12),
+    ("Cluster question coverage", "pass if ≥60% of the selected cluster's questions are matched in headings/title; partial if ≥30%", 10),
+    ("Published & modified dates", "pass if both present; partial if one", 4),
+    ("Canonical URL", "pass if a canonical link is present", 3),
+    ("Crawlability (robots & sitemap)", "pass if robots.txt is reachable and a sitemap is found; partial if one", 3),
+]
+
+EXTRACTABILITY_WEIGHTS: dict[str, int] = {name: weight for name, _rule, weight in EXTRACTABILITY_RULES}
+_EXTRACTABILITY_RULE_TEXT: dict[str, str] = {name: rule for name, rule, _w in EXTRACTABILITY_RULES}
+
+
+def _tier(value: Optional[float], pass_at: float, partial_at: float) -> str:
+    """Map a numeric observation onto pass/partial/fail (unknown when value is None)."""
+    if value is None:
+        return "unknown"
+    if value >= pass_at:
+        return "pass"
+    if value >= partial_at:
+        return "partial"
+    return "fail"
+
+
+def extractability_factors(row, cluster_questions: Optional[list[str]] = None) -> list[dict]:
+    """The 12 Answer Extractability factors for one audited page, each reported separately.
+
+    ``cluster_questions`` are the prompt texts of the selected AEO cluster; when omitted,
+    the coverage factor is reported as ``unknown`` rather than guessed.
+
+    Each item: ``{"factor", "status", "observed", "rule", "weight"}``.
+    """
+    status_ok = _get(row, "audit_status") == "ok"
+    schema_types = str(_get(row, "schema_types", "") or "")
+    schema_hits = [t for t in READINESS_SCHEMA_TYPES if t.lower() in schema_types.lower()]
+
+    def gate(status: str) -> str:
+        """Anything read from the page body is unknown when the fetch didn't succeed."""
+        return status if status_ok else "unknown"
+
+    factors: list[dict] = []
+
+    def add(factor: str, status: str, observed: str) -> None:
+        factors.append({
+            "factor": factor,
+            "status": status,
+            "observed": observed,
+            "rule": _EXTRACTABILITY_RULE_TEXT[factor],
+            "weight": EXTRACTABILITY_WEIGHTS[factor],
+        })
+
+    # 1. Direct answer near the beginning
+    ans = _get(row, "answer_upfront")
+    add("Direct answer near the beginning", gate("pass" if ans else "fail"),
+        "Substantive paragraph before the first H2" if ans else "No early answer paragraph found")
+
+    # 2. Question-based headings
+    q = _get(row, "question_heading_count")
+    add("Question-based headings", gate(_tier(q, 3, 1)), f"{q if q is not None else '—'} question-style heading(s)")
+
+    # 3. Short answer sections
+    sa = _get(row, "short_answer_count")
+    add("Short answer sections", gate(_tier(sa, 2, 1)),
+        f"{sa if sa is not None else '—'} question heading(s) followed by a concise answer")
+
+    # 4. Lists
+    lc = _get(row, "list_count")
+    add("Lists", gate(_tier(lc, 3, 1)), f"{lc if lc is not None else '—'} list element(s)")
+
+    # 5. Comparison tables
+    ct, tc = _get(row, "comparison_table_count"), _get(row, "table_count")
+    if ct is None and tc is None:
+        ct_status, ct_obs = "unknown", "—"
+    elif (ct or 0) >= 1:
+        ct_status, ct_obs = "pass", f"{ct} comparison-style table(s) of {tc} total"
+    elif (tc or 0) >= 1:
+        ct_status, ct_obs = "partial", f"{tc} table(s), none with 3+ columns"
+    else:
+        ct_status, ct_obs = "fail", "No tables"
+    add("Comparison tables", gate(ct_status), ct_obs)
+
+    # 6. Clear brand, product & category entities
+    has_entity_schema = ("Organization" in schema_hits) or ("Product" in schema_hits)
+    has_title = bool(_get(row, "page_title"))
+    ent_status = "pass" if has_entity_schema else ("partial" if has_title else "fail")
+    add("Clear brand, product & category entities", gate(ent_status),
+        ", ".join(schema_hits) if has_entity_schema else ("Title only, no Organization/Product schema" if has_title else "No entity signal"))
+
+    # 7. Supporting evidence & outbound sources
+    ext = _get(row, "external_link_count")
+    add("Supporting evidence & outbound sources", gate(_tier(ext, 3, 1)),
+        f"{ext if ext is not None else '—'} external link(s)")
+
+    # 8. Answer schema
+    add("Answer schema (FAQ/Product/Organization/Article/HowTo)", gate(_tier(len(schema_hits) if status_ok else None, 2, 1)),
+        ", ".join(schema_hits) if schema_hits else "None of FAQPage/HowTo/Product/Organization/Article")
+
+    # 9. Cluster question coverage
+    if not cluster_questions:
+        add("Cluster question coverage", "unknown", "No AEO cluster selected — coverage not evaluated")
+    else:
+        cov = question_coverage(_get(row, "headings_text"), _get(row, "page_title"), cluster_questions)
+        pct = cov["coverage"] or 0.0
+        add("Cluster question coverage", gate(_tier(pct, 0.6, 0.3)),
+            f"{cov['covered']}/{cov['total']} cluster question(s) matched in headings/title ({round(pct*100)}%)")
+
+    # 10. Published & modified dates
+    has_pub, has_mod = bool(_get(row, "published_date")), bool(_get(row, "modified_date"))
+    add("Published & modified dates", gate("pass" if (has_pub and has_mod) else ("partial" if (has_pub or has_mod) else "fail")),
+        f"published={_get(row,'published_date','—')}, modified={_get(row,'modified_date','—')}")
+
+    # 11. Canonical URL
+    canonical = _get(row, "canonical_url")
+    add("Canonical URL", gate("pass" if canonical else "fail"), canonical or "No canonical link")
+
+    # 12. Crawlability
+    robots, sitemap = _get(row, "robots_accessible"), _get(row, "sitemap_found")
+    if robots is None and sitemap is None:
+        crawl = "unknown"
+    elif robots and sitemap:
+        crawl = "pass"
+    elif robots or sitemap:
+        crawl = "partial"
+    else:
+        crawl = "fail"
+    add("Crawlability (robots & sitemap)", crawl, f"robots={robots}, sitemap={sitemap}")
+
+    return factors
+
+
+def extractability_summary(row, cluster_questions: Optional[list[str]] = None) -> dict:
+    """Transparent Answer Extractability summary — component rules always shown.
+
+    Uses the same explicit arithmetic as the readiness score: each factor's rule and
+    weight are displayed, credit is pass=1.0 / partial=0.5 / fail=0.0, and factors that
+    could not be observed are excluded from both sides of the ratio (so a blocked page
+    is reported as *unknown*, never as a misleading 0).
+
+    Returns ``score`` (None if nothing observable), ``points_earned``,
+    ``points_considered``, ``formula``, ``rules`` and per-factor ``components``.
+    """
+    factors = extractability_factors(row, cluster_questions)
+    components, earned, considered = [], 0.0, 0.0
+    for f in factors:
+        weight = f["weight"]
+        if f["status"] == "unknown":
+            components.append({**f, "credit": None, "points": None})
+            continue
+        credit = _STATUS_CREDIT[f["status"]]
+        pts = weight * credit
+        earned += pts
+        considered += weight
+        components.append({**f, "credit": credit, "points": pts})
+    return {
+        "score": (earned / considered * 100) if considered else None,
+        "points_earned": earned,
+        "points_considered": considered,
+        "formula": "Answer Extractability = sum(weight × credit) / sum(weight of evaluated factors) × 100; "
+                   "credit: pass=1.0, partial=0.5, fail=0.0; factors that could not be observed are excluded.",
+        "rules": EXTRACTABILITY_RULES,
         "components": components,
     }

@@ -121,5 +121,76 @@ if audits is not None and not audits.empty:
         "Pattern to *investigate*, not conclude: do frequently-cited pages tend to score higher? "
         "Treat any correlation as a hypothesis. Technical traits do not prove causation of AI citations."
     )
+
+    # -- Answer Extractability Analysis (AEO) ------------------------------
+    st.divider()
+    st.subheader("Answer Extractability Analysis")
+    st.caption(
+        "How easily an answer engine can lift a usable answer off this page: short answers, "
+        "lists, comparison tables, entities, evidence, schema — plus how much of a chosen AEO "
+        "question cluster the page actually covers. Every factor is shown separately with the "
+        "exact rule applied."
+    )
+
+    from src import clusters as C  # noqa: E402
+
+    cluster_questions = None
+    cluster_label = "(none)"
+    prompts_norm = C.prepare_prompts(data.prompts)
+    if not prompts_norm.empty:
+        ec1, ec2 = st.columns(2)
+        with ec1:
+            ex_dim = st.selectbox(
+                "Cluster dimension (for question coverage)",
+                C.CLUSTER_DIMENSIONS,
+                format_func=lambda d: C.DIMENSION_LABELS.get(d, d),
+                key="extract_dim",
+            )
+        with ec2:
+            options = ["(skip coverage check)"] + sorted(prompts_norm[ex_dim].dropna().unique().tolist())
+            ex_val = st.selectbox("AEO question cluster", options, key="extract_cluster")
+        if ex_val != "(skip coverage check)":
+            cluster_questions = C.cluster_questions(data, ex_dim, ex_val)
+            cluster_label = ex_val
+
+    ex_url = st.selectbox("Choose an audited page", url_options, key="extract_url")
+    ex_row = enriched[enriched["citation_url"] == ex_url].iloc[0].to_dict()
+    ex = PA.extractability_summary(ex_row, cluster_questions)
+
+    if ex["score"] is not None:
+        st.metric(
+            "Answer Extractability (transparent summary)", f"{round(ex['score'])}/100",
+            help="Weighted from the component rules below — every rule, weight and point is shown.",
+        )
+    else:
+        st.info("Nothing observable on this page (blocked/timed out), so no summary is computed.")
+    if cluster_questions:
+        st.caption(f"Coverage checked against **{len(cluster_questions)}** question(s) in cluster: *{cluster_label}*.")
+
+    for f in ex["components"]:
+        st.markdown(
+            f"{_STATUS_ICON[f['status']]} **{f['factor']}** ({f['status']}, weight {f['weight']}) — {f['observed']}"
+        )
+        st.caption(f"Rule: {f['rule']}")
+
+    with st.expander("Show the exact component rules, weights and points"):
+        st.markdown(f"**Formula:** {ex['formula']}")
+        st.dataframe(
+            [
+                {"Factor": c["factor"], "Rule": c["rule"], "Status": c["status"],
+                 "Weight": c["weight"], "Credit": c["credit"], "Points": c["points"]}
+                for c in ex["components"]
+            ],
+            use_container_width=True, hide_index=True,
+        )
+        st.caption(
+            f"Points earned {ex['points_earned']:.1f} ÷ points evaluated {ex['points_considered']:.1f} × 100. "
+            "Factors that could not be observed are excluded from both sides."
+        )
+
+    st.caption(
+        "Extractability describes the page's *shape*, not its ranking. A high summary does not "
+        "guarantee citation, and these traits are associations — not proven causes."
+    )
 else:
     st.info("No audit has been run yet. Click **Run page audit** above.")

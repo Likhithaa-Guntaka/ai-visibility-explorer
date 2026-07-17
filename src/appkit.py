@@ -12,7 +12,12 @@ from typing import Optional
 
 import pandas as pd
 
-from .database import AnalysisData, BENCHMARKS_COLUMNS, load_analysis_from_csvs
+from .database import (
+    AnalysisData,
+    BENCHMARKS_COLUMNS,
+    ensure_prompt_cluster_columns,
+    load_analysis_from_csvs,
+)
 from .entities import extract_all_entities
 from .extraction import build_alias_map, extract_all
 
@@ -75,7 +80,11 @@ def run_extraction(data: AnalysisData, alias_overrides: Optional[dict[str, list[
     alias_map = build_alias_map(data.brands, alias_overrides)
     mentions, citations = extract_all(data.response_runs, alias_map)
     entities = extract_all_entities(data.response_runs, alias_map)
-    return replace(data, brand_mentions=mentions, citations=citations, brand_entities=entities)
+    # Guarantee AEO clustering columns exist for hand-entered prompts too.
+    prompts = ensure_prompt_cluster_columns(data.prompts)
+    return replace(
+        data, prompts=prompts, brand_mentions=mentions, citations=citations, brand_entities=entities
+    )
 
 
 # ---------------------------------------------------------------------------
@@ -143,6 +152,8 @@ def filter_data(
     run_dates: Optional[list[str]] = None,
     dataset_kinds: Optional[list[str]] = None,
     benchmark_names: Optional[list[str]] = None,
+    search_intents: Optional[list[str]] = None,
+    question_clusters: Optional[list[str]] = None,
 ) -> AnalysisData:
     """Filter an analysis by response and prompt attributes.
 
@@ -153,7 +164,8 @@ def filter_data(
     and synthetic results separated.
     """
     runs = data.response_runs.copy()
-    prompts = data.prompts.copy()
+    # Normalize so AEO cluster columns are always available to filter on.
+    prompts = ensure_prompt_cluster_columns(data.prompts)
 
     # Prompt-level filters restrict the set of prompt_ids.
     if categories:
@@ -164,6 +176,10 @@ def filter_data(
         prompts = prompts[prompts["persona"].isin(personas)]
     if journey_stages:
         prompts = prompts[prompts["journey_stage"].isin(journey_stages)]
+    if search_intents:
+        prompts = prompts[prompts["search_intent"].isin(search_intents)]
+    if question_clusters:
+        prompts = prompts[prompts["question_cluster"].isin(question_clusters)]
     allowed_prompt_ids = set(prompts["prompt_id"])
 
     # Response-level filters.
