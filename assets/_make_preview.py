@@ -104,5 +104,67 @@ def _card(d: "ImageDraw.ImageDraw", x: int, y: int, w: int, h: int) -> None:
     d.rounded_rectangle([x, y, x + w, y + h], radius=14, fill=CARD, outline=(226, 232, 240), width=1)
 
 
+def build_readiness() -> None:
+    """Second preview: AI Answer Readiness factors + citation source types (from demo)."""
+    from src import citation_quality as CQ
+
+    data = appkit.load_demo_analysis()
+    classified = CQ.classify_citations(data.citations, data.brands, "Notion")
+    stb = CQ.source_type_breakdown(classified)
+
+    GREEN, AMBER, RED = (22, 163, 74), (217, 119, 6), (220, 38, 38)
+    W, H = 1200, 675
+    img = Image.new("RGB", (W, H), BG)
+    d = ImageDraw.Draw(img)
+
+    d.text((40, 30), "AI Answer Readiness  ·  Citation Source Types", font=_font(30, bold=True), fill=INK)
+    d.text((40, 72), "Each factor shown separately · transparent score (no opaque number) · synthetic demo",
+            font=_font(16), fill=MUTED)
+
+    # Left card: readiness factors (representative sample).
+    _card(d, 40, 118, 560, 500)
+    d.text((64, 138), "AI Answer Readiness — sample page", font=_font(20, bold=True), fill=INK)
+    factors = [
+        ("Direct answer near the beginning", "pass"), ("Question-based headings", "pass"),
+        ("H1/H2/H3 hierarchy", "pass"), ("Answer-friendly schema (FAQ/HowTo/…)", "pass"),
+        ("Author information", "partial"), ("Published & modified dates", "pass"),
+        ("Source links / factual evidence", "pass"), ("Brand & product entity clarity", "pass"),
+        ("Canonical URL", "pass"), ("Robots & sitemap access", "partial"),
+        ("Content freshness", "fail"), ("Topic coverage (depth)", "pass"),
+    ]
+    icon_color = {"pass": GREEN, "partial": AMBER, "fail": RED}
+    icon_txt = {"pass": "✓", "partial": "~", "fail": "✗"}
+    y = 178
+    for name, status in factors:
+        d.ellipse([64, y + 3, 82, y + 21], fill=icon_color[status])
+        d.text((68, y + 2), icon_txt[status], font=_font(14, bold=True), fill=(255, 255, 255))
+        d.text((96, y), name, font=_font(16), fill=INK)
+        y += 35
+    d.text((64, y + 6), "Score = Σ(weight × credit) / Σ(known weights) × 100", font=_font(14), fill=MUTED)
+
+    # Right card: source-type bars (real demo numbers).
+    _card(d, 620, 118, 540, 500)
+    d.text((644, 138), "Citation source types (relative to Notion)", font=_font(20, bold=True), fill=INK)
+    top = 186
+    bar_x = 860
+    bar_max = 250
+    max_c = float(stb["citations"].max()) if not stb.empty else 1.0
+    for _, row in stb.head(7).iterrows():
+        label = str(row["source_type"])
+        c = int(row["citations"])
+        d.text((644, top + 8), label[:22], font=_font(15), fill=INK)
+        width = int(bar_max * (c / max_c)) if max_c else 0
+        d.rounded_rectangle([bar_x, top + 6, bar_x + max(width, 4), top + 30], radius=5, fill=BLUE)
+        d.text((bar_x + width + 10, top + 8), str(c), font=_font(15), fill=MUTED)
+        top += 44
+
+    d.text((40, H - 28), "Deterministic · associations not causation · real vs synthetic kept separate",
+            font=_font(15), fill=MUTED)
+    out = os.path.join(HERE, "readiness_preview.png")
+    img.save(out)
+    print(f"Wrote {out}")
+
+
 if __name__ == "__main__":
     build()
+    build_readiness()

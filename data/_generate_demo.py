@@ -17,10 +17,17 @@ the test suite / README findings stay reproducible.
 from __future__ import annotations
 
 import csv
+import hashlib
 import os
 import random
 
 random.seed(42)  # deterministic output
+
+
+def _stable_hash(*parts) -> int:
+    """Deterministic, cross-process hash (Python's built-in hash() is randomized)."""
+    joined = "|".join(str(p) for p in parts)
+    return int(hashlib.md5(joined.encode("utf-8")).hexdigest(), 16)
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 
@@ -111,7 +118,7 @@ def _ordered_brands_for_prompt(prompt_id: str, salt: int) -> list[str]:
     strength plus per-run jitter, so repeated runs mostly agree but occasionally
     reorder — the noise the consistency metric is meant to surface.
     """
-    rng = random.Random(hash((prompt_id, salt)) & 0xFFFFFFFF)
+    rng = random.Random(_stable_hash(prompt_id, salt) & 0xFFFFFFFF)
     included = []
     for b in BRANDS:
         # Inclusion probability tracks strength but leaves headroom below 1.0 so even
@@ -127,7 +134,41 @@ def _ordered_brands_for_prompt(prompt_id: str, salt: int) -> list[str]:
     return included
 
 
-def _build_response_text(prompt_id: str, ordered: list[str], with_citations: bool, rng: random.Random) -> str:
+# Two descriptor variants per brand. The variant is chosen by PLATFORM so different
+# platforms describe the same brand slightly differently — this deliberately creates
+# realistic narrative variation and a few genuine conflicts (e.g. "affordable" vs
+# "pricey") for the Entity & Narrative Analysis page to surface.
+BLURB_VARIANTS = {
+    "Notion": [
+        "**Notion** is an all-in-one workspace that combines docs, wikis, databases, and project boards. Its strength is flexibility and a generous free plan, though it can be overwhelming to set up for beginners.",
+        "**Notion** is a flexible all-in-one workspace with docs, wikis, and databases. It is simple to start with ready-made templates and is popular with startups and small teams.",
+    ],
+    "Asana": [
+        "**Asana** is a mature project management platform known for reliable task tracking, timelines, and workload management. It is powerful for larger teams, but its pricing gets expensive at scale.",
+        "**Asana** offers polished task tracking, timelines, and reporting. It is affordable for small teams and is often recommended for marketing teams.",
+    ],
+    "ClickUp": [
+        "**ClickUp** is a highly customizable, all-in-one tool bundling tasks, docs, goals, and automations at an affordable price, though the interface can feel cluttered and the learning curve is steep.",
+        "**ClickUp** packs powerful automations, dashboards, and goals into one platform. It is feature-rich, but it can get pricey on higher tiers.",
+    ],
+    "Monday.com": [
+        "**Monday.com** offers colorful, spreadsheet-style boards, automations, and dashboards that non-technical teams find approachable and easy to use, but advanced reporting is limited on lower tiers.",
+        "**Monday.com** provides visual boards with powerful dashboards and reporting. Its automations suit larger teams, though it can feel expensive as you add seats.",
+    ],
+    "Trello": [
+        "**Trello** uses a simple, intuitive Kanban-board approach that is easy to learn and has a free plan, though it feels limited for complex projects and lacks advanced reporting.",
+        "**Trello** is a lightweight Kanban tool that is easy to learn and great for simple workflows, with a free plan that appeals to freelancers and small teams.",
+    ],
+}
+
+
+def _blurb_for(brand: str, platform: str) -> str:
+    """Deterministically pick a brand's descriptor variant based on the platform."""
+    variants = BLURB_VARIANTS[brand]
+    return variants[_stable_hash(brand, platform) % len(variants)]
+
+
+def _build_response_text(prompt_id: str, ordered: list[str], with_citations: bool, platform: str, rng: random.Random) -> str:
     """Compose a synthetic answer that mentions brands in order and may cite sources."""
     intro = rng.choice(
         [
@@ -138,15 +179,8 @@ def _build_response_text(prompt_id: str, ordered: list[str], with_citations: boo
         ]
     )
     lines = [intro, ""]
-    blurbs = {
-        "Notion": "**Notion** is an all-in-one workspace that combines docs, wikis, and flexible databases, which makes it popular with teams that want to consolidate tools.",
-        "Asana": "**Asana** is a mature project management platform with strong task tracking, timelines, and workload views.",
-        "ClickUp": "**ClickUp** is a highly customizable option that bundles tasks, docs, and goals, often positioned as an all-in-one alternative.",
-        "Monday.com": "**Monday.com** offers colorful, spreadsheet-style boards and automations that non-technical teams find approachable.",
-        "Trello": "**Trello** uses a simple Kanban-board approach that is easy to learn, though it can feel limited for complex projects.",
-    }
     for i, b in enumerate(ordered, start=1):
-        lines.append(f"{i}. {blurbs[b]}")
+        lines.append(f"{i}. {_blurb_for(b, platform)}")
     lines.append("")
     # The top-ranked brand is framed as the recommendation.
     lines.append(f"For most teams, **{ordered[0]}** is a great starting point, with **{ordered[1]}** as a solid alternative.")
@@ -192,8 +226,8 @@ def build() -> None:
                 ordered = _ordered_brands_for_prompt(pid, salt=run_counter)
                 # ~75% of answers include citations.
                 with_citations = random.random() < 0.75
-                rng = random.Random(hash((pid, platform, run_number)) & 0xFFFFFFFF)
-                text = _build_response_text(pid, ordered, with_citations, rng)
+                rng = random.Random(_stable_hash(pid, platform, run_number) & 0xFFFFFFFF)
+                text = _build_response_text(pid, ordered, with_citations, platform, rng)
                 response_rows.append(
                     {
                         "run_id": f"r{run_counter:03d}",
@@ -204,6 +238,10 @@ def build() -> None:
                         "run_number": run_number,
                         "response_text": text,
                         "has_citations": str(with_citations).lower(),
+                        "dataset_kind": "Synthetic",
+                        "benchmark_name": "Demo Synthetic Benchmark",
+                        "collection_date": RUN_DATE,
+                        "collection_notes": "Script-generated synthetic response (not a real AI platform output).",
                     }
                 )
                 run_counter += 1
@@ -215,7 +253,8 @@ def build() -> None:
     )
     _write_csv(
         os.path.join(HERE, "demo_responses.csv"),
-        ["run_id", "prompt_id", "platform", "model_name", "run_date", "run_number", "response_text", "has_citations"],
+        ["run_id", "prompt_id", "platform", "model_name", "run_date", "run_number", "response_text", "has_citations",
+         "dataset_kind", "benchmark_name", "collection_date", "collection_notes"],
         response_rows,
     )
     print(f"Wrote {len(prompt_rows)} prompts and {len(response_rows)} synthetic responses.")

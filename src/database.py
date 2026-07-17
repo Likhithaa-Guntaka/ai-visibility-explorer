@@ -48,6 +48,36 @@ RESPONSE_RUNS_COLUMNS: list[str] = [
     "run_number",
     "response_text",
     "has_citations",
+    # -- Real Benchmark Mode fields (added in the upgrade) -------------------
+    "dataset_kind",     # one of DATASET_KINDS — keeps real and synthetic separate
+    "benchmark_name",   # optional named benchmark this run belongs to
+    "collection_date",  # when the user actually collected the response
+    "collection_notes", # free-text provenance notes
+]
+
+# A benchmark is a named collection of runs. It records the honesty label for the
+# whole collection so real and synthetic data never get silently mixed.
+BENCHMARKS_COLUMNS: list[str] = [
+    "benchmark_name",
+    "dataset_kind",     # Synthetic | Real | User Collected
+    "created_at",
+    "notes",
+]
+
+# Deterministically-extracted, user-editable narrative entities per (run, brand).
+# Multi-valued fields are stored as "; "-joined strings so they round-trip to CSV
+# and are easy to correct in a Streamlit data editor.
+BRAND_ENTITIES_COLUMNS: list[str] = [
+    "run_id",
+    "brand_name",
+    "brand_category",
+    "products",
+    "features",
+    "personas",
+    "strengths",
+    "weaknesses",
+    "pricing_positioning",
+    "competitors_alongside",
 ]
 
 BRAND_MENTIONS_COLUMNS: list[str] = [
@@ -78,6 +108,12 @@ PAGE_AUDITS_COLUMNS: list[str] = [
     "modified_date",
     "word_count",
     "audit_status",
+    # -- AI Answer Readiness Audit fields (added in the upgrade) -------------
+    "h3_count",
+    "answer_upfront",         # a substantive paragraph appears before the first H2
+    "question_heading_count", # headings phrased as questions (AI answers favour these)
+    "has_author",             # author info present (meta/schema/rel=author)
+    "external_link_count",    # outbound source links (factual evidence signal)
 ]
 
 # Allowed controlled-vocabulary values (used by validation + UI dropdowns).
@@ -92,6 +128,10 @@ PROMPT_CATEGORIES: list[str] = [
 ]
 
 JOURNEY_STAGES: list[str] = ["Awareness", "Consideration", "Decision", "Retention"]
+
+# Honesty labels for a dataset. "Synthetic" must never be presented as a real
+# platform output; the UI and exports keep these strictly separated.
+DATASET_KINDS: list[str] = ["Synthetic", "Real", "User Collected"]
 
 # DDL for the persistent/in-memory schema. Kept close to the DuckDB type system.
 _SCHEMA_DDL: str = """
@@ -128,7 +168,31 @@ CREATE TABLE IF NOT EXISTS response_runs (
     run_date      VARCHAR,
     run_number    INTEGER,
     response_text VARCHAR,
-    has_citations BOOLEAN
+    has_citations BOOLEAN,
+    dataset_kind     VARCHAR,
+    benchmark_name   VARCHAR,
+    collection_date  VARCHAR,
+    collection_notes VARCHAR
+);
+
+CREATE TABLE IF NOT EXISTS benchmarks (
+    benchmark_name VARCHAR,
+    dataset_kind   VARCHAR,
+    created_at     VARCHAR,
+    notes          VARCHAR
+);
+
+CREATE TABLE IF NOT EXISTS brand_entities (
+    run_id                VARCHAR,
+    brand_name            VARCHAR,
+    brand_category        VARCHAR,
+    products              VARCHAR,
+    features              VARCHAR,
+    personas              VARCHAR,
+    strengths             VARCHAR,
+    weaknesses            VARCHAR,
+    pricing_positioning   VARCHAR,
+    competitors_alongside VARCHAR
 );
 
 CREATE TABLE IF NOT EXISTS brand_mentions (
@@ -158,7 +222,12 @@ CREATE TABLE IF NOT EXISTS page_audits (
     published_date    VARCHAR,
     modified_date     VARCHAR,
     word_count        INTEGER,
-    audit_status      VARCHAR
+    audit_status      VARCHAR,
+    h3_count          INTEGER,
+    answer_upfront    BOOLEAN,
+    question_heading_count INTEGER,
+    has_author        BOOLEAN,
+    external_link_count    INTEGER
 );
 """
 
@@ -185,6 +254,12 @@ class AnalysisData:
     citations: pd.DataFrame = field(default_factory=lambda: pd.DataFrame(columns=CITATIONS_COLUMNS))
     page_audits: pd.DataFrame = field(
         default_factory=lambda: pd.DataFrame(columns=PAGE_AUDITS_COLUMNS)
+    )
+    benchmarks: pd.DataFrame = field(
+        default_factory=lambda: pd.DataFrame(columns=BENCHMARKS_COLUMNS)
+    )
+    brand_entities: pd.DataFrame = field(
+        default_factory=lambda: pd.DataFrame(columns=BRAND_ENTITIES_COLUMNS)
     )
 
     def table(self, name: str) -> pd.DataFrame:
@@ -235,6 +310,8 @@ class Database:
             "brand_mentions": data.brand_mentions,
             "citations": data.citations,
             "page_audits": data.page_audits,
+            "benchmarks": data.benchmarks,
+            "brand_entities": data.brand_entities,
         }
         for name, df in mapping.items():
             self.con.execute(f"DELETE FROM {name}")
@@ -290,6 +367,16 @@ def load_analysis_from_csvs(
         responses["run_number"] = pd.to_numeric(responses["run_number"], errors="coerce").fillna(1).astype(int)
     if "has_citations" in responses.columns:
         responses["has_citations"] = _to_bool(responses["has_citations"])
+
+    # Default the Real-Benchmark fields when a CSV does not provide them. A dataset
+    # with no explicit label is treated as "Synthetic" so it is never mistaken for
+    # real platform output.
+    if "dataset_kind" not in responses.columns or responses["dataset_kind"].eq("").all():
+        responses["dataset_kind"] = "Synthetic"
+    responses["dataset_kind"] = responses["dataset_kind"].replace("", "Synthetic")
+    for col, default in [("benchmark_name", ""), ("collection_date", ""), ("collection_notes", "")]:
+        if col not in responses.columns:
+            responses[col] = default
 
     projects = pd.DataFrame(
         [{"project_id": project_id, "project_name": project_name, "industry": industry, "created_at": ""}],

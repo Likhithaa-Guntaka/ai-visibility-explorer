@@ -13,7 +13,9 @@ from typing import Optional
 
 import pandas as pd
 
+from . import entities as ENT
 from . import metrics as M
+from .citation_quality import classify_citations, source_type_breakdown
 from .database import AnalysisData
 
 
@@ -22,11 +24,15 @@ class Readout:
     """Structured customer-facing summary. Each field is a list of plain sentences."""
 
     executive_summary: list[str] = field(default_factory=list)
+    what_ai_says: list[str] = field(default_factory=list)
+    narrative_inconsistencies: list[str] = field(default_factory=list)
+    influential_source_types: list[str] = field(default_factory=list)
     strongest_areas: list[str] = field(default_factory=list)
     weakest_areas: list[str] = field(default_factory=list)
     competitors_gaining: list[str] = field(default_factory=list)
     frequent_sources: list[str] = field(default_factory=list)
     content_gaps: list[str] = field(default_factory=list)
+    content_actions: list[str] = field(default_factory=list)
     next_actions: list[str] = field(default_factory=list)
     limitations_confidence: list[str] = field(default_factory=list)
 
@@ -71,10 +77,21 @@ def build_readout(data: AnalysisData, focal_brand: str) -> Readout:
     focal_rank = _rank(leaderboard, "brand_name", focal_brand)
     n_brands = len(leaderboard)
 
+    # Describe the dataset honestly (real vs synthetic) in the summary.
+    kinds = sorted(data.response_runs["dataset_kind"].dropna().unique().tolist()) if "dataset_kind" in data.response_runs.columns else []
+    if kinds == ["Synthetic"]:
+        data_desc = "synthetic (demo) AI responses"
+    elif "Synthetic" in kinds and len(kinds) > 1:
+        data_desc = "AI responses (⚠ mixes synthetic and real — filter by dataset type)"
+    elif kinds:
+        data_desc = f"{'/'.join(kinds).lower()} AI responses"
+    else:
+        data_desc = "AI responses"
+
     # -- Executive summary ---------------------------------------------------
     rank_txt = f"ranks #{focal_rank} of {n_brands}" if focal_rank else "was not ranked"
     r.executive_summary.append(
-        f"Across {n} synthetic AI responses, {focal_brand} was mentioned in "
+        f"Across {n} {data_desc}, {focal_brand} was mentioned in "
         f"{_pct(focal_mr)} of answers and holds {_pct(focal_sov)} share of voice, and {rank_txt} "
         f"among tracked brands."
     )
@@ -92,6 +109,48 @@ def build_readout(data: AnalysisData, focal_brand: str) -> Readout:
     r.executive_summary.append(
         f"{_pct(cite['citation_rate'])} of responses included at least one source link."
     )
+
+    # -- What AI says about the brand (narrative descriptors) ----------------
+    common = ENT.common_descriptors(data.brand_entities, focal_brand, min_share=0.4)
+    if not common.empty:
+        top_desc = common.head(4)["descriptor"].tolist()
+        r.what_ai_says.append(
+            f"AI answers most often describe {focal_brand} as: " + ", ".join(top_desc) + "."
+        )
+    strengths = ENT.descriptor_frequency(data.brand_entities, focal_brand, "strengths").head(3)
+    weaknesses = ENT.descriptor_frequency(data.brand_entities, focal_brand, "weaknesses").head(3)
+    if not strengths.empty:
+        r.what_ai_says.append("Commonly cited strengths: " + ", ".join(strengths["descriptor"]) + ".")
+    if not weaknesses.empty:
+        r.what_ai_says.append("Commonly cited weaknesses: " + ", ".join(weaknesses["descriptor"]) + ".")
+    if not r.what_ai_says:
+        r.what_ai_says.append(f"Not enough descriptive language was found to characterize {focal_brand}.")
+
+    # -- Where the narrative is inconsistent ---------------------------------
+    conflicts = ENT.conflicting_descriptions(data.brand_entities, focal_brand)
+    for _, c in conflicts.iterrows():
+        r.narrative_inconsistencies.append(
+            f"{focal_brand} is described as both '{c['descriptor_a']}' ({int(c['count_a'])}×) and "
+            f"'{c['descriptor_b']}' ({int(c['count_b'])}×) across responses — a mixed message."
+        )
+    nc = ENT.narrative_consistency(data.brand_entities, data.response_runs, focal_brand)
+    if nc["consistency"] is not None:
+        r.narrative_inconsistencies.append(
+            f"Descriptor overlap across runs averages {_pct(nc['consistency'])} — "
+            + ("fairly consistent." if nc["consistency"] >= 0.7 else "the narrative varies noticeably run-to-run.")
+        )
+    if not r.narrative_inconsistencies:
+        r.narrative_inconsistencies.append("No clear narrative conflicts were detected in this sample.")
+
+    # -- Which source types influence answers --------------------------------
+    classified = classify_citations(data.citations, data.brands, focal_brand)
+    stb = source_type_breakdown(classified)
+    for _, s in stb.head(4).iterrows():
+        r.influential_source_types.append(
+            f"{s['source_type']}: {int(s['citations'])} citations ({_pct(s['share'])} of sources)."
+        )
+    if not r.influential_source_types:
+        r.influential_source_types.append("No source URLs were found to classify.")
 
     # -- Strongest areas -----------------------------------------------------
     cat_perf = M.visibility_by_attribute(enriched, data.response_runs, data.prompts, "prompt_category", focal_brand)
@@ -151,6 +210,18 @@ def build_readout(data: AnalysisData, focal_brand: str) -> Readout:
     if not r.content_gaps:
         r.content_gaps.append(f"No clear topic gaps where competitors beat {focal_brand} in this sample.")
 
+    # -- Content actions (from deterministic briefs) -------------------------
+    from .briefs import build_briefs  # local import avoids any load-order surprises
+
+    briefs = build_briefs(data, focal_brand, max_briefs=3)
+    for b in briefs:
+        r.content_actions.append(
+            f"Create a {b.suggested_format.lower()} on '{b.topic}' for {b.target_persona} "
+            f"({b.journey_stage}). Suggested title: “{b.suggested_title}”. Schema: {b.recommended_schema}."
+        )
+    if not r.content_actions:
+        r.content_actions.append("No content gaps require a brief right now — maintain current coverage.")
+
     # -- Next actions (grounded, prioritized) --------------------------------
     if not real_gaps.empty:
         top_gap = real_gaps.iloc[0]
@@ -199,13 +270,17 @@ def readout_to_markdown(readout: Readout, focal_brand: str, project_name: str) -
     """Render a :class:`Readout` as a Markdown document for export."""
     sections = [
         ("Executive summary", readout.executive_summary),
+        ("What AI says about the brand", readout.what_ai_says),
+        ("Where the narrative is inconsistent", readout.narrative_inconsistencies),
+        ("Which source types influence answers", readout.influential_source_types),
         ("Strongest visibility areas", readout.strongest_areas),
         ("Weakest visibility areas", readout.weakest_areas),
-        ("Competitors ahead / gaining", readout.competitors_gaining),
+        ("Where competitors are winning", readout.competitors_gaining),
         ("Frequently cited sources", readout.frequent_sources),
         ("Content gaps", readout.content_gaps),
+        ("Content actions to take", readout.content_actions),
         ("Recommended next actions", readout.next_actions),
-        ("Limitations and confidence", readout.limitations_confidence),
+        ("Confidence and limitations", readout.limitations_confidence),
     ]
     lines = [
         f"# AI Visibility Readout — {focal_brand}",

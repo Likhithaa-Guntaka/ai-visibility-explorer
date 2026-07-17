@@ -12,7 +12,8 @@ from typing import Optional
 
 import pandas as pd
 
-from .database import AnalysisData, load_analysis_from_csvs
+from .database import AnalysisData, BENCHMARKS_COLUMNS, load_analysis_from_csvs
+from .entities import extract_all_entities
 from .extraction import build_alias_map, extract_all
 
 DATA_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "data")
@@ -51,14 +52,30 @@ def load_demo_analysis() -> AnalysisData:
         industry="Productivity Software",
     )
     data.brands = demo_brands_df()
+    # Register the synthetic benchmark so real vs synthetic separation is explicit.
+    data.benchmarks = pd.DataFrame(
+        [{
+            "benchmark_name": "Demo Synthetic Benchmark",
+            "dataset_kind": "Synthetic",
+            "created_at": "2026-07-10",
+            "notes": "Script-generated demo data. Not real AI platform output.",
+        }],
+        columns=BENCHMARKS_COLUMNS,
+    )
     return run_extraction(data)
 
 
 def run_extraction(data: AnalysisData, alias_overrides: Optional[dict[str, list[str]]] = None) -> AnalysisData:
-    """(Re)compute brand_mentions and citations from response_runs, return new AnalysisData."""
+    """(Re)compute brand_mentions, citations, and narrative entities from response_runs.
+
+    Returns a new :class:`AnalysisData`. Entity/narrative extraction (feature 2) runs
+    alongside the original brand-mention and citation extraction so all deterministic
+    signals are refreshed together.
+    """
     alias_map = build_alias_map(data.brands, alias_overrides)
     mentions, citations = extract_all(data.response_runs, alias_map)
-    return replace(data, brand_mentions=mentions, citations=citations)
+    entities = extract_all_entities(data.response_runs, alias_map)
+    return replace(data, brand_mentions=mentions, citations=citations, brand_entities=entities)
 
 
 # ---------------------------------------------------------------------------
@@ -124,12 +141,16 @@ def filter_data(
     personas: Optional[list[str]] = None,
     journey_stages: Optional[list[str]] = None,
     run_dates: Optional[list[str]] = None,
+    dataset_kinds: Optional[list[str]] = None,
+    benchmark_names: Optional[list[str]] = None,
 ) -> AnalysisData:
     """Filter an analysis by response and prompt attributes.
 
     A value of ``None`` (or empty list) means "no filter on that dimension". The
     returned object contains only the responses matching every active filter, plus
-    the mentions/citations belonging to those responses and the prompts they use.
+    the mentions/citations/entities belonging to those responses and the prompts they
+    use. ``dataset_kinds`` and ``benchmark_names`` are the key controls that keep real
+    and synthetic results separated.
     """
     runs = data.response_runs.copy()
     prompts = data.prompts.copy()
@@ -152,17 +173,23 @@ def filter_data(
         runs = runs[runs["platform"].isin(platforms)]
     if run_dates and not runs.empty:
         runs = runs[runs["run_date"].isin(run_dates)]
+    if dataset_kinds and not runs.empty and "dataset_kind" in runs.columns:
+        runs = runs[runs["dataset_kind"].isin(dataset_kinds)]
+    if benchmark_names and not runs.empty and "benchmark_name" in runs.columns:
+        runs = runs[runs["benchmark_name"].isin(benchmark_names)]
 
     allowed_run_ids = set(runs["run_id"]) if not runs.empty else set()
-    mentions = data.brand_mentions[data.brand_mentions["run_id"].isin(allowed_run_ids)] if not data.brand_mentions.empty else data.brand_mentions
-    citations = data.citations[data.citations["run_id"].isin(allowed_run_ids)] if not data.citations.empty else data.citations
+
+    def _subset(df: pd.DataFrame) -> pd.DataFrame:
+        return df[df["run_id"].isin(allowed_run_ids)] if not df.empty else df
 
     return replace(
         data,
         prompts=prompts.reset_index(drop=True),
         response_runs=runs.reset_index(drop=True),
-        brand_mentions=mentions.reset_index(drop=True),
-        citations=citations.reset_index(drop=True),
+        brand_mentions=_subset(data.brand_mentions).reset_index(drop=True),
+        citations=_subset(data.citations).reset_index(drop=True),
+        brand_entities=_subset(data.brand_entities).reset_index(drop=True),
     )
 
 

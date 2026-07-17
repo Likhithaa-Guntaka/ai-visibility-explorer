@@ -43,6 +43,16 @@ def sidebar_filters(st, data: AnalysisData) -> AnalysisData:
         focal = st.sidebar.selectbox("Focal brand", brands, index=idx, help="The brand most metrics are computed for.")
         st.session_state["focal_brand"] = focal
 
+    # Dataset-kind and benchmark filters keep REAL and SYNTHETIC data separated.
+    kind_options = appkit.unique_values(data.response_runs, "dataset_kind")
+    dataset_kinds = st.sidebar.multiselect(
+        "Dataset type", kind_options,
+        help="Keep Real, User Collected, and Synthetic data separate. Leave empty to view all (a warning is shown if mixed).",
+    )
+    benchmark_options = appkit.unique_values(data.response_runs, "benchmark_name")
+    benchmark_options = [b for b in benchmark_options if b]
+    benchmark_names = st.sidebar.multiselect("Benchmark", benchmark_options) if benchmark_options else []
+
     platforms = st.sidebar.multiselect("AI platform", appkit.unique_values(data.response_runs, "platform"))
     categories = st.sidebar.multiselect("Prompt category", appkit.unique_values(data.prompts, "prompt_category"))
     topics = st.sidebar.multiselect("Topic", appkit.unique_values(data.prompts, "topic"))
@@ -58,6 +68,19 @@ def sidebar_filters(st, data: AnalysisData) -> AnalysisData:
         personas=personas or None,
         journey_stages=stages or None,
         run_dates=dates or None,
+        dataset_kinds=dataset_kinds or None,
+        benchmark_names=benchmark_names or None,
     )
     st.sidebar.caption(f"{len(filtered.response_runs)} of {len(data.response_runs)} responses in view.")
+
+    # Honesty guard: warn whenever the current view mixes real and synthetic data.
+    if not filtered.response_runs.empty and "dataset_kind" in filtered.response_runs.columns:
+        kinds_in_view = sorted(filtered.response_runs["dataset_kind"].dropna().unique().tolist())
+        if len(kinds_in_view) > 1:
+            st.sidebar.warning(
+                "⚠ This view mixes dataset types: " + ", ".join(kinds_in_view) +
+                ". Filter by a single **Dataset type** to keep real and synthetic results separate.",
+            )
+        elif kinds_in_view:
+            st.sidebar.caption(f"Dataset type in view: **{kinds_in_view[0]}**")
     return filtered

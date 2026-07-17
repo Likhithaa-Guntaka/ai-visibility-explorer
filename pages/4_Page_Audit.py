@@ -68,16 +68,58 @@ if audits is not None and not audits.empty:
     enriched = summarize_audits(audits, data.citations)
     display_cols = [
         "citation_url", "citation_domain", "times_cited", "audit_status", "page_title",
-        "h1_count", "h2_count", "schema_types", "word_count",
+        "h1_count", "h2_count", "h3_count", "schema_types", "word_count", "external_link_count",
+        "question_heading_count", "answer_upfront", "has_author",
         "published_date", "modified_date", "robots_accessible", "sitemap_found", "canonical_url",
     ]
     display_cols = [c for c in display_cols if c in enriched.columns]
     st.dataframe(enriched[display_cols], use_container_width=True, hide_index=True)
 
+    # -- AI Answer Readiness, per page, factor-by-factor --------------------
+    st.divider()
+    st.subheader("AI Answer Readiness — per page")
     st.caption(
-        "Pattern to *investigate* (not conclude): do frequently-cited pages tend to share "
-        "traits such as structured data, clear headings, or recent modification dates? "
-        "Treat any pattern as a hypothesis for further testing."
+        "Each of 12 factors is shown separately. The optional summary score is fully "
+        "transparent: its exact formula, weights, and per-factor points are always displayed. "
+        "There is deliberately no opaque overall score."
+    )
+    from src import page_audit as PA  # noqa: E402
+
+    _STATUS_ICON = {"pass": "✅", "partial": "🟡", "fail": "❌", "unknown": "⚪"}
+    url_options = enriched["citation_url"].tolist()
+    chosen = st.selectbox("Choose an audited page", url_options)
+    row = enriched[enriched["citation_url"] == chosen].iloc[0].to_dict()
+
+    score = PA.readiness_score(row)
+    if score["score"] is not None:
+        st.metric("Readiness score (transparent)", f"{round(score['score'])}/100",
+                  help="Optional weighted score — formula and components shown below.")
+    else:
+        st.info("Not enough was observable on this page to compute a score (e.g. blocked/timed out).")
+
+    factors = PA.readiness_factors(row)
+    for f in factors:
+        weight = PA.READINESS_WEIGHTS.get(f["factor"], 0)
+        st.markdown(f"{_STATUS_ICON[f['status']]} **{f['factor']}** ({f['status']}, weight {weight}) — {f['observed']}")
+
+    with st.expander("Show the exact scoring formula, weights, and points"):
+        st.markdown(f"**Formula:** {score['formula']}")
+        comp_rows = [
+            {
+                "Factor": c["factor"], "Status": c["status"], "Weight": c["weight"],
+                "Credit": c["credit"], "Points": c["points"],
+            }
+            for c in score["components"]
+        ]
+        st.dataframe(comp_rows, use_container_width=True, hide_index=True)
+        st.caption(
+            f"Points earned {score['points_earned']:.1f} ÷ points considered "
+            f"{score['points_considered']:.1f} × 100. Unknown factors are excluded from both."
+        )
+
+    st.caption(
+        "Pattern to *investigate*, not conclude: do frequently-cited pages tend to score higher? "
+        "Treat any correlation as a hypothesis. Technical traits do not prove causation of AI citations."
     )
 else:
     st.info("No audit has been run yet. Click **Run page audit** above.")

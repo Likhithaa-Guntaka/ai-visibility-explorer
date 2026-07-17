@@ -37,13 +37,17 @@ st.info(
 
 SECTIONS = [
     ("Executive summary", readout.executive_summary, "🎯"),
+    ("What AI says about the brand", readout.what_ai_says, "💬"),
+    ("Where the narrative is inconsistent", readout.narrative_inconsistencies, "🔀"),
+    ("Which source types influence answers", readout.influential_source_types, "🧭"),
     ("Strongest visibility areas", readout.strongest_areas, "💪"),
     ("Weakest visibility areas", readout.weakest_areas, "🔻"),
-    ("Competitors ahead / gaining", readout.competitors_gaining, "🏁"),
+    ("Where competitors are winning", readout.competitors_gaining, "🏁"),
     ("Frequently cited sources", readout.frequent_sources, "🔗"),
     ("Content gaps", readout.content_gaps, "🕳️"),
+    ("Content actions to take", readout.content_actions, "🧱"),
     ("Recommended next actions", readout.next_actions, "✅"),
-    ("Limitations & confidence", readout.limitations_confidence, "⚠️"),
+    ("Confidence and limitations", readout.limitations_confidence, "⚠️"),
 ]
 
 for title, items, icon in SECTIONS:

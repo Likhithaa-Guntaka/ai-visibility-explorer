@@ -11,6 +11,7 @@ import streamlit as st
 from src import appkit
 from src.database import (
     AnalysisData,
+    DATASET_KINDS,
     JOURNEY_STAGES,
     PROMPT_CATEGORIES,
     _to_bool,
@@ -182,6 +183,22 @@ with tab_responses:
         icon="⚠️",
     )
 
+    # -- Benchmark Mode: label this batch as Real / User Collected / Synthetic --
+    st.markdown("##### Benchmark & dataset label")
+    st.caption(
+        "Label every batch you add so **real** and **synthetic** results stay separated in every "
+        "chart and export. Real = collected from a live platform; Synthetic = generated/example data."
+    )
+    bcol1, bcol2 = st.columns(2)
+    with bcol1:
+        dataset_kind = st.selectbox("Dataset type", DATASET_KINDS, index=1,  # default to "Real" for manual input
+                                    help="How this batch was obtained. Synthetic data is never shown as real output.")
+        benchmark_name = st.text_input("Benchmark name", value="My Benchmark",
+                                       help="A name for this collection, e.g. 'July 2026 – ChatGPT'.")
+    with bcol2:
+        collection_date = st.date_input("Collection date")
+        collection_notes = st.text_input("Collection notes (optional)", value="")
+
     mode = st.radio("Add responses by", ["Upload CSV", "Paste a single response"], horizontal=True)
 
     if mode == "Upload CSV":
@@ -192,11 +209,18 @@ with tab_responses:
             result = validate_responses(df, known)
             _show_validation(result)
             if result.ok:
-                df = df.reindex(columns=["run_id", "prompt_id", "platform", "model_name", "run_date", "run_number", "response_text", "has_citations"])
+                df = df.reindex(columns=["run_id", "prompt_id", "platform", "model_name", "run_date",
+                                         "run_number", "response_text", "has_citations",
+                                         "dataset_kind", "benchmark_name", "collection_date", "collection_notes"])
                 df["run_number"] = pd.to_numeric(df["run_number"], errors="coerce").fillna(1).astype(int)
                 df["has_citations"] = _to_bool(df["has_citations"].fillna("false"))
+                # Apply the batch labels where the CSV didn't supply them.
+                df["dataset_kind"] = df["dataset_kind"].replace("", pd.NA).fillna(dataset_kind)
+                df["benchmark_name"] = df["benchmark_name"].replace("", pd.NA).fillna(benchmark_name)
+                df["collection_date"] = df["collection_date"].replace("", pd.NA).fillna(str(collection_date))
+                df["collection_notes"] = df["collection_notes"].replace("", pd.NA).fillna(collection_notes)
                 appkit.set_data(replace(appkit.get_data(), response_runs=df.fillna("")))
-                st.success(f"Loaded {len(df)} responses. Go to tab 4 to run extraction.")
+                st.success(f"Loaded {len(df)} responses as '{dataset_kind}'. Go to tab 4 to run extraction.")
     else:
         with st.form("paste_form"):
             prompt_ids = appkit.get_data().prompts["prompt_id"].tolist() if not appkit.get_data().prompts.empty else []
@@ -217,15 +241,20 @@ with tab_responses:
                     "run_number": int(run_number),
                     "response_text": text,
                     "has_citations": "http" in text.lower(),
+                    "dataset_kind": dataset_kind,
+                    "benchmark_name": benchmark_name,
+                    "collection_date": str(collection_date),
+                    "collection_notes": collection_notes,
                 }
                 updated = pd.concat([cur, pd.DataFrame([new_row])], ignore_index=True)
                 appkit.set_data(replace(appkit.get_data(), response_runs=updated))
-                st.success("Response added. Go to tab 4 to run extraction.")
+                st.success(f"Response added as '{dataset_kind}'. Go to tab 4 to run extraction.")
 
     cur_runs = appkit.get_data().response_runs
     if not cur_runs.empty:
         st.caption(f"{len(cur_runs)} response(s) currently loaded.")
-        st.dataframe(cur_runs[["run_id", "prompt_id", "platform", "run_number"]], use_container_width=True, height=200)
+        view_cols = [c for c in ["run_id", "prompt_id", "platform", "run_number", "dataset_kind", "benchmark_name"] if c in cur_runs.columns]
+        st.dataframe(cur_runs[view_cols], use_container_width=True, height=200)
 
 # ---------------------------------------------------------------------------
 # Tab 4 — Review & Correct
@@ -259,5 +288,13 @@ with tab_review:
             appkit.set_data(replace(appkit.get_data(), citations=edited_c))
             st.success("Citation corrections saved.")
 
+    if not d.brand_entities.empty:
+        st.markdown("**Extracted brand entities & narrative** (editable — correct descriptors)")
+        st.caption("Category, products, features, personas, strengths, weaknesses, positioning, and competitors mentioned alongside each brand.")
+        edited_e = st.data_editor(d.brand_entities, num_rows="dynamic", use_container_width=True, key="entities_editor", height=280)
+        if st.button("Save entity corrections"):
+            appkit.set_data(replace(appkit.get_data(), brand_entities=edited_e))
+            st.success("Entity corrections saved.")
+
     if not d.brand_mentions.empty:
-        st.success("✅ Analysis is ready. Open the **Visibility Dashboard** from the sidebar.")
+        st.success("✅ Analysis is ready. Open the **Visibility Dashboard**, **Entity & Narrative Analysis**, and **Content Action Briefs** from the sidebar.")
