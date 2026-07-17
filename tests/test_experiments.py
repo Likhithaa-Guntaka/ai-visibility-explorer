@@ -31,11 +31,11 @@ def _data() -> AnalysisData:
     ])
     runs = pd.DataFrame([
         # Baseline: Trello absent from both questions.
-        _row("b1", "p1", "2026-07-01", "1. **Notion** is flexible."),
-        _row("b2", "p2", "2026-07-01", "1. **Notion** is affordable."),
+        _row("b1", "p1", "2026-06-05", "1. **Notion** is flexible."),
+        _row("b2", "p2", "2026-06-05", "1. **Notion** is affordable."),
         # Post: Trello now appears in both.
-        _row("a1", "p1", "2026-08-01", "1. **Trello** is simple. 2. **Notion** is flexible."),
-        _row("a2", "p2", "2026-08-01", "1. **Trello** is affordable. https://g2.com/x"),
+        _row("a1", "p1", "2026-07-10", "1. **Trello** is simple. 2. **Notion** is flexible."),
+        _row("a2", "p2", "2026-07-10", "1. **Trello** is affordable. https://g2.com/x"),
     ])
     brands = pd.DataFrame([
         {"brand_id": "b1", "project_id": "x", "brand_name": "Notion", "brand_domain": "notion.so"},
@@ -47,7 +47,7 @@ def _data() -> AnalysisData:
 @pytest.fixture
 def exp():
     return X.Experiment(
-        name="test", focal_brand="Trello", baseline_date="2026-07-01", post_date="2026-08-01",
+        name="test", focal_brand="Trello", baseline_date="2026-06-05", post_date="2026-07-10",
         cluster_dimension="question_cluster", cluster_value=None,
         change_made="added pages", hypothesis="visibility rises",
         primary_kpi="Brand mention rate", secondary_kpis=["Share of voice"],
@@ -55,13 +55,13 @@ def exp():
 
 
 def test_available_dates():
-    assert X.available_dates(_data()) == ["2026-07-01", "2026-08-01"]
+    assert X.available_dates(_data()) == ["2026-06-05", "2026-07-10"]
 
 
 def test_slice_arm_splits_by_date():
     data = _data()
-    base = X.slice_arm(data, "2026-07-01")
-    post = X.slice_arm(data, "2026-08-01")
+    base = X.slice_arm(data, "2026-06-05")
+    post = X.slice_arm(data, "2026-07-10")
     assert set(base.response_runs["run_id"]) == {"b1", "b2"}
     assert set(post.response_runs["run_id"]) == {"a1", "a2"}
     # Derived tables follow the slice.
@@ -70,7 +70,7 @@ def test_slice_arm_splits_by_date():
 
 def test_slice_arm_respects_cluster():
     data = _data()
-    arm = X.slice_arm(data, "2026-07-01", "question_cluster", "Pricing")
+    arm = X.slice_arm(data, "2026-06-05", "question_cluster", "Pricing")
     assert set(arm.response_runs["run_id"]) == {"b2"}
 
 

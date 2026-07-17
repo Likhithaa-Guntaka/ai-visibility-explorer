@@ -34,6 +34,15 @@ st.warning(
     icon="⚠️",
 )
 
+# Honesty note whenever the loaded data is the synthetic demo scenario.
+if "dataset_kind" in data.response_runs.columns and set(data.response_runs["dataset_kind"].unique()) == {"Synthetic"}:
+    st.info(
+        "**Synthetic demonstration scenario.** The baseline and post-change waves are synthetic "
+        "demonstration data created to show the experiment workflow. They do not represent real "
+        "platform responses or evidence of actual brand performance changes.",
+        icon="🧪",
+    )
+
 dates = X.available_dates(data)
 if len(dates) < 2:
     st.info(

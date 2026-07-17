@@ -111,3 +111,21 @@ def test_demo_has_two_collection_waves():
     assert len(dates) == 2
     # Both waves remain clearly labelled synthetic.
     assert set(data.response_runs["dataset_kind"].unique()) == {"Synthetic"}
+
+
+def test_demo_wave_dates_are_the_corrected_ones():
+    """The synthetic demonstration scenario uses baseline 2026-06-05, post-change 2026-07-10."""
+    data = appkit.load_demo_analysis()
+    assert sorted(data.response_runs["run_date"].unique()) == ["2026-06-05", "2026-07-10"]
+    # collection_date must agree with run_date for every synthetic row.
+    assert (data.response_runs["run_date"] == data.response_runs["collection_date"]).all()
+    assert data.benchmarks.iloc[0]["created_at"] == "2026-06-05"
+
+
+def test_demo_contains_no_future_dates():
+    """Guard against re-introducing a demo wave dated after the project's current date."""
+    data = appkit.load_demo_analysis()
+    latest_allowed = "2026-07-16"
+    for col in ("run_date", "collection_date"):
+        future = [d for d in data.response_runs[col].unique() if str(d) > latest_allowed]
+        assert not future, f"{col} contains future-dated demo rows: {future}"

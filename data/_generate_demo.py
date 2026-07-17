@@ -10,6 +10,11 @@ not produced by ChatGPT, Claude, Gemini, Perplexity, or any real AI platform. Th
 The data is designed to be *realistic enough to exercise every metric* while being
 honestly fictional. Nothing here should be presented as a real measurement.
 
+The dataset ships two collection waves (a baseline and a post-change wave) so the AEO
+Experiments page has something to compare. The baseline and post-change waves are
+synthetic demonstration data created to show the experiment workflow. They do not
+represent real platform responses or evidence of actual brand performance changes.
+
 The generator is fully deterministic (fixed random seed) so the CSVs are stable and
 the test suite / README findings stay reproducible.
 """
@@ -111,15 +116,16 @@ PLATFORMS = [
     ("Gemini (synthetic)", "gemini-synthetic-demo"),
 ]
 
-RUN_DATE = "2026-07-10"
-
 # Two synthetic collection waves so the AEO Experiments page has a before/after to
-# compare. WAVE 2 applies a small, INVENTED uplift to Trello, as if content work had
-# happened between the waves. This is illustrative demo data only — it is NOT evidence
-# that any change caused any effect, and it is NOT real AI platform output.
+# compare.
+#
+# SYNTHETIC DEMONSTRATION SCENARIO: wave 2 applies a small, INVENTED uplift to Trello,
+# as if content work had happened between the waves. The baseline and post-change waves
+# are synthetic demonstration data created to show the experiment workflow. They do not
+# represent real platform responses or evidence of actual brand performance changes.
 WAVES = [
-    {"label": "baseline", "run_date": "2026-07-10", "strength_delta": {}},
-    {"label": "post-change", "run_date": "2026-08-14", "strength_delta": {"Trello": 0.18}},
+    {"label": "baseline", "run_date": "2026-06-05", "strength_delta": {}},
+    {"label": "post-change", "run_date": "2026-07-10", "strength_delta": {"Trello": 0.18}},
 ]
 
 # User-defined AEO question clusters, mapped from the existing topic metadata (not

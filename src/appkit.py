@@ -62,8 +62,12 @@ def load_demo_analysis() -> AnalysisData:
         [{
             "benchmark_name": "Demo Synthetic Benchmark",
             "dataset_kind": "Synthetic",
-            "created_at": "2026-07-10",
-            "notes": "Script-generated demo data. Not real AI platform output.",
+            # The benchmark starts at the baseline wave.
+            "created_at": "2026-06-05",
+            "notes": (
+                "Script-generated demo data (baseline 2026-06-05, post-change 2026-07-10). "
+                "Synthetic demonstration scenario — not real AI platform output."
+            ),
         }],
         columns=BENCHMARKS_COLUMNS,
     )

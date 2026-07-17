@@ -56,6 +56,10 @@ measurable experiments**:
    citation rate, source coverage, narrative consistency, and competitor visibility — with absolute
    change, percentage-point change, sample sizes, platform-level and prompt-level results, and
    confidence/limitations. **Findings are stated as associations, never as proof of causation.**
+   The demo ships a **synthetic demonstration scenario** with two waves (baseline `2026-06-05`,
+   post-change `2026-07-10`). The baseline and post-change waves are synthetic demonstration data
+   created to show the experiment workflow. They do not represent real platform responses or
+   evidence of actual brand performance changes.
 8. **Answer Extractability Analysis** (inside page 4) — extends the readiness audit with the shapes
    an answer engine can actually lift: short answer sections, lists, comparison tables, entity
    clarity, evidence/outbound sources, FAQ/Product/Organization/Article/HowTo schema, and **coverage
@@ -416,8 +420,11 @@ python assets/_make_preview.py    # rebuilds the preview PNGs
    cluster-question coverage).
 7. Open **AEO Question Clusters** — switch the clustering dimension, inspect a cluster's wins/losses,
    and read the *one page or several?* recommendation with its evidence.
-8. Open **AEO Experiments** — the demo ships **two synthetic waves** (baseline `2026-07-10`,
-   post-change `2026-08-14`), so you can run a before/after comparison immediately.
+8. Open **AEO Experiments** — the demo ships **two synthetic waves** (baseline `2026-06-05`,
+   post-change `2026-07-10`), so you can run a before/after comparison immediately.
+   *The baseline and post-change waves are synthetic demonstration data created to show the
+   experiment workflow. They do not represent real platform responses or evidence of actual
+   brand performance changes.*
 9. Open **Customer Readout** and **⬇️ Download** the Markdown summary.
 10. Read **Limitations & Confidence**, and note the **Dataset type** filter keeps real vs synthetic separate.
 
@@ -429,19 +436,25 @@ python assets/_make_preview.py    # rebuilds the preview PNGs
 > responses across two waves). They illustrate the kind of insight the tool surfaces — they are
 > **not** real market data and **not** real AI platform output.
 
-- **Notion leads visibility** — ~86% mention rate, ~31% share of voice, and ~85% recommendation
-  rate, and it is mentioned first in most answers that name any tracked brand.
-- **A "loud but not loved" gap exists.** **Monday.com** holds ~22% share of voice but only a
-  ~21% recommendation rate — it gets *named* often but *picked* rarely. **ClickUp** has *less*
-  share of voice (~13%) yet a **higher** recommendation rate (~38%). Share of voice alone would
-  miss this.
-- **Third-party sources matter.** News/media and review domains (e.g. G2, Capterra, PCMag,
-  Reddit) together outweigh brand-owned domains among cited sources (~76% citation rate overall).
-- **Results are noisy.** Across repeated runs of the same prompt, brand sets overlapped only
-  ~60% on average — a single run is not a conclusion.
-- **The synthetic before/after wave** shows Trello's recommendation rate ~+16 pp and the top
-  competitor's share of voice ~−5 pp between the two waves. This is **invented demo data used to
-  exercise the Experiments page** — it is not evidence that any change caused any effect.
+- **In the demo data, Notion leads visibility** — ~86% mention rate, ~31% share of voice, and
+  ~85% recommendation rate, and it is mentioned first in most answers that name any tracked
+  brand. This reflects the invented brand-strength weights in the generator, not the real Notion.
+- **The demo data contains a "loud but not loved" pattern.** **Monday.com** holds ~22% share of
+  voice but only a ~21% recommendation rate — *named* often but *picked* rarely — while
+  **ClickUp** has *less* share of voice (~13%) yet a *higher* recommendation rate (~38%). The
+  point is that share of voice alone would miss this shape; the numbers themselves are invented.
+- **In the demo data, third-party sources dominate citations.** News/media and review domains
+  (e.g. G2, Capterra, PCMag, Reddit) together outweigh brand-owned domains (~76% citation rate
+  overall). The source pool is fictional and chosen by the generator.
+- **The demo data is deliberately noisy.** Across repeated runs of the same prompt, brand sets
+  overlapped only ~60% on average — included to show why a single run is not a conclusion.
+- **Synthetic demonstration scenario (before/after waves).** Between the baseline
+  (`2026-06-05`) and post-change (`2026-07-10`) waves, Trello's recommendation rate moves
+  ~+16 pp and the top competitor's share of voice ~−5 pp. The baseline and post-change waves
+  are synthetic demonstration data created to show the experiment workflow. They do not
+  represent real platform responses or evidence of actual brand performance changes. The uplift
+  is **invented by the demo generator** to exercise the Experiments page — it is not a finding,
+  and it is not evidence that any change caused any effect.
 
 ## What a Marketing Team Could Do With These Insights
 
