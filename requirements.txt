@@ -1,5 +1,6 @@
 # AI Visibility Explorer — Phase 1 (MVP) dependencies
-# Pinned to versions verified on Python 3.14. Loosen if you need older Python.
+# Recommended environment: Python 3.12 (matches the devcontainer / Codespaces image).
+# Also verified working on Python 3.14; loosen the pins only if you need older Python.
 pandas>=2.2
 duckdb>=1.1
 streamlit>=1.40

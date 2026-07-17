@@ -8,11 +8,16 @@ non-technical user fix their file, not to reject it on a technicality.
 
 from __future__ import annotations
 
+import re
 from dataclasses import dataclass, field
+from datetime import datetime
+from typing import Optional
+from urllib.parse import urlparse
 
 import pandas as pd
 
 from .database import (
+    DATASET_KINDS,
     PROMPT_CATEGORIES,
     PROMPTS_COLUMNS,
     RESPONSE_RUNS_COLUMNS,
@@ -21,6 +26,9 @@ from .database import (
 # Columns a user *must* provide. Others can be derived or defaulted.
 REQUIRED_PROMPT_COLUMNS: list[str] = ["prompt_id", "prompt_text", "prompt_category"]
 REQUIRED_RESPONSE_COLUMNS: list[str] = ["run_id", "prompt_id", "platform", "response_text"]
+
+# A permissive-but-real domain check (label.label, each label alnum/hyphen).
+_DOMAIN_RE = re.compile(r"^(?=.{1,253}$)([a-z0-9](-?[a-z0-9])*\.)+[a-z]{2,63}$")
 
 
 @dataclass
@@ -117,3 +125,129 @@ def _warn_missing_optional(
             f"Optional {label} column(s) not provided (defaults will be used): "
             f"{', '.join(optional_missing)}."
         )
+
+
+# ---------------------------------------------------------------------------
+# Manual (pasted) response validation — the same core rules as the CSV path.
+# ---------------------------------------------------------------------------
+
+
+def normalize_domain_input(raw: str) -> str:
+    """Normalize a user-entered brand domain to a bare host.
+
+    Accepts bare domains, or full URLs with scheme/path, and returns
+    ``lowercase host without a leading www.``. Returns "" for blanks.
+
+    >>> normalize_domain_input("https://www.Notion.so/product")
+    'notion.so'
+    """
+    raw = (raw or "").strip().lower()
+    if not raw:
+        return ""
+    candidate = raw if "//" in raw else "//" + raw  # let urlparse find the host
+    host = urlparse(candidate).netloc or urlparse("//" + raw).netloc
+    host = host.split("@")[-1].split(":")[0]
+    if host.startswith("www."):
+        host = host[4:]
+    return host
+
+
+def is_valid_domain(domain: str) -> bool:
+    """True if ``domain`` looks like a real hostname (after normalization)."""
+    return bool(_DOMAIN_RE.match(domain))
+
+
+def validate_manual_response(
+    row: dict,
+    known_prompt_ids: Optional[set[str]] = None,
+    existing_run_ids: Optional[set[str]] = None,
+) -> ValidationResult:
+    """Validate a single pasted response, applying the same rules as CSV uploads.
+
+    Checks: required values, a valid prompt reference, a unique run id, a valid run
+    number, a valid date, a valid dataset type, and non-empty response text.
+    """
+    result = ValidationResult()
+    existing_run_ids = existing_run_ids or set()
+
+    run_id = str(row.get("run_id", "") or "").strip()
+    if not run_id:
+        result.add_error("Run ID is required.")
+    elif run_id in existing_run_ids:
+        result.add_error(f"Run ID '{run_id}' already exists — run IDs must be unique.")
+
+    prompt_id = str(row.get("prompt_id", "") or "").strip()
+    if not prompt_id:
+        result.add_error("A prompt must be selected (prompt_id is required).")
+    elif known_prompt_ids is not None and prompt_id not in {str(p) for p in known_prompt_ids}:
+        result.add_error(f"Prompt '{prompt_id}' does not exist. Add the prompt first, or pick an existing one.")
+
+    if not str(row.get("response_text", "") or "").strip():
+        result.add_error("Response text cannot be empty.")
+
+    run_number = row.get("run_number", 1)
+    try:
+        if int(run_number) < 1:
+            result.add_error("Run number must be 1 or greater.")
+    except (TypeError, ValueError):
+        result.add_error(f"Run number '{run_number}' is not a valid whole number.")
+
+    dataset_kind = str(row.get("dataset_kind", "") or "").strip()
+    if dataset_kind and dataset_kind not in DATASET_KINDS:
+        result.add_error(f"Dataset type '{dataset_kind}' is invalid. Choose one of: {', '.join(DATASET_KINDS)}.")
+
+    run_date = str(row.get("run_date", "") or "").strip()
+    if run_date and not _looks_like_date(run_date):
+        result.add_warning(f"Collection date '{run_date}' is not in YYYY-MM-DD format; it will be stored as text.")
+
+    if not str(row.get("platform", "") or "").strip():
+        result.add_warning("No platform label was given; the response will still be added.")
+
+    return result
+
+
+def _looks_like_date(value: str) -> bool:
+    """True if ``value`` parses as an ISO date (YYYY-MM-DD)."""
+    try:
+        datetime.strptime(value, "%Y-%m-%d")
+        return True
+    except (TypeError, ValueError):
+        return False
+
+
+# ---------------------------------------------------------------------------
+# Brand validation (names + domains).
+# ---------------------------------------------------------------------------
+
+
+def validate_brands(df: pd.DataFrame) -> ValidationResult:
+    """Validate a brands table: non-empty unique names and normalizable domains.
+
+    Domains are validated after normalization; malformed domains are a warning (they
+    simply won't classify source ownership), not a hard error.
+    """
+    result = ValidationResult()
+    if df is None or df.empty or "brand_name" not in df.columns:
+        result.add_error("Add at least one brand with a name.")
+        return result
+
+    names = df["brand_name"].fillna("").astype(str).str.strip()
+    if (names == "").any():
+        result.add_error("Every brand must have a non-empty name.")
+
+    non_empty = names[names != ""]
+    dupes = non_empty[non_empty.str.lower().duplicated()].unique().tolist()
+    if dupes:
+        result.add_error(f"Duplicate brand name(s): {', '.join(dupes)}. Brand names must be unique.")
+
+    if "brand_domain" in df.columns:
+        for _, raw in df["brand_domain"].fillna("").astype(str).items():
+            raw = raw.strip()
+            if not raw:
+                continue
+            normalized = normalize_domain_input(raw)
+            if not is_valid_domain(normalized):
+                result.add_warning(
+                    f"Domain '{raw}' does not look like a valid host; source ownership won't be detected for it."
+                )
+    return result

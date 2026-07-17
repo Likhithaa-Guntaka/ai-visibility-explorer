@@ -14,6 +14,17 @@ from src.ui import require_data
 st.set_page_config(page_title="AEO Experiments", page_icon="🧪", layout="wide")
 appkit.ensure_state()
 
+
+def _as_experiment(e) -> X.Experiment:
+    """Coerce a stored experiment (dataclass from this session, or dict from an
+    imported project) into an Experiment."""
+    return e if isinstance(e, X.Experiment) else X.Experiment(**e)
+
+
+def _exp_name(e) -> str:
+    return e["name"] if isinstance(e, dict) else e.name
+
+
 st.title("🧪 AEO Experiments")
 st.caption(
     "Define a before/after experiment, then compare a baseline collection date with a "
@@ -78,22 +89,30 @@ with st.form("experiment_form"):
     submitted = st.form_submit_button("Run comparison", type="primary")
 
 if submitted:
-    st.session_state["experiments"] = [
-        X.Experiment(
-            name=name, focal_brand=focal, baseline_date=baseline_date, post_date=post_date,
-            cluster_dimension=dimension,
-            cluster_value=None if cluster_choice == "(All questions)" else cluster_choice,
-            change_made=change_made, hypothesis=hypothesis,
-            primary_kpi=primary_kpi, secondary_kpis=secondary_kpis,
-        )
-    ]
+    new_exp = X.Experiment(
+        name=name, focal_brand=focal, baseline_date=baseline_date, post_date=post_date,
+        cluster_dimension=dimension,
+        cluster_value=None if cluster_choice == "(All questions)" else cluster_choice,
+        change_made=change_made, hypothesis=hypothesis,
+        primary_kpi=primary_kpi, secondary_kpis=secondary_kpis,
+    )
+    # Accumulate a history of experiments (replace one with the same name), so the list
+    # genuinely holds multiple definitions and they persist with the project.
+    history = [e for e in st.session_state["experiments"] if _exp_name(e) != name]
+    history.append(new_exp)
+    st.session_state["experiments"] = history
 
 if not st.session_state["experiments"]:
     st.info("Define an experiment above and click **Run comparison**.")
     st.stop()
 
-exp: X.Experiment = st.session_state["experiments"][-1]
+# Experiments may be Experiment dataclasses (this session) or dicts (imported project).
+exp = _as_experiment(st.session_state["experiments"][-1])
 result = X.compare_experiment(data, exp)
+
+if len(st.session_state["experiments"]) > 1:
+    names = ", ".join(_exp_name(e) for e in st.session_state["experiments"])
+    st.caption(f"Saved experiments in this project ({len(st.session_state['experiments'])}): {names}. Showing the most recent.")
 
 # -- Results -----------------------------------------------------------------
 st.divider()
@@ -150,7 +169,7 @@ else:
     st.dataframe(
         show[["metric", "Baseline", "Post-change", "Absolute change", "Percentage-point change", "baseline_n", "post_n", "Role"]]
         .rename(columns={"metric": "Metric", "baseline_n": "Baseline n", "post_n": "Post n"}),
-        use_container_width=True, hide_index=True,
+        width="stretch", hide_index=True,
     )
 
     rates = comp[(comp["unit"] == "rate") & comp["pp_change"].notna()]
@@ -159,7 +178,7 @@ else:
                      labels={"pp_change": "Percentage-point change", "metric": ""})
         fig.update_traces(marker_color="#2563eb")
         fig.update_layout(yaxis={"categoryorder": "total ascending"}, height=340)
-        st.plotly_chart(fig, use_container_width=True)
+        st.plotly_chart(fig, width="stretch")
 
     # Platform-level.
     st.markdown("##### Platform-level results")
@@ -172,7 +191,7 @@ else:
         p["post_rate"] = (p["post_rate"] * 100).round(0).astype(int).astype(str) + "%"
         p["pp_change"] = p["pp_change"].round(1).astype(str) + " pp"
         p.columns = ["Platform", "Baseline", "Post-change", "Change", "Baseline n", "Post n"]
-        st.dataframe(p, use_container_width=True, hide_index=True)
+        st.dataframe(p, width="stretch", hide_index=True)
 
     # Prompt-level.
     st.markdown("##### Prompt-level changes")
@@ -185,7 +204,7 @@ else:
         d["post_rate"] = (d["post_rate"] * 100).round(0).astype(int).astype(str) + "%"
         d["pp_change"] = d["pp_change"].round(1).astype(str) + " pp"
         d.columns = ["ID", "Question", "Baseline", "Post-change", "Change", "Baseline n", "Post n"]
-        st.dataframe(d, use_container_width=True, hide_index=True, height=320)
+        st.dataframe(d, width="stretch", hide_index=True, height=320)
 
 # -- Confidence & limitations ------------------------------------------------
 st.divider()

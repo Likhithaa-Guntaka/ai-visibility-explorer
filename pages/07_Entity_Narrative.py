@@ -44,7 +44,7 @@ field = st.selectbox(
     index=0,
 )
 plat = E.platform_descriptions(data.brand_entities, data.response_runs, focal, field)
-st.dataframe(plat, use_container_width=True, hide_index=True)
+st.dataframe(plat, width="stretch", hide_index=True)
 
 # -- 2. Common descriptors ---------------------------------------------------
 st.subheader("Common descriptors")
@@ -54,7 +54,7 @@ if not common.empty:
     fig = px.bar(common, x="share", y="descriptor", color="field", orientation="h",
                  labels={"share": "Share of responses", "descriptor": ""})
     fig.update_layout(xaxis_tickformat=".0%", yaxis={"categoryorder": "total ascending"}, height=360)
-    st.plotly_chart(fig, use_container_width=True)
+    st.plotly_chart(fig, width="stretch")
 else:
     st.write("No descriptor reaches the 40% threshold in this view.")
 
@@ -67,7 +67,7 @@ if not conflicts.empty:
         "descriptor_a": "Attribute A", "descriptor_b": "Attribute B",
         "count_a": "A count", "count_b": "B count",
     })
-    st.dataframe(show, use_container_width=True, hide_index=True)
+    st.dataframe(show, width="stretch", hide_index=True)
     st.warning("Mixed messages like these can confuse how AI answers position the brand.", icon="🔀")
 else:
     st.success("No opposing-attribute conflicts detected in this view.")
@@ -79,7 +79,7 @@ if not cov.empty:
     show = cov.copy()
     show["coverage"] = (show["coverage"] * 100).round(0).astype(int).astype(str) + "%"
     show.columns = ["Attribute", "Responses with value", "Total responses", "Coverage"]
-    st.dataframe(show, use_container_width=True, hide_index=True)
+    st.dataframe(show, width="stretch", hide_index=True)
     low = cov[cov["coverage"] < 0.25]["attribute"].tolist()
     if low:
         st.info("Low-coverage attributes (rarely described): " + ", ".join(low) +
@@ -99,7 +99,7 @@ st.dataframe(
     cons_df[["brand", "runs", "consistency_display"]].rename(
         columns={"brand": "Brand", "runs": "Runs", "consistency_display": "Narrative consistency"}
     ),
-    use_container_width=True, hide_index=True,
+    width="stretch", hide_index=True,
 )
 focal_nc = next((r for r in rows if r["brand"] == focal), None)
 if focal_nc and focal_nc["consistency"] is not None and focal_nc["consistency"] < 0.7:

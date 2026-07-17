@@ -304,46 +304,81 @@ result would change your mind. Note any holdout (untouched questions) used as a 
 
 ## Technical architecture
 
+This diagram reflects the **real runtime path**, including which layer computes what.
+
 ```
-┌────────────┐   CSV / paste   ┌──────────────┐   deterministic   ┌───────────────┐
-│  Prompts   │───────────────▶ │  Response    │────extraction────▶│ brand_mentions│
-│  Responses │                 │  runs (raw)  │   (regex + alias) │   citations   │
-└────────────┘                 └──────────────┘                   └───────┬───────┘
-                                                                          │
-                          pandas DataFrames (source of truth)             │
-                                          │                               │
-                                          ▼                               ▼
-                                   ┌──────────────┐   SQL       ┌────────────────────┐
-                                   │   DuckDB     │◀───────────▶│  metrics.py (pure) │
-                                   │ (analytics)  │             │  12 metrics + defs │
-                                   └──────────────┘             └─────────┬──────────┘
-                                                                          ▼
-                                    Streamlit multipage UI  ◀──  recommendations.py (grounded readout)
-                                    (Plotly charts, filters)      page_audit.py (optional web signals)
+ CSV upload / manual paste / synthetic demo CSVs
+        │
+        ▼
+ validation.py  ── validates BOTH CSV uploads and manual paste (required values,
+        │            unique run id, valid prompt ref, run number, date, dataset type,
+        │            non-empty text) + brand names & normalized domains
+        ▼
+ AnalysisData  =  9 pandas DataFrames held in st.session_state  (the source of truth)
+        │
+        ▼
+ appkit.run_extraction  ── deterministic extraction (regex + aliases + lexicons)
+        │                    → brand_mentions, citations, brand_entities
+        ▼
+ ui.sidebar_filters → appkit.filter_data  (returns a scoped AnalysisData copy)
+        │
+        ├────────────────────────────► DuckDB SQL  (src/sql_metrics.py + sql/*.sql)
+        │        Headline visibility metrics: mention rate, share of voice,
+        │        first-mention share, recommendation rate, citation rate,
+        │        source domain share, platform comparison, competitor visibility,
+        │        prompt-category & persona performance.  ← Dashboard + Citation page.
+        │
+        └────────────────────────────► pandas  (src/metrics.py & feature modules)
+                 Content-coverage gaps, response/narrative consistency, citation
+                 diversity/concentration/opportunities, entity analysis, clusters,
+                 experiments, briefs — plus all reshaping, display and charts.
+        │
+        ▼
+ recommendations.py (grounded readout)   ·   page_audit.py (optional web signals)
+        │
+        ▼
+ Streamlit multipage UI (Plotly charts, filters)  ·  persistence.py (export/import JSON)
 ```
 
-- **Python 3.11+** · **pandas** (data) · **DuckDB** (local SQL analytics) · **Streamlit**
-  (UI) · **Plotly** (charts) · **requests + BeautifulSoup** (page audit) · **pytest** (tests).
-- **CSV files / session DataFrames are the source of truth.** DuckDB is a fast SQL engine
-  *over* them, so the `.duckdb` file is disposable and rebuilt on demand.
+**Engine split (honest):**
+- **DuckDB is a genuine part of the runtime.** The ten headline metrics above are computed
+  in SQL (`sql/brand_visibility.sql`, `sql/citation_metrics.sql`, `sql/segment_performance.sql`,
+  run via `src/sql_metrics.py`) against an in-memory DuckDB built from the active `AnalysisData`.
+  `tests/test_sql_metrics.py` asserts the SQL output equals the pandas reference value-for-value.
+- **pandas** does everything SQL is not the best tool for: pairwise set operations (Jaccard
+  consistency), lexicon/entity extraction, cluster and experiment reshaping, and all display,
+  transformation and charts. `src/metrics.py` remains the definition of record for every metric.
+- **Streamlit session state** holds the active analysis; **Plotly** renders charts;
+  **requests + BeautifulSoup** power the optional page audits.
+- **Persistence is file-based** (`src/persistence.py`): export/import the whole project as one
+  JSON file — no hosted database.
+
+**Environment & conventions:**
+- **Python 3.12 recommended** (matches the devcontainer / Codespaces image). Also verified on
+  Python 3.14 — newer versions are not blocked.
 - **Extraction is pluggable** via an `Extractor` interface — deterministic by default, with a
   clear seam to add an LLM extractor later without touching metrics or UI.
-- **No secrets in the repo.** Optional API keys load from `.env` (see `.env.example`).
+- **No secrets in the repo or in exports.** Optional API keys load from `.env` (see `.env.example`).
 
-**Analysis modules** (all pure/deterministic and independently tested):
+**Analysis modules** (deterministic and independently tested; `page_audit` additionally
+makes optional web requests):
 
 | Module | Responsibility |
 |--------|----------------|
+| [`src/database.py`](src/database.py) | Schema constants, DuckDB `Database` class + DDL, `AnalysisData`, CSV loader. |
+| [`src/sql_metrics.py`](src/sql_metrics.py) + [`sql/`](sql/) | **DuckDB SQL** implementations of the 10 headline metrics (used by the dashboard + citation page). |
+| [`src/metrics.py`](src/metrics.py) | Pandas reference for the 12 metrics + definitions (definition of record). |
 | [`src/extraction.py`](src/extraction.py) | Brand-mention + citation extraction (pluggable `Extractor`). |
 | [`src/entities.py`](src/entities.py) | Entity & narrative extraction + consistency/conflict analysis. |
-| [`src/metrics.py`](src/metrics.py) | The 12 core visibility metrics + definitions. |
 | [`src/citation_quality.py`](src/citation_quality.py) | Source-type classification, diversity/concentration, opportunities. |
 | [`src/briefs.py`](src/briefs.py) | Deterministic content action briefs. |
 | [`src/clusters.py`](src/clusters.py) | AEO question clusters, question outcomes, page-consolidation rules. |
 | [`src/experiments.py`](src/experiments.py) | Before/after experiment slicing, comparison and limitations. |
 | [`src/page_audit.py`](src/page_audit.py) | Page audit + AI-answer-readiness + Answer Extractability (each with transparent rules). |
 | [`src/recommendations.py`](src/recommendations.py) | Grounded, templated customer readout. |
-| [`src/appkit.py`](src/appkit.py) · [`src/ui.py`](src/ui.py) | Session state, demo loading, dataset/benchmark filtering, shared widgets. |
+| [`src/persistence.py`](src/persistence.py) | Project export/import to a single JSON file (schema-versioned). |
+| [`src/validation.py`](src/validation.py) | CSV, manual-paste, and brand/domain validation. |
+| [`src/appkit.py`](src/appkit.py) · [`src/ui.py`](src/ui.py) | Session state, demo loading, dataset/benchmark/cluster filtering, shared widgets. |
 
 ### Data model
 
@@ -361,13 +396,15 @@ Experiments are user-defined at runtime (held in session state), not stored rows
 
 ### Option A — locally (recommended)
 
+Recommended: **Python 3.12** (the devcontainer image; also verified on 3.14).
+
 ```bash
 # 1. Clone and enter the project
 git clone https://github.com/Likhithaa-Guntaka/ai-visibility-explorer.git
 cd ai-visibility-explorer
 
 # 2. Create and activate a virtual environment (isolates dependencies)
-python3 -m venv .venv
+python3.12 -m venv .venv           # or: python3 -m venv .venv
 source .venv/bin/activate          # macOS/Linux
 # .venv\Scripts\activate           # Windows PowerShell
 
@@ -395,8 +432,10 @@ To stop the app, press `Ctrl+C` in the terminal. To leave the virtual environmen
 ### Run the tests
 
 ```bash
-pytest            # 102 tests: metrics, extraction, entities, citation quality, briefs, page-audit
-                  # readiness, answer extractability, AEO clusters, experiments, benchmark filtering
+pytest            # 160 tests: pandas metrics, SQL-metric equivalence, extraction, entities,
+                  # citation quality, briefs, page-audit readiness, answer extractability, AEO
+                  # clusters, experiments, benchmark filtering, project export/import,
+                  # manual-input & brand validation, and Streamlit page execution (offline)
 ```
 
 ### Regenerate demo data or the preview images (optional)
@@ -427,6 +466,9 @@ python assets/_make_preview.py    # rebuilds the preview PNGs
    brand performance changes.*
 9. Open **Customer Readout** and **⬇️ Download** the Markdown summary.
 10. Read **Limitations & Confidence**, and note the **Dataset type** filter keeps real vs synthetic separate.
+11. On **Data Input → 💾 Save / load project**, **⬇️ Download** the project JSON, then re-import it —
+    all tables, extracted mentions/citations/entities, aliases, focal brand and experiments are restored
+    (Streamlit otherwise forgets everything on refresh).
 
 ---
 
@@ -517,27 +559,33 @@ I used Claude Code as an AI-assisted development tool for implementation support
 ai-visibility-explorer/
 ├── app.py                     # Streamlit home page
 ├── pages/
-│   ├── 1_Data_Input.py        # project, brands, prompts, responses, benchmark labels, corrections
-│   ├── 2_Visibility_Dashboard.py
-│   ├── 3_Citation_Analysis.py # + source-type classification, diversity, opportunities
-│   ├── 4_Page_Audit.py        # + AI Answer Readiness (12 factors + transparent score)
-│   ├── 5_Customer_Readout.py  # + narrative / source-type / content-action sections
-│   ├── 6_Limitations.py
-│   ├── 7_Entity_Narrative.py  # how AI describes the brand + consistency
-│   ├── 8_Content_Briefs.py    # grounded content action briefs
-│   ├── 9_AEO_Question_Clusters.py  # (new) cluster map, wins/losses, one-page-vs-several
+│   ├── 01_Data_Input.py       # project, brands, prompts, responses, save/load, corrections
+│   ├── 02_Visibility_Dashboard.py  # headline metrics (DuckDB SQL)
+│   ├── 03_Citation_Analysis.py     # source-type classification, diversity, opportunities (SQL + pandas)
+│   ├── 04_Page_Audit.py       # AI Answer Readiness + Answer Extractability (12 factors each)
+│   ├── 05_Customer_Readout.py # narrative / source-type / content-action sections
+│   ├── 06_Limitations.py
+│   ├── 07_Entity_Narrative.py # how AI describes the brand + consistency
+│   ├── 08_Content_Briefs.py   # grounded content action briefs
+│   ├── 09_AEO_Question_Clusters.py  # cluster map, wins/losses, one-page-vs-several
 │   └── 10_AEO_Experiments.py       # (new) before/after experiments
+├── sql/                       # reviewable SQL for the DuckDB-computed metrics
+│   ├── brand_visibility.sql   # mention rate, share of voice, first-mention, rec rate, leaderboard
+│   ├── citation_metrics.sql   # citation rate, source domain share
+│   └── segment_performance.sql# category/persona performance, platform comparison
 ├── src/
 │   ├── database.py            # DuckDB layer + schema + AnalysisData (+ benchmarks, brand_entities)
+│   ├── sql_metrics.py         # DuckDB SQL implementations of the 10 headline metrics
+│   ├── metrics.py             # pandas reference for the 12 metrics + definitions
 │   ├── extraction.py          # deterministic extraction (LLM-ready interface)
 │   ├── entities.py            # entity & narrative extraction + analysis
-│   ├── metrics.py             # 12 metrics + definitions
 │   ├── citation_quality.py    # source classification, diversity, opportunities
 │   ├── briefs.py              # deterministic content action briefs
-│   ├── clusters.py            # (new) AEO question clusters + consolidation rules
-│   ├── experiments.py         # (new) before/after experiment comparison
+│   ├── clusters.py            # AEO question clusters + consolidation rules
+│   ├── experiments.py         # before/after experiment comparison
 │   ├── recommendations.py     # grounded, templated customer readout
-│   ├── validation.py          # CSV/DataFrame validation
+│   ├── persistence.py         # project export/import (JSON, schema-versioned)
+│   ├── validation.py          # CSV + manual-paste + brand/domain validation
 │   ├── page_audit.py          # page inspection + readiness + answer extractability
 │   ├── appkit.py              # session state, demo loading, dataset/benchmark/cluster filtering
 │   └── ui.py                  # shared Streamlit filter widgets (incl. dataset type, cluster, intent)
@@ -545,19 +593,38 @@ ai-visibility-explorer/
 │   ├── demo_prompts.csv       # synthetic (+ search_intent, question_cluster)
 │   ├── demo_responses.csv     # synthetic (dataset_kind = Synthetic; two collection waves)
 │   └── _generate_demo.py      # deterministic demo generator
-├── tests/
-│   ├── test_metrics.py            test_extraction.py
-│   ├── test_entities.py           test_citation_quality.py
-│   ├── test_briefs.py             test_page_audit.py
-│   ├── test_clusters.py           test_experiments.py
-│   ├── test_extractability.py
-│   └── test_benchmark_filtering.py
+├── tests/                     # 14 files (see "Run the tests")
+│   ├── test_metrics.py            test_sql_metrics.py        test_extraction.py
+│   ├── test_entities.py           test_citation_quality.py   test_briefs.py
+│   ├── test_page_audit.py         test_extractability.py     test_clusters.py
+│   ├── test_experiments.py        test_benchmark_filtering.py
+│   ├── test_persistence.py        test_input_validation.py   test_streamlit_pages.py
 ├── assets/dashboard_preview.png · readiness_preview.png
-├── .devcontainer/devcontainer.json   # GitHub Codespaces
+├── .devcontainer/devcontainer.json   # GitHub Codespaces (Python 3.12)
 ├── requirements.txt · .env.example · .gitignore · pytest.ini
 ```
 
 ---
+
+## Project status — honest positioning
+
+To be clear about exactly what this project is and is not:
+
+- **The bundled demo data is 100% synthetic** — generated by `data/_generate_demo.py`, labelled
+  `Synthetic` everywhere, and **not** real output from ChatGPT, Claude, Gemini, or Perplexity.
+- **The tool supports real, user-collected benchmarks** (label a batch `Real`/`User Collected`,
+  paste or upload responses, filter to them) — but **no real benchmark is bundled yet.** Every
+  number in this repo comes from synthetic data.
+- **No AI platform UI is scraped.** You bring responses you collected yourself or via official APIs.
+- **Automated official-API collection is not implemented.** The `Extractor` interface and the
+  `.env.example` keys leave a seam for it, but the LLM narrative/collection code is not wired up
+  (`recommendations.generate_llm_narrative` intentionally raises `NotImplementedError`).
+- **Core headline metrics now run in DuckDB SQL** (`src/sql_metrics.py`, `sql/*.sql`); the rest of
+  the analytics run in pandas. See the architecture section for the exact split.
+- **Persistence is file-based** (a JSON export/import), **not a production database.** There is no
+  multi-user auth, no scheduled monitoring, and no hosted deployment.
+- **This is a portfolio and analytical-research tool**, not a production SaaS platform. Findings
+  are exploratory: associations, never proof of causation, with small samples flagged.
 
 ## Responsible-use notes
 
@@ -565,6 +632,6 @@ ai-visibility-explorer/
   responses you collected yourself, or official APIs.
 - **Synthetic data is labelled synthetic** everywhere it appears.
 - **Page-audit traits are associations, not proven causes** of AI citations.
-- **No secrets in the repo** — copy `.env.example` to `.env` for any optional keys.
+- **No secrets in the repo or in project exports** — copy `.env.example` to `.env` for any optional keys.
 
 _Built as a portfolio project. MIT-friendly; adapt freely._

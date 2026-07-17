@@ -8,6 +8,7 @@ import streamlit as st
 from src import appkit
 from src import metrics as M
 from src.metrics import METRIC_DEFINITIONS
+from src.sql_metrics import SqlMetrics
 from src.ui import require_data, sidebar_filters
 
 st.set_page_config(page_title="Citation Analysis", page_icon="🔗", layout="wide")
@@ -22,7 +23,10 @@ if data is None:
 data = sidebar_filters(st, data)
 n = M.total_runs(data.response_runs)
 
-cite = M.citation_rate(data.citations, data.response_runs)
+# Citation rate + top source domains are computed in DuckDB SQL (src/sql_metrics.py).
+with SqlMetrics(data) as sqlm:
+    cite = sqlm.citation_rate()
+    domains = sqlm.source_domain_share(top_n=15)
 k1, k2, k3 = st.columns(3)
 k1.metric("Responses in view", n)
 k2.metric("Responses with ≥1 source", cite["runs_with_citations"], help=METRIC_DEFINITIONS["citation_rate"])
@@ -34,18 +38,17 @@ if data.citations.empty:
 
 st.divider()
 st.subheader("Top cited source domains")
-st.caption(METRIC_DEFINITIONS["source_domain_share"])
-domains = M.source_domain_share(data.citations, top_n=15)
+st.caption(METRIC_DEFINITIONS["source_domain_share"] + "  ·  Computed in DuckDB SQL.")
 fig = px.bar(domains, x="citations", y="citation_domain", orientation="h",
              labels={"citations": "Citations", "citation_domain": ""})
 fig.update_traces(marker_color="#2563eb")
 fig.update_layout(yaxis={"categoryorder": "total ascending"}, height=420)
-st.plotly_chart(fig, use_container_width=True)
+st.plotly_chart(fig, width="stretch")
 
 show = domains.copy()
 show["domain_share"] = (show["domain_share"] * 100).round(0).astype(int).astype(str) + "%"
 show.columns = ["Domain", "Citations", "Responses citing it", "Share of all citations"]
-st.dataframe(show, use_container_width=True, hide_index=True)
+st.dataframe(show, width="stretch", hide_index=True)
 
 # ---------------------------------------------------------------------------
 # Source classification, quality, and opportunities (upgrade features).
@@ -79,7 +82,7 @@ with c1:
                   labels={"citations": "Citations", "source_type": ""})
     fig2.update_traces(marker_color="#2563eb")
     fig2.update_layout(yaxis={"categoryorder": "total ascending"}, height=340)
-    st.plotly_chart(fig2, use_container_width=True)
+    st.plotly_chart(fig2, width="stretch")
 with c2:
     st.metric("Brand-owned share", f"{round(bt['brand_owned_share']*100)}%")
     st.metric("Competitor-owned share", f"{round(bt['competitor_owned_share']*100)}%")
@@ -99,7 +102,7 @@ if not opps.empty:
         "runs_with_focal": f"…with {focal}", "runs_with_competitor": "…with a competitor",
         "opportunity_gap": "Opportunity gap",
     })
-    st.dataframe(show, use_container_width=True, hide_index=True)
+    st.dataframe(show, width="stretch", hide_index=True)
     st.info(
         f"These sources appear alongside competitors more than {focal}. Consider earning accurate, "
         "up-to-date coverage on them, and see the **Content Action Briefs** page for concrete next steps.",
@@ -113,7 +116,7 @@ st.subheader("All cited URLs")
 with st.expander("Show every extracted citation (with source type)"):
     st.dataframe(
         classified[["run_id", "citation_url", "citation_domain", "source_type", "citation_position"]],
-        use_container_width=True,
+        width="stretch",
         hide_index=True,
     )
 

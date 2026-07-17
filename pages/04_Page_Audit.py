@@ -45,10 +45,13 @@ with st.expander("URLs that will be audited"):
 if st.button("▶ Run page audit", type="primary"):
     with st.spinner(f"Auditing {len(selected)} page(s)…"):
         audits = audit_urls(selected)
-        st.session_state["page_audits"] = audits
+        # Store audits on the AnalysisData so they persist with the project (export/import)
+        # and can be re-read on later reruns — a single source of truth.
+        from dataclasses import replace
+        appkit.set_data(replace(appkit.get_data(), page_audits=audits))
     st.success("Audit complete.")
 
-audits = st.session_state.get("page_audits")
+audits = appkit.get_data().page_audits
 if audits is not None and not audits.empty:
     st.divider()
     st.subheader("Audit results")
@@ -73,7 +76,7 @@ if audits is not None and not audits.empty:
         "published_date", "modified_date", "robots_accessible", "sitemap_found", "canonical_url",
     ]
     display_cols = [c for c in display_cols if c in enriched.columns]
-    st.dataframe(enriched[display_cols], use_container_width=True, hide_index=True)
+    st.dataframe(enriched[display_cols], width="stretch", hide_index=True)
 
     # -- AI Answer Readiness, per page, factor-by-factor --------------------
     st.divider()
@@ -111,7 +114,7 @@ if audits is not None and not audits.empty:
             }
             for c in score["components"]
         ]
-        st.dataframe(comp_rows, use_container_width=True, hide_index=True)
+        st.dataframe(comp_rows, width="stretch", hide_index=True)
         st.caption(
             f"Points earned {score['points_earned']:.1f} ÷ points considered "
             f"{score['points_considered']:.1f} × 100. Unknown factors are excluded from both."
@@ -181,7 +184,7 @@ if audits is not None and not audits.empty:
                  "Weight": c["weight"], "Credit": c["credit"], "Points": c["points"]}
                 for c in ex["components"]
             ],
-            use_container_width=True, hide_index=True,
+            width="stretch", hide_index=True,
         )
         st.caption(
             f"Points earned {ex['points_earned']:.1f} ÷ points evaluated {ex['points_considered']:.1f} × 100. "

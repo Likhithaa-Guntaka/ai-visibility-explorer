@@ -106,8 +106,10 @@ def ensure_state() -> None:
         st.session_state["focal_brand"] = None
     if "alias_overrides" not in st.session_state:
         st.session_state["alias_overrides"] = {}
-    if "page_audits" not in st.session_state:
-        st.session_state["page_audits"] = None
+    if "experiments" not in st.session_state:
+        st.session_state["experiments"] = []
+    # Page audits live on AnalysisData.page_audits (a single source of truth), so they
+    # persist with the project — no separate session slot is needed.
 
 
 def get_data() -> AnalysisData:

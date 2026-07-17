@@ -54,7 +54,7 @@ show = show[["cluster", "prompts", "runs", "focal_mention_rate", "share_of_voice
 show.columns = ["Cluster", "Prompts", "Responses", f"{focal} mention rate", f"{focal} SoV",
                 f"{focal} rec. rate", "Citation rate", "Top competitor",
                 "Competitor mention rate", "Gap"]
-st.dataframe(show, use_container_width=True, hide_index=True)
+st.dataframe(show, width="stretch", hide_index=True)
 
 fig = px.bar(
     summary, x="gap", y="cluster", orientation="h",
@@ -62,7 +62,7 @@ fig = px.bar(
 )
 fig.update_traces(marker_color="#2563eb")
 fig.update_layout(xaxis_tickformat=".0%", yaxis={"categoryorder": "total ascending"}, height=360)
-st.plotly_chart(fig, use_container_width=True)
+st.plotly_chart(fig, width="stretch")
 st.caption("Positive gap = the strongest competitor appears in more responses than the focal brand.")
 
 st.divider()
@@ -89,7 +89,7 @@ if not comp.empty:
     for col in ["mention_rate", "share_of_voice", "recommendation_rate"]:
         cshow[col] = (cshow[col] * 100).round(0).astype(int).astype(str) + "%"
     cshow.columns = ["Brand", "Mention rate", "Share of voice", "Recommendation rate"]
-    st.dataframe(cshow, use_container_width=True, hide_index=True)
+    st.dataframe(cshow, width="stretch", hide_index=True)
 
 # -- Question outcomes -------------------------------------------------------
 st.markdown("##### Question-by-question outcomes")
@@ -116,7 +116,7 @@ else:
             d["competitor_rate"] = (d["competitor_rate"] * 100).round(0).astype(int).astype(str) + "%"
             d = d[["prompt_id", "prompt_text", "runs", "focal_rate", "top_competitor", "competitor_rate", "outcome"]]
             d.columns = ["ID", "Question", "Responses", f"{focal} rate", "Top competitor", "Competitor rate", "Outcome"]
-            st.dataframe(d, use_container_width=True, hide_index=True)
+            st.dataframe(d, width="stretch", hide_index=True)
 
 # -- Coverage gaps within the cluster ---------------------------------------
 st.markdown("##### Content coverage gaps in this cluster")
@@ -129,7 +129,7 @@ else:
     for col in ["focal_rate", "competitor_rate", "gap"]:
         g[col] = (g[col] * 100).round(0).astype(int).astype(str) + "%"
     g.columns = ["Topic", f"{focal} rate", "Top competitor", "Competitor rate", "Gap", "Responses"]
-    st.dataframe(g, use_container_width=True, hide_index=True)
+    st.dataframe(g, width="stretch", hide_index=True)
 
 # -- Page consolidation recommendation --------------------------------------
 st.divider()

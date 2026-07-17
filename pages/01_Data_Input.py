@@ -16,7 +16,14 @@ from src.database import (
     PROMPT_CATEGORIES,
     _to_bool,
 )
-from src.validation import validate_prompts, validate_responses
+from src import persistence as P
+from src.validation import (
+    normalize_domain_input,
+    validate_brands,
+    validate_manual_response,
+    validate_prompts,
+    validate_responses,
+)
 
 st.set_page_config(page_title="Data Input", page_icon="📥", layout="wide")
 appkit.ensure_state()
@@ -68,6 +75,49 @@ if st.button("🚀 Load synthetic demo dataset"):
     st.success("Demo data loaded and extracted.")
     st.rerun()
 
+# ---------------------------------------------------------------------------
+# Save / load project (file-based persistence; survives a browser refresh).
+# ---------------------------------------------------------------------------
+with st.expander("💾 Save / load project (JSON)", expanded=False):
+    st.caption(
+        "Streamlit forgets everything on refresh. Export the whole project — tables, "
+        "extracted mentions/citations/entities, page audits, aliases, focal brand and "
+        "experiments — to a single JSON file, and import it later. No secrets are included."
+    )
+    sc1, sc2 = st.columns(2)
+    with sc1:
+        st.markdown("**Export**")
+        json_str = P.export_project_json(
+            appkit.get_data(),
+            alias_overrides=st.session_state.get("alias_overrides"),
+            focal_brand=st.session_state.get("focal_brand"),
+            experiments=st.session_state.get("experiments"),
+        )
+        st.download_button(
+            "⬇️ Download project (.json)",
+            data=json_str,
+            file_name="ai_visibility_project.json",
+            mime="application/json",
+            width="stretch",
+        )
+    with sc2:
+        st.markdown("**Import**")
+        proj_file = st.file_uploader("Upload a project .json", type=["json"], key="project_import")
+        if proj_file is not None and st.button("↩️ Restore this project", width="stretch"):
+            try:
+                bundle = P.import_bundle(proj_file.getvalue().decode("utf-8"))
+            except P.ProjectImportError as exc:
+                st.error(f"Could not import this file: {exc}")
+            else:
+                appkit.set_data(bundle.data)
+                st.session_state["alias_overrides"] = bundle.alias_overrides
+                st.session_state["focal_brand"] = bundle.focal_brand
+                st.session_state["experiments"] = bundle.experiments
+                st.success(
+                    f"Project restored: {len(bundle.data.response_runs)} responses, "
+                    f"{len(bundle.data.brands)} brands. Open the dashboard from the sidebar."
+                )
+
 tab_project, tab_prompts, tab_responses, tab_review = st.tabs(
     ["1 · Project & Brands", "2 · Prompts", "3 · Responses", "4 · Review & Correct"]
 )
@@ -98,7 +148,7 @@ with tab_project:
             [{"brand_name": "", "brand_domain": ""}]
         ),
         num_rows="dynamic",
-        use_container_width=True,
+        width="stretch",
         key="brands_editor",
         column_config={
             "brand_name": st.column_config.TextColumn("Brand name", required=True),
@@ -120,14 +170,20 @@ with tab_project:
                     "brand_id": f"b{i+1}",
                     "project_id": "user",
                     "brand_name": str(row["brand_name"]).strip(),
-                    "brand_domain": str(row.get("brand_domain", "") or "").strip(),
+                    # Domains are normalized to a bare host on save.
+                    "brand_domain": normalize_domain_input(str(row.get("brand_domain", "") or "")),
                 }
                 for i, (_, row) in enumerate(clean.iterrows())
             ]
         )
-        appkit.set_data(replace(appkit.get_data(), brands=brands_df))
-        st.session_state["alias_overrides"] = _parse_aliases(alias_text)
-        st.success(f"Saved {len(brands_df)} brand(s). Aliases: {st.session_state['alias_overrides'] or 'none'}")
+        brand_result = validate_brands(brands_df)
+        _show_validation(brand_result)
+        if brand_result.ok:
+            appkit.set_data(replace(appkit.get_data(), brands=brands_df))
+            st.session_state["alias_overrides"] = _parse_aliases(alias_text)
+            st.success(
+                f"Saved {len(brands_df)} brand(s). Aliases: {st.session_state['alias_overrides'] or 'none'}"
+            )
 
 # ---------------------------------------------------------------------------
 # Tab 2 — Prompts
@@ -158,7 +214,7 @@ with tab_prompts:
     edited_prompts = st.data_editor(
         prompts_seed.drop(columns=[c for c in ["project_id"] if c in prompts_seed.columns]),
         num_rows="dynamic",
-        use_container_width=True,
+        width="stretch",
         key="prompts_editor",
         column_config={
             "prompt_category": st.column_config.SelectboxColumn("Category", options=PROMPT_CATEGORIES),
@@ -232,6 +288,7 @@ with tab_responses:
             text = st.text_area("Paste the AI response text", height=200)
             if st.form_submit_button("Add response"):
                 cur = appkit.get_data().response_runs
+                existing_ids = set(cur["run_id"]) if not cur.empty else set()
                 new_row = {
                     "run_id": f"m{len(cur) + 1:03d}",
                     "prompt_id": pid,
@@ -246,15 +303,20 @@ with tab_responses:
                     "collection_date": str(collection_date),
                     "collection_notes": collection_notes,
                 }
-                updated = pd.concat([cur, pd.DataFrame([new_row])], ignore_index=True)
-                appkit.set_data(replace(appkit.get_data(), response_runs=updated))
-                st.success(f"Response added as '{dataset_kind}'. Go to tab 4 to run extraction.")
+                # Manual input goes through the SAME core rules as CSV uploads.
+                known = set(appkit.get_data().prompts["prompt_id"]) if not appkit.get_data().prompts.empty else None
+                result = validate_manual_response(new_row, known_prompt_ids=known, existing_run_ids=existing_ids)
+                _show_validation(result)
+                if result.ok:
+                    updated = pd.concat([cur, pd.DataFrame([new_row])], ignore_index=True)
+                    appkit.set_data(replace(appkit.get_data(), response_runs=updated))
+                    st.success(f"Response added as '{dataset_kind}'. Go to tab 4 to run extraction.")
 
     cur_runs = appkit.get_data().response_runs
     if not cur_runs.empty:
         st.caption(f"{len(cur_runs)} response(s) currently loaded.")
         view_cols = [c for c in ["run_id", "prompt_id", "platform", "run_number", "dataset_kind", "benchmark_name"] if c in cur_runs.columns]
-        st.dataframe(cur_runs[view_cols], use_container_width=True, height=200)
+        st.dataframe(cur_runs[view_cols], width="stretch", height=200)
 
 # ---------------------------------------------------------------------------
 # Tab 4 — Review & Correct
@@ -276,14 +338,14 @@ with tab_review:
     d = appkit.get_data()
     if not d.brand_mentions.empty:
         st.markdown("**Extracted brand mentions** (editable — correct any mistakes)")
-        edited_m = st.data_editor(d.brand_mentions, num_rows="dynamic", use_container_width=True, key="mentions_editor", height=260)
+        edited_m = st.data_editor(d.brand_mentions, num_rows="dynamic", width="stretch", key="mentions_editor", height=260)
         if st.button("Save mention corrections"):
             appkit.set_data(replace(appkit.get_data(), brand_mentions=edited_m))
             st.success("Mention corrections saved.")
 
     if not d.citations.empty:
         st.markdown("**Extracted citations** (editable)")
-        edited_c = st.data_editor(d.citations, num_rows="dynamic", use_container_width=True, key="citations_editor", height=260)
+        edited_c = st.data_editor(d.citations, num_rows="dynamic", width="stretch", key="citations_editor", height=260)
         if st.button("Save citation corrections"):
             appkit.set_data(replace(appkit.get_data(), citations=edited_c))
             st.success("Citation corrections saved.")
@@ -291,7 +353,7 @@ with tab_review:
     if not d.brand_entities.empty:
         st.markdown("**Extracted brand entities & narrative** (editable — correct descriptors)")
         st.caption("Category, products, features, personas, strengths, weaknesses, positioning, and competitors mentioned alongside each brand.")
-        edited_e = st.data_editor(d.brand_entities, num_rows="dynamic", use_container_width=True, key="entities_editor", height=280)
+        edited_e = st.data_editor(d.brand_entities, num_rows="dynamic", width="stretch", key="entities_editor", height=280)
         if st.button("Save entity corrections"):
             appkit.set_data(replace(appkit.get_data(), brand_entities=edited_e))
             st.success("Entity corrections saved.")

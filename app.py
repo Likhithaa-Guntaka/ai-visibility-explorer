@@ -42,16 +42,16 @@ with col1:
         "Load the bundled synthetic dataset (5 productivity brands, 22 prompts across "
         "all categories, 67 AI responses) to explore the full workflow immediately."
     )
-    if st.button("🚀 Load demo data", type="primary", use_container_width=True):
+    if st.button("🚀 Load demo data", type="primary", width="stretch"):
         with st.spinner("Loading synthetic demo data and extracting mentions…"):
             appkit.set_data(appkit.load_demo_analysis())
             st.session_state["focal_brand"] = "Notion"
         st.success("Demo data loaded. Open **Visibility Dashboard** from the sidebar.")
 
     if appkit.has_data():
-        if st.button("🗑️ Clear loaded data", use_container_width=True):
+        if st.button("🗑️ Clear loaded data", width="stretch"):
             appkit.set_data(appkit.get_data().__class__())
-            st.session_state["page_audits"] = None
+            st.session_state["experiments"] = []
             st.rerun()
 
 with col2:
@@ -60,7 +60,7 @@ with col2:
         "Go to **Data Input** to create a project, add brands and prompts, and paste "
         "or upload AI responses as CSV. No API keys required."
     )
-    st.page_link("pages/1_Data_Input.py", label="→ Go to Data Input", icon="📥")
+    st.page_link("pages/01_Data_Input.py", label="→ Go to Data Input", icon="📥")
 
 st.divider()
 
