@@ -1,0 +1,26 @@
+# Secrets — never commit real keys
+.env
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# DuckDB working database (rebuilt from CSVs; not a source of truth)
+data/*.duckdb
+data/*.duckdb.wal
+
+# OS / editor cruft
+.DS_Store
+.idea/
+.vscode/
+
+# Streamlit local secrets (if ever used)
+.streamlit/secrets.toml

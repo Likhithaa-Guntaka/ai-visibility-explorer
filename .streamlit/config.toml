@@ -1,0 +1,9 @@
+# Streamlit UI configuration for AI Visibility Explorer.
+[theme]
+base = "light"
+primaryColor = "#2563eb"
+font = "sans serif"
+
+[browser]
+# Do not send usage statistics during a portfolio demo.
+gatherUsageStats = false

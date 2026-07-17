@@ -1,0 +1,11 @@
+# AI Visibility Explorer — Phase 1 (MVP) dependencies
+# Pinned to versions verified on Python 3.14. Loosen if you need older Python.
+pandas>=2.2
+duckdb>=1.1
+streamlit>=1.40
+plotly>=5.24
+requests>=2.32
+beautifulsoup4>=4.12
+lxml>=5.0
+python-dotenv>=1.0
+pytest>=8.0

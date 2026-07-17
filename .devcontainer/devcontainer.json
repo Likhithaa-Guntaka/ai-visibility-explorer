@@ -1,0 +1,25 @@
+{
+  "name": "AI Visibility Explorer",
+  "image": "mcr.microsoft.com/devcontainers/python:3.12",
+  "features": {
+    "ghcr.io/devcontainers/features/git:1": {}
+  },
+  "postCreateCommand": "pip install --upgrade pip && pip install -r requirements.txt",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-python.python"
+      ]
+    }
+  },
+  "forwardPorts": [8501],
+  "portsAttributes": {
+    "8501": {
+      "label": "Streamlit app",
+      "onAutoForward": "openPreview"
+    }
+  },
+  "postAttachCommand": {
+    "hint": "echo 'Run the app with:  streamlit run app.py --server.port 8501 --server.address 0.0.0.0'"
+  }
+}
