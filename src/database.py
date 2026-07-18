@@ -162,6 +162,128 @@ CATEGORY_TO_INTENT: dict[str, str] = {
 # platform output; the UI and exports keep these strictly separated.
 DATASET_KINDS: list[str] = ["Synthetic", "Real", "User Collected"]
 
+# ---------------------------------------------------------------------------
+# AI Decision Influence Lab — vocabularies and table columns (research layer).
+# ---------------------------------------------------------------------------
+
+# Recommendation outcome per (response, brand). Deterministic, editable.
+OUTCOMES: list[str] = [
+    "Mentioned and recommended",
+    "Mentioned but not recommended",
+    "Compared but rejected",
+    "Not mentioned",
+]
+
+# Transparent reason categories for a "Compared but rejected" outcome.
+REJECTION_REASONS: list[str] = [
+    "Pricing concern",
+    "Missing capability",
+    "Complexity",
+    "Ease of use concern",
+    "Integration concern",
+    "Scalability concern",
+    "Persona mismatch",
+    "Trust or evidence concern",
+    "Competitor advantage",
+    "Other or unknown",
+]
+
+# Claim types extracted per tracked brand.
+CLAIM_TYPES: list[str] = [
+    "Product capability",
+    "Pricing claim",
+    "Positioning claim",
+    "Performance claim",
+    "Ease of use claim",
+    "Customer suitability claim",
+    "Limitation",
+    "Comparative claim",
+]
+
+# Ordered customer decision journey stages (distinct from the AEO JOURNEY_STAGES).
+DECISION_JOURNEY_STAGES: list[str] = [
+    "Discovery",
+    "Consideration",
+    "Evaluation",
+    "Decision",
+    "Retention",
+]
+
+# Map the existing prompt journey_stage vocabulary onto the ordered decision journey,
+# so journeys can be derived from existing structured metadata by default.
+JOURNEY_STAGE_MAP: dict[str, str] = {
+    "Awareness": "Discovery",
+    "Consideration": "Consideration",
+    "Evaluation": "Evaluation",
+    "Decision": "Decision",
+    "Retention": "Retention",
+    # Common synonyms a user might type.
+    "Discovery": "Discovery",
+    "Post purchase": "Retention",
+    "Post-purchase": "Retention",
+}
+
+# Whether a journey is a set of independent prompts or a real linked conversation.
+JOURNEY_KINDS: list[str] = ["Simulated (independent prompts)", "Linked conversation"]
+
+# Authoritative brand-fact types the Truth & Freshness monitor accepts.
+FACT_TYPES: list[str] = [
+    "Product name",
+    "Pricing",
+    "Feature",
+    "Integration",
+    "Customer segment",
+    "Company description",
+    "Supported location",
+    "Launch date",
+    "Discontinued feature",
+    "Official source URL",
+]
+
+# Comparison verdicts (authoritative-source comparison — NOT absolute truth).
+TRUTH_VERDICTS: list[str] = [
+    "Supported",
+    "Partially supported",
+    "Conflicting",
+    "Outdated",
+    "Unverifiable",
+    "Missing from AI responses",
+]
+
+RECOMMENDATION_OUTCOMES_COLUMNS: list[str] = [
+    "run_id",
+    "brand_name",
+    "outcome",
+    "reason_categories",   # "; "-joined REJECTION_REASONS (only for rejected)
+    "evidence_text",       # the exact text snippet the rule keyed on
+]
+
+BRAND_CLAIMS_COLUMNS: list[str] = [
+    "claim_id",
+    "run_id",
+    "brand_name",
+    "claim_type",
+    "claim_text",          # the observed statement
+    "evidence_text",       # the surrounding block used as evidence
+]
+
+BRAND_FACTS_COLUMNS: list[str] = [
+    "brand_name",
+    "fact_type",
+    "fact_value",
+    "source_url",
+    "as_of_date",
+]
+
+JOURNEYS_COLUMNS: list[str] = [
+    "journey_id",
+    "journey_name",
+    "journey_kind",
+    "stage",               # one of DECISION_JOURNEY_STAGES
+    "stage_order",         # integer 1..5
+    "prompt_id",
+]
+
 # DDL for the persistent/in-memory schema. Kept close to the DuckDB type system.
 _SCHEMA_DDL: str = """
 CREATE TABLE IF NOT EXISTS projects (
@@ -224,6 +346,40 @@ CREATE TABLE IF NOT EXISTS brand_entities (
     weaknesses            VARCHAR,
     pricing_positioning   VARCHAR,
     competitors_alongside VARCHAR
+);
+
+CREATE TABLE IF NOT EXISTS recommendation_outcomes (
+    run_id            VARCHAR,
+    brand_name        VARCHAR,
+    outcome           VARCHAR,
+    reason_categories VARCHAR,
+    evidence_text     VARCHAR
+);
+
+CREATE TABLE IF NOT EXISTS brand_claims (
+    claim_id      VARCHAR,
+    run_id        VARCHAR,
+    brand_name    VARCHAR,
+    claim_type    VARCHAR,
+    claim_text    VARCHAR,
+    evidence_text VARCHAR
+);
+
+CREATE TABLE IF NOT EXISTS brand_facts (
+    brand_name VARCHAR,
+    fact_type  VARCHAR,
+    fact_value VARCHAR,
+    source_url VARCHAR,
+    as_of_date VARCHAR
+);
+
+CREATE TABLE IF NOT EXISTS journeys (
+    journey_id   VARCHAR,
+    journey_name VARCHAR,
+    journey_kind VARCHAR,
+    stage        VARCHAR,
+    stage_order  INTEGER,
+    prompt_id    VARCHAR
 );
 
 CREATE TABLE IF NOT EXISTS brand_mentions (
@@ -297,6 +453,19 @@ class AnalysisData:
     brand_entities: pd.DataFrame = field(
         default_factory=lambda: pd.DataFrame(columns=BRAND_ENTITIES_COLUMNS)
     )
+    # -- AI Decision Influence Lab tables (research layer) ------------------
+    recommendation_outcomes: pd.DataFrame = field(
+        default_factory=lambda: pd.DataFrame(columns=RECOMMENDATION_OUTCOMES_COLUMNS)
+    )
+    brand_claims: pd.DataFrame = field(
+        default_factory=lambda: pd.DataFrame(columns=BRAND_CLAIMS_COLUMNS)
+    )
+    brand_facts: pd.DataFrame = field(
+        default_factory=lambda: pd.DataFrame(columns=BRAND_FACTS_COLUMNS)
+    )
+    journeys: pd.DataFrame = field(
+        default_factory=lambda: pd.DataFrame(columns=JOURNEYS_COLUMNS)
+    )
 
     def table(self, name: str) -> pd.DataFrame:
         """Return a canonical DataFrame by table name (raises KeyError if unknown)."""
@@ -348,6 +517,10 @@ class Database:
             "page_audits": data.page_audits,
             "benchmarks": data.benchmarks,
             "brand_entities": data.brand_entities,
+            "recommendation_outcomes": data.recommendation_outcomes,
+            "brand_claims": data.brand_claims,
+            "brand_facts": data.brand_facts,
+            "journeys": data.journeys,
         }
         for name, df in mapping.items():
             self.con.execute(f"DELETE FROM {name}")

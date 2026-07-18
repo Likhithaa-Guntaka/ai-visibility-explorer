@@ -71,23 +71,32 @@ def load_demo_analysis() -> AnalysisData:
         }],
         columns=BENCHMARKS_COLUMNS,
     )
+    # Synthetic authoritative facts for the Truth & Freshness monitor (clearly invented).
+    from .truth_monitor import demo_brand_facts
+    data.brand_facts = demo_brand_facts()
     return run_extraction(data)
 
 
 def run_extraction(data: AnalysisData, alias_overrides: Optional[dict[str, list[str]]] = None) -> AnalysisData:
-    """(Re)compute brand_mentions, citations, and narrative entities from response_runs.
+    """(Re)compute all deterministic signals from response_runs.
 
-    Returns a new :class:`AnalysisData`. Entity/narrative extraction (feature 2) runs
-    alongside the original brand-mention and citation extraction so all deterministic
-    signals are refreshed together.
+    Refreshes brand mentions, citations, narrative entities, plus the AI Decision
+    Influence Lab signals: recommendation outcomes and typed brand claims. User-entered
+    ``brand_facts`` and ``journeys`` are preserved (not recomputed). Returns new data.
     """
+    from .claims import extract_all_claims
+    from .decision_lab import classify_outcomes
+
     alias_map = build_alias_map(data.brands, alias_overrides)
     mentions, citations = extract_all(data.response_runs, alias_map)
     entities = extract_all_entities(data.response_runs, alias_map)
+    outcomes = classify_outcomes(data.response_runs, mentions, alias_map)
+    claims = extract_all_claims(data.response_runs, alias_map)
     # Guarantee AEO clustering columns exist for hand-entered prompts too.
     prompts = ensure_prompt_cluster_columns(data.prompts)
     return replace(
-        data, prompts=prompts, brand_mentions=mentions, citations=citations, brand_entities=entities
+        data, prompts=prompts, brand_mentions=mentions, citations=citations, brand_entities=entities,
+        recommendation_outcomes=outcomes, brand_claims=claims,
     )
 
 
@@ -205,6 +214,9 @@ def filter_data(
     def _subset(df: pd.DataFrame) -> pd.DataFrame:
         return df[df["run_id"].isin(allowed_run_ids)] if not df.empty else df
 
+    # journeys are prompt-scoped; brand_facts are brand-level reference (not filtered).
+    journeys = data.journeys[data.journeys["prompt_id"].isin(allowed_prompt_ids)] if not data.journeys.empty else data.journeys
+
     return replace(
         data,
         prompts=prompts.reset_index(drop=True),
@@ -212,6 +224,9 @@ def filter_data(
         brand_mentions=_subset(data.brand_mentions).reset_index(drop=True),
         citations=_subset(data.citations).reset_index(drop=True),
         brand_entities=_subset(data.brand_entities).reset_index(drop=True),
+        recommendation_outcomes=_subset(data.recommendation_outcomes).reset_index(drop=True),
+        brand_claims=_subset(data.brand_claims).reset_index(drop=True),
+        journeys=journeys.reset_index(drop=True),
     )
 
 

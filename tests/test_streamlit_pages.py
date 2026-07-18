@@ -28,6 +28,7 @@ PAGES: list[tuple[str, str]] = [
     ("pages/08_Content_Briefs.py", "Content Action Briefs"),
     ("pages/09_AEO_Question_Clusters.py", "AEO Question Clusters"),
     ("pages/10_AEO_Experiments.py", "AEO Experiments"),
+    ("pages/11_AI_Decision_Influence_Lab.py", "AI Decision Influence Lab"),
 ]
 
 
@@ -72,7 +73,7 @@ def test_pages_appear_in_correct_order():
         "01_Data_Input.py", "02_Visibility_Dashboard.py", "03_Citation_Analysis.py",
         "04_Page_Audit.py", "05_Customer_Readout.py", "06_Limitations.py",
         "07_Entity_Narrative.py", "08_Content_Briefs.py", "09_AEO_Question_Clusters.py",
-        "10_AEO_Experiments.py",
+        "10_AEO_Experiments.py", "11_AI_Decision_Influence_Lab.py",
     ]
     assert page_files == expected
 

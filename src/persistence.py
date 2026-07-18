@@ -27,19 +27,24 @@ import pandas as pd
 
 from .database import (
     BENCHMARKS_COLUMNS,
+    BRAND_CLAIMS_COLUMNS,
     BRAND_ENTITIES_COLUMNS,
+    BRAND_FACTS_COLUMNS,
     BRAND_MENTIONS_COLUMNS,
     BRANDS_COLUMNS,
     CITATIONS_COLUMNS,
+    JOURNEYS_COLUMNS,
     PAGE_AUDITS_COLUMNS,
     PROJECTS_COLUMNS,
     PROMPTS_COLUMNS,
+    RECOMMENDATION_OUTCOMES_COLUMNS,
     RESPONSE_RUNS_COLUMNS,
     AnalysisData,
 )
 
-#: Bump when the on-disk format changes incompatibly.
-PROJECT_SCHEMA_VERSION = 1
+#: Bump when the on-disk format changes incompatibly. v2 adds the AI Decision
+#: Influence Lab tables; older v1 files still import (their new tables come back empty).
+PROJECT_SCHEMA_VERSION = 2
 
 #: table name -> canonical column list (drives (de)serialisation + reindexing).
 _TABLE_COLUMNS: dict[str, list[str]] = {
@@ -52,6 +57,11 @@ _TABLE_COLUMNS: dict[str, list[str]] = {
     "citations": CITATIONS_COLUMNS,
     "brand_entities": BRAND_ENTITIES_COLUMNS,
     "page_audits": PAGE_AUDITS_COLUMNS,
+    # -- AI Decision Influence Lab tables ----------------------------------
+    "recommendation_outcomes": RECOMMENDATION_OUTCOMES_COLUMNS,
+    "brand_claims": BRAND_CLAIMS_COLUMNS,
+    "brand_facts": BRAND_FACTS_COLUMNS,
+    "journeys": JOURNEYS_COLUMNS,
 }
 
 

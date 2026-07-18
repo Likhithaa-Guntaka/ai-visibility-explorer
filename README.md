@@ -14,6 +14,36 @@ customer-success team can act on.
 
 ---
 
+## What Makes This Different
+
+Standard AI-visibility analytics answer one question: **does the brand appear** in AI answers
+(mention rate, share of voice, citations). The **AI Decision Influence Lab** — a research module
+in this project — goes a layer deeper and investigates the *decision itself*:
+
+1. **Why the brand was selected or rejected** — every (response, brand) pair is classified as
+   recommended, mentioned-but-not-recommended, compared-but-rejected, or not-mentioned, and each
+   rejection carries a transparent reason category (pricing, missing capability, complexity, …)
+   with the exact text evidence.
+2. **Which claims shaped the answer** — typed claims about each brand (capabilities, pricing,
+   positioning, performance, ease-of-use, suitability, limitations, comparisons) are extracted and
+   connected to the response, prompt, platform, citations, and outcome in a provenance table.
+3. **Which sources appeared alongside successful recommendations** — claims and citations are shown
+   next to recommended vs rejected outcomes (as *associations*, never as proof of causation).
+4. **Where the brand drops out of the decision journey** — prompts are grouped into an ordered
+   Discovery → Consideration → Evaluation → Decision → Retention funnel showing the stage where the
+   brand is most often lost and which competitor gains between stages.
+5. **Which evidence may be needed to improve the outcome** — a grounded evidence engine maps each
+   observed objection to a recommended asset (pricing comparison, benchmark, case study, integration
+   docs, …), and a fully transparent priority framework ranks where to act.
+
+This is a **research extension** that goes beyond the visibility monitoring and optimization
+capabilities publicly described by current AI-visibility platforms. It is not a claim about what any
+specific vendor does or does not do internally. Everything here is deterministic, editable, and
+framed as association rather than causation; the Truth & Freshness tab is an *authoritative-source
+comparison*, not a verification of absolute truth.
+
+---
+
 ## What's new (upgrade)
 
 The original MVP measured visibility, competitors, citations, and produced a readout.
@@ -376,19 +406,22 @@ makes optional web requests):
 | [`src/experiments.py`](src/experiments.py) | Before/after experiment slicing, comparison and limitations. |
 | [`src/page_audit.py`](src/page_audit.py) | Page audit + AI-answer-readiness + Answer Extractability (each with transparent rules). |
 | [`src/recommendations.py`](src/recommendations.py) | Grounded, templated customer readout. |
+| [`src/decision_lab.py`](src/decision_lab.py) · [`src/claims.py`](src/claims.py) · [`src/journeys.py`](src/journeys.py) | **AI Decision Influence Lab** — outcomes + rejection reasons, typed claims + provenance, decision-journey funnel. |
+| [`src/truth_monitor.py`](src/truth_monitor.py) · [`src/evidence_engine.py`](src/evidence_engine.py) · [`src/prioritization.py`](src/prioritization.py) · [`src/case_study.py`](src/case_study.py) | Authoritative-source comparison, grounded evidence actions, transparent priority, case-study export. |
 | [`src/persistence.py`](src/persistence.py) | Project export/import to a single JSON file (schema-versioned). |
 | [`src/validation.py`](src/validation.py) | CSV, manual-paste, and brand/domain validation. |
 | [`src/appkit.py`](src/appkit.py) · [`src/ui.py`](src/ui.py) | Session state, demo loading, dataset/benchmark/cluster filtering, shared widgets. |
 
 ### Data model
 
-Tables / DuckDB views (see [`src/database.py`](src/database.py)):
+13 tables / DuckDB views (see [`src/database.py`](src/database.py)):
 
-`projects` · `brands` · `prompts` (now with `search_intent`, `question_cluster`) · `response_runs`
+`projects` · `brands` · `prompts` (with `search_intent`, `question_cluster`) · `response_runs`
 (with `dataset_kind`, `benchmark_name`, `collection_date`, `collection_notes`) · `brand_mentions` ·
-`citations` · `page_audits` (with the readiness **and** extractability fields) · `benchmarks` ·
-`brand_entities` — with the exact columns documented in the module and mirrored in the schema DDL.
-Experiments are user-defined at runtime (held in session state), not stored rows.
+`citations` · `page_audits` (readiness + extractability fields) · `benchmarks` · `brand_entities` ·
+and the **AI Decision Influence Lab** tables: `recommendation_outcomes`, `brand_claims`,
+`brand_facts`, `journeys`. All are documented in the module and mirrored in the schema DDL, and all
+round-trip through the JSON export (schema v2). Experiments are user-defined at runtime.
 
 ---
 
@@ -432,10 +465,11 @@ To stop the app, press `Ctrl+C` in the terminal. To leave the virtual environmen
 ### Run the tests
 
 ```bash
-pytest            # 160 tests: pandas metrics, SQL-metric equivalence, extraction, entities,
+pytest            # 185 tests: pandas metrics, SQL-metric equivalence, extraction, entities,
                   # citation quality, briefs, page-audit readiness, answer extractability, AEO
                   # clusters, experiments, benchmark filtering, project export/import,
-                  # manual-input & brand validation, and Streamlit page execution (offline)
+                  # manual-input & brand validation, Streamlit page execution (offline), and the
+                  # AI Decision Influence Lab (outcomes, claims, journeys, truth, evidence, priority)
 ```
 
 ### Regenerate demo data or the preview images (optional)
@@ -568,37 +602,40 @@ ai-visibility-explorer/
 │   ├── 07_Entity_Narrative.py # how AI describes the brand + consistency
 │   ├── 08_Content_Briefs.py   # grounded content action briefs
 │   ├── 09_AEO_Question_Clusters.py  # cluster map, wins/losses, one-page-vs-several
-│   └── 10_AEO_Experiments.py       # (new) before/after experiments
+│   ├── 10_AEO_Experiments.py       # before/after experiments
+│   └── 11_AI_Decision_Influence_Lab.py  # (new) outcomes, claims, journey, truth, evidence, priority
 ├── sql/                       # reviewable SQL for the DuckDB-computed metrics
 │   ├── brand_visibility.sql   # mention rate, share of voice, first-mention, rec rate, leaderboard
 │   ├── citation_metrics.sql   # citation rate, source domain share
 │   └── segment_performance.sql# category/persona performance, platform comparison
 ├── src/
-│   ├── database.py            # DuckDB layer + schema + AnalysisData (+ benchmarks, brand_entities)
+│   ├── database.py            # DuckDB layer + schema + AnalysisData (13 tables)
 │   ├── sql_metrics.py         # DuckDB SQL implementations of the 10 headline metrics
 │   ├── metrics.py             # pandas reference for the 12 metrics + definitions
-│   ├── extraction.py          # deterministic extraction (LLM-ready interface)
-│   ├── entities.py            # entity & narrative extraction + analysis
-│   ├── citation_quality.py    # source classification, diversity, opportunities
-│   ├── briefs.py              # deterministic content action briefs
-│   ├── clusters.py            # AEO question clusters + consolidation rules
-│   ├── experiments.py         # before/after experiment comparison
-│   ├── recommendations.py     # grounded, templated customer readout
-│   ├── persistence.py         # project export/import (JSON, schema-versioned)
+│   ├── extraction.py · entities.py · citation_quality.py · briefs.py
+│   ├── clusters.py · experiments.py · recommendations.py · page_audit.py
+│   ├── decision_lab.py        # (new) recommendation outcomes + rejection reasons + metrics
+│   ├── claims.py              # (new) typed claim extraction + provenance
+│   ├── journeys.py            # (new) ordered decision-journey funnel
+│   ├── truth_monitor.py       # (new) authoritative-source comparison + verdicts
+│   ├── evidence_engine.py     # (new) grounded evidence opportunities
+│   ├── prioritization.py      # (new) transparent decision-impact priority
+│   ├── case_study.py          # (new) decision-influence case study export
+│   ├── persistence.py         # project export/import (JSON, schema v2)
 │   ├── validation.py          # CSV + manual-paste + brand/domain validation
-│   ├── page_audit.py          # page inspection + readiness + answer extractability
-│   ├── appkit.py              # session state, demo loading, dataset/benchmark/cluster filtering
-│   └── ui.py                  # shared Streamlit filter widgets (incl. dataset type, cluster, intent)
+│   ├── appkit.py              # session state, demo loading, filtering
+│   └── ui.py                  # shared Streamlit filter widgets
 ├── data/
 │   ├── demo_prompts.csv       # synthetic (+ search_intent, question_cluster)
 │   ├── demo_responses.csv     # synthetic (dataset_kind = Synthetic; two collection waves)
 │   └── _generate_demo.py      # deterministic demo generator
-├── tests/                     # 14 files (see "Run the tests")
+├── tests/                     # 16 files (see "Run the tests")
 │   ├── test_metrics.py            test_sql_metrics.py        test_extraction.py
 │   ├── test_entities.py           test_citation_quality.py   test_briefs.py
 │   ├── test_page_audit.py         test_extractability.py     test_clusters.py
 │   ├── test_experiments.py        test_benchmark_filtering.py
 │   ├── test_persistence.py        test_input_validation.py   test_streamlit_pages.py
+│   └── test_decision_lab.py
 ├── assets/dashboard_preview.png · readiness_preview.png
 ├── .devcontainer/devcontainer.json   # GitHub Codespaces (Python 3.12)
 ├── requirements.txt · .env.example · .gitignore · pytest.ini
